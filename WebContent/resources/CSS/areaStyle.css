@@ -1,0 +1,276 @@
+img#mainBackground{
+    display: none;
+}
+
+section#mainSection{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    font-size: 30px;
+
+    min-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1200px auto;
+    grid-template-rows: auto auto auto;
+    justify-content: start;
+    align-items: center;
+    align-content: center;
+}
+
+section#mainSection div#areaImg {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    min-width: 1200px;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    border-bottom: 2px solid rgba(200, 255, 255, 0.8);
+}
+section#mainSection div#areaImg:hover > h1 {
+    opacity: 0;
+    transition: opacity ease 0.5s 0s;
+}
+section#mainSection div#areaImg img{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    min-width: 1200px;
+    width: 100vw;
+    filter: blur(2px);
+}
+section#mainSection div#areaImg h1{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    z-index: 999;
+    font-size: 50px;
+    color: rgba(255,255,255,1);
+    text-shadow: 0 0 10px rgba(0,0,0,0.8), 0 0 5px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.8);
+    transition: opacity ease 0.5s 0s;
+}
+
+section#mainSection div#areaInfo {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    min-width: 1200px;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    column-gap: 30px;
+    padding: 20px 0px;
+    padding-bottom: 50px;
+}
+
+section#mainSection div#areaInfo input.areaButton {
+    font-size: 25px;
+    border: none;
+    padding: 4px 10px;
+    border-bottom: 2px solid rgba(100, 100, 255, 0);
+    background-color: white;
+    cursor: pointer;
+    color: rgba(0,0,0,0.6);
+    border-radius: 0px;
+    transition: box-shadow ease 0.3s 0s, color ease 0.3s 0s, border-bottom ease 0.3s 0s;
+}
+section#mainSection div#areaInfo input.areaButton:hover {
+    border-bottom: 2px solid rgba(100, 100, 255, 1);
+    color: rgba(0,0,0,1);
+    box-shadow: 0 0 5px 2px rgba(100, 100, 255, 0);
+    transition: box-shadow ease 0.3s 0s, color ease 0.3s 0s, border-bottom ease 0.3s 0s;
+}
+section#mainSection div#placeSection {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+section#mainSection div#placeSection div#placeListOrder {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    min-width: 800px;
+    width: 950px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryButtonMenu {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryButtonMenu input[type="radio"] {
+    display: none;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryButtonMenu input[type="radio"] + span {
+    color: rgba(0,0,0,0.5);
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 6px;
+    transition: color ease 0.5s 0s;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryButtonMenu input[type="radio"] + span:hover {
+    color: rgba(0,0,0,0.8);
+    transition: color ease 0.5s 0s;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryButtonMenu input[type="radio"]:checked + span{
+    cursor: default;
+    color: red;
+    transition: color ease 0.5s 0s;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryRadioMenu {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryRadioMenu input[type="radio"] {
+    display: none;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryRadioMenu input[type="radio"] + span {
+    color: rgba(0,0,0,0.5);
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 6px;
+    transition: color ease 0.5s 0s;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryRadioMenu input[type="radio"] + span:hover {
+    color: rgba(0,0,0,0.8);
+    transition: color ease 0.5s 0s;
+}
+section#mainSection div#placeSection div#placeListOrder div#categoryRadioMenu input[type="radio"]:checked + span{
+    cursor: default;
+    color: red;
+    transition: color ease 0.5s 0s;
+}
+/*아래는 목록*/
+
+
+section#mainSection div#placeSection div#placeList {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    min-width: 1200px;
+    margin-top: 50px;
+    margin-bottom: 80px;
+
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-auto-rows: auto;
+    column-gap: 5px;
+    row-gap: 15px;
+    justify-content: center;
+    justify-items: center;
+    align-content: start;
+    align-items: start;
+}
+
+section#mainSection div#placeSection div#placeList div.place {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto;
+    justify-content: start;
+    justify-items: start;
+    align-items: center;
+    align-content: center;
+    cursor: pointer;
+}
+section#mainSection div#placeSection div#placeList div.place div.placeImage{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+    margin: 10px 10px;
+    margin-bottom: 3px;
+    width: 220px;
+    height: 130px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    cursor: pointer;
+}
+section#mainSection div#placeSection div#placeList div.place div.placeImage:hover > img{
+    transform: scale(1.05);
+    transition: transform ease 0.3s 0s;
+}
+section#mainSection div#placeSection div#placeList div.place div.placeImage img{
+    min-width: 220px;
+    width: 220px;
+    min-height: 130px;
+    cursor: pointer;
+    transition: transform ease 0.3s 0s;
+}
+section#mainSection div#placeSection div#placeList div.place p{
+    font-size: 20px;
+    margin-left: 12px;
+    cursor: pointer;
+}
+section#mainSection div#placeSection div#placeList div.place p.placeScore{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+section#mainSection div#placeSection div#placeList div.place p.placeName{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgba(0,0,0,0.6);
+    transition: color ease 0.3s 0s;
+}
+section#mainSection div#placeSection div#placeList div.place p.placeName:hover{
+    color: rgba(0,0,0,1);
+    transition: color ease 0.3s 0s;
+}
+section#mainSection div#placeSection div#placeList div.place p.placeCategory{
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
