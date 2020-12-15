@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.team4.travel.object.countryMapper">
+    
+    <select id="getOneCountry" parameterType="int" resultType="com.team4.travel.object.countryVO">
+        SELECT T1.*, T2.englishName AS continentName
+        FROM countryTable AS T1 LEFT JOIN continentTable AS T2 ON T1.continentNumber = T2.continentNumber 
+        WHERE countryNumber = #{countryNumber};
+    </select>
+    
+    <select id="getCountryList" resultType="com.team4.travel.object.countryVO">
+        SELECT T1.*, T2.englishName AS continentName
+        FROM countryTable AS T1 LEFT JOIN continentTable AS T2 ON T1.continentNumber = T2.continentNumber 
+    </select>
+</mapper>

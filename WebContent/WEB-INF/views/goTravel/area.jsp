@@ -5,11 +5,11 @@
 <head>
     <meta charset="UTF-8">
 	<title>방구석여행기 - 지역</title>
-    <script src="/travel/resources/JS/jquery-3.5.1.min.js"></script>
+    <script src="../../../resources/JS/jquery-3.5.1.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/travel/resources/CSS/defaultStyle.css">
-    <link rel="stylesheet" href="/travel/resources/CSS/areaStyle.css">
+    <link rel="stylesheet" href="../../../resources/CSS/defaultStyle.css">
+    <link rel="stylesheet" href="../../../resources/CSS/areaStyle.css">
 </head>
 <body>
     <jsp:include page="../header.jsp"></jsp:include>

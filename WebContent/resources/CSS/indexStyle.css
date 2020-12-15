@@ -262,7 +262,7 @@ section#mainSection div#allCountryList div.continent h2.countryHeader {
 section#mainSection div#allCountryList div.continent div.countryList {
     display: grid;
     grid-template-columns: repeat(4, auto);
-    grid-auto-columns: auto;
+    grid-auto-row: auto;
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 2;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.team4.travel.object.areaMapper">
+
+    <select id="getAreaList" parameterType="int" resultType="com.team4.travel.object.areaVO">
+        SELECT T1.*, T2.englishName AS countryName
+		FROM areaTable AS T1 LEFT JOIN countryTable AS T2 ON T1.countryNumber = T2.countryNumber
+		WHERE T1.countryNumber = #{countryNumber}
+    </select>
+    
+    <select id="getOneArea" parameterType="int" resultType="com.team4.travel.object.areaVO">
+    	SELECT T1.*, T2.englishName AS countryName
+		FROM areaTable AS T1 LEFT JOIN countryTable AS T2 ON T1.countryNumber = T2.countryNumber
+		WHERE T1.areaNumber = #{areaNumber}
+    </select>
+    
+    <select id="getBestArea" resultType="com.team4.travel.object.areaVO">
+    	SELECT T1.* COUNT(T2.areaNumber) FROM areaTable AS T1 LEFT JOIN bookmarkTable AS T2 ON T1.areaNumber = T2.areaNumber
+    	GROUP BY T1.areaNumber ORDER BY DESC LIMIT 3;
+    </select>
+    
+</mapper>
