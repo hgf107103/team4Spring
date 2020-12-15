@@ -33,7 +33,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@SuppressWarnings("finally")
-	@RequestMapping(value = "/asdasdasdasdasd", method = RequestMethod.GET)
+	@RequestMapping(value = "/asdasdasdasdasd", method = RequestMethod.POST)
 	public String home(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		try {
@@ -58,7 +58,7 @@ public class HomeController {
 	@RequestMapping(value = "/wqeqwewqaasdasda", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public String upload(@RequestParam(value="file1", required = false) MultipartFile mf) {
-		System.out.println(1);
+		System.out.println(SAVE_PATH);
 		String originalFileName = mf.getOriginalFilename();
         long fileSize = mf.getSize();
         String safeFile = SAVE_PATH + System.currentTimeMillis() + originalFileName;

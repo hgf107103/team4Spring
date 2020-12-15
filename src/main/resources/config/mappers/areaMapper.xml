@@ -16,8 +16,11 @@
     </select>
     
     <select id="getBestArea" resultType="com.team4.travel.object.areaVO">
-    	SELECT T1.* COUNT(T2.areaNumber) FROM areaTable AS T1 LEFT JOIN bookmarkTable AS T2 ON T1.areaNumber = T2.areaNumber
-    	GROUP BY T1.areaNumber ORDER BY DESC LIMIT 3;
+    	SELECT T3.*, T4.englishName AS countryName
+		FROM (SELECT T1.*, COUNT(T2.areaNumber) AS count
+		FROM areaTable AS T1 LEFT JOIN bookmarkTable AS T2 ON T1.areaNumber = T2.areaNumber
+		GROUP BY T1.areaNumber) AS T3 LEFT JOIN countryTable AS T4 ON T3.countryNumber = T4.countryNumber
+		ORDER BY T3.count DESC LIMIT 3;
     </select>
     
 </mapper>

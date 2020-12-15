@@ -22,18 +22,6 @@
             <div id="bestAreaSection">
                 <h1 id="bestAreaTitle">최고 인기 여행지를 확인하세요</h1>
                 <div id="bestAreaList">
-                    <div class="bestArea">
-                        <p class="bestAreaName">도쿄</p>
-                        <img class="bestAreaImg" src="resources/image/area/japan_tokyo.jpg" alt="">
-                    </div>
-                    <div class="bestArea">
-                        <p class="bestAreaName">오사카</p>
-                        <img class="bestAreaImg" src="img/city/japan_osaka.jpg" alt="">
-                    </div>
-                    <div class="bestArea">
-                        <p class="bestAreaName">후쿠오카</p>
-                        <img class="bestAreaImg" src="img/city/japan_hukuoka.jpg" alt="">
-                    </div>
                 </div>
             </div>
             <div id="searchSection">

@@ -15,12 +15,14 @@ $(document).ready(() => {
         }
     });
 	$.ajax({
-		url: `country/1/area/list`,
+		url: `country/list/area/best`,
 		type: "post",
 		cache: false,
 		dataType: "json",
 		success: (data) => {
-			console.log(data)
+			$.each (data.list, function (index, el) {
+                $(`#bestAreaList`).append(returnBestAreaString(el));
+            });
 		},
 		error: () => {
 			alert('오류가 발생하였습니다.');
@@ -32,5 +34,10 @@ $(document).ready(() => {
 function returnCountryString(country) {
 	let str = `<div id="${country.englishName}" class="country" onclick="window.open('country/${country.countryNumber}', '_blank')">
 	<p>${country.koreanName}</p><img src="resources/image/country/${country.englishName}.jpg" alt=""></div>`;
+	return str;
+}
+function returnBestAreaString(area) {
+	let str = `<div class="bestArea"><p class="bestAreaName">${area.koreanName}</p>
+	<img class="bestAreaImg" src="resources/image/area/${area.countryName}_${area.englishName}.jpg" alt=""></div>`;
 	return str;
 }

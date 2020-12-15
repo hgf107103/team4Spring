@@ -38,7 +38,7 @@ public class areaController {
 			Gson create = new GsonBuilder().setPrettyPrinting().create();
 			JsonObject jo = new JsonObject();
 			List<areaVO> list = mapper.getAreaList(countryNumber);
-			System.out.println(list.toString());
+			
 			jo.add("list", create.toJsonTree(list));
 			
 			pw.write(create.toJson(jo));
@@ -51,7 +51,19 @@ public class areaController {
 	@PostMapping(value = "/country/list/area/best")
 	public void getBestArea(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) throws Exception {
 		try {
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			Gson create = new GsonBuilder().setPrettyPrinting().create();
+			JsonObject jo = new JsonObject();
+			List<areaVO> list = mapper.getBestArea();
+			System.out.println(list.get(0).toString());
+			System.out.println(list.get(1).toString());
+			System.out.println(list.get(2).toString());
+			jo.add("list", create.toJsonTree(list));
 			
+			pw.write(create.toJson(jo));
 		} catch (Exception e) {
 			response.sendError(400);
 		}
