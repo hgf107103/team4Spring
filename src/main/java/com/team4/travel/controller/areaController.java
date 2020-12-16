@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.annotations.JsonAdapter;
 import com.team4.travel.object.areaMapper;
 import com.team4.travel.object.areaVO;
 
@@ -28,44 +29,95 @@ public class areaController {
 	@Autowired
 	private areaMapper mapper;
 	
-	@RequestMapping(value = "/country/{countryNumber}/area/list", method = RequestMethod.POST)
-	public void getAreaList(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, Locale locale, Model model) throws Exception {
+	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}")
+	public void getArea(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber, Locale locale, Model model) throws Exception {
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		
 		try {
-			request.setCharacterEncoding("UTF-8");
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json");
-			PrintWriter pw = response.getWriter();
-			Gson create = new GsonBuilder().setPrettyPrinting().create();
-			JsonObject jo = new JsonObject();
+			areaVO temp = new areaVO();
+			temp.setCountryNumber(countryNumber);
+			temp.setAreaNumber(areaNumber);
+			
+			areaVO area = mapper.getOneArea(temp);
+			jo.add("area", create.toJsonTree(area));
+
+			jo.add("check", create.toJsonTree("success"));
+			
+			
+		} catch (Exception e) {
+			
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+		
+	}
+	
+	@PostMapping(value = "/country/{countryNumber}/area/list")
+	public void getAreaList(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, Locale locale, Model model) throws Exception {
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		
+		try {
+			
 			List<areaVO> list = mapper.getAreaList(countryNumber);
 			
 			jo.add("list", create.toJsonTree(list));
+
+			jo.add("check", create.toJsonTree("success"));
 			
-			pw.write(create.toJson(jo));
+			
 		} catch (Exception e) {
-			response.sendError(400);
+			
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
 		}
 		
 	}
 	
 	@PostMapping(value = "/country/list/area/best")
 	public void getBestArea(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) throws Exception {
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		
 		try {
-			request.setCharacterEncoding("UTF-8");
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("application/json");
-			PrintWriter pw = response.getWriter();
-			Gson create = new GsonBuilder().setPrettyPrinting().create();
-			JsonObject jo = new JsonObject();
+			
 			List<areaVO> list = mapper.getBestArea();
-			System.out.println(list.get(0).toString());
-			System.out.println(list.get(1).toString());
-			System.out.println(list.get(2).toString());
+			
 			jo.add("list", create.toJsonTree(list));
 			
-			pw.write(create.toJson(jo));
+			jo.add("check", create.toJsonTree("success"));
+			
 		} catch (Exception e) {
-			response.sendError(400);
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
 		}
 	}
 }

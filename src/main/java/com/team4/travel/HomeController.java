@@ -9,6 +9,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,6 @@ public class HomeController {
         long fileSize = mf.getSize();
         String safeFile = SAVE_PATH + System.currentTimeMillis() + originalFileName;
         System.out.println(1);
-            
         try {
         	System.out.println(1);
         	mf.transferTo(new File(safeFile));

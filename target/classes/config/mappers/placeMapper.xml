@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.team4.travel.object.placeMapper">
+    
+    <select id="getPlace" parameterType="int" resultType="com.team4.travel.object.placeVO">
+        SELECT * FROM placeTable WHERE placeNumber = #{placeNumber} AND T1.placeCheck = 1
+    </select>
+    <select id="getPlaceListLike" parameterType="hashmap" resultType="com.team4.travel.object.placeVO">
+		SELECT T1.*, COUNT(T2.placeNumber) AS count
+		FROM (
+		SELECT T3.*, T4.koreanName AS categoryName FROM placeTable AS T3 LEFT JOIN categoryTable AS T4 ON T3.categoryNumber = T4.categoryNumber
+		) AS T1 LEFT JOIN placeScoreTable AS T2 ON T1.placeNumber = T2.placeNumber
+		WHERE T1.areaNumber = #{areaNumber} AND T1.placeCheck = 1
+		<if test="categoryNumber > 0">
+			AND T1.categoryNumber = #{categoryNumber}
+		</if>
+		GROUP BY T1.placeNumber ORDER BY count DESC;
+    </select>
+    <select id="getPlaceListNew" parameterType="hashmap" resultType="com.team4.travel.object.placeVO">
+        SELECT T1.*, COUNT(T2.placeNumber) AS count
+		FROM (
+		SELECT T3.*, T4.koreanName AS categoryName FROM placeTable AS T3 LEFT JOIN categoryTable AS T4 ON T3.categoryNumber = T4.categoryNumber
+		) AS T1 LEFT JOIN placeScoreTable AS T2 ON T1.placeNumber = T2.placeNumber
+		WHERE T1.areaNumber = #{areaNumber} AND T1.placeCheck = 1
+		<if test="categoryNumber > 0">
+			AND T1.categoryNumber = #{categoryNumber}
+		</if>
+		GROUP BY T1.placeNumber ORDER BY T1.placeNumber DESC;
+    </select>
+    <select id="getPlaceListName" parameterType="hashmap" resultType="com.team4.travel.object.placeVO">
+        SELECT T1.*, COUNT(T2.placeNumber) AS count
+		FROM (
+		SELECT T3.*, T4.koreanName AS categoryName FROM placeTable AS T3 LEFT JOIN categoryTable AS T4 ON T3.categoryNumber = T4.categoryNumber
+		) AS T1 LEFT JOIN placeScoreTable AS T2 ON T1.placeNumber = T2.placeNumber
+		WHERE T1.areaNumber = #{areaNumber} AND T1.placeCheck = 1
+		<if test="categoryNumber > 0">
+			AND T1.categoryNumber = #{categoryNumber}
+		</if>
+		GROUP BY T1.placeNumber ORDER BY T1.koreanName DESC;
+    </select>
+</mapper>

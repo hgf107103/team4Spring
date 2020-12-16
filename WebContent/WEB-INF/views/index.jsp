@@ -4,15 +4,14 @@
 <html lang="ko" oncontextmenu="return false" ondragstart="return false" onselectstart='return false'>
 <head>
     <meta charset="UTF-8">
-	<meta name="_csrf" th:content="${_csrf.token}"/>
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="path" id="path" content="${pageContext.request.contextPath}">
     <title>방구석여행기</title>
-    <script src="resources/JS/jquery-3.5.1.min.js"></script>
-    <script src="resources/JS/indexScript.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/JS/jquery-3.5.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/JS/indexScript.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="resources/CSS/defaultStyle.css">
-    <link rel="stylesheet" href="resources/CSS/indexStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/CSS/defaultStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/CSS/indexStyle.css">
 </head>
 <body>
     <jsp:include page="header.jsp"></jsp:include>

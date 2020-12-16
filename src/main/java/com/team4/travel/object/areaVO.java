@@ -11,6 +11,7 @@ public class areaVO {
 	private int areaNumber;
 	private int countryNumber;
 	private String countryName;
+	private String countryKoreanName;
 	private String englishName;
 	private String koreanName;
 	private double areaLat;

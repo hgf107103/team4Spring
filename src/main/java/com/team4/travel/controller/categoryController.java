@@ -1,6 +1,5 @@
 package com.team4.travel.controller;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
@@ -12,22 +11,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.team4.travel.object.countryMapper;
-import com.team4.travel.object.countryVO;
+import com.team4.travel.object.areaVO;
+import com.team4.travel.object.categoryMapper;
+import com.team4.travel.object.categoryVO;
 
 @Controller
-public class countryController {
-	@Autowired
-	private countryMapper mapper;
+public class categoryController {
 	
-	@PostMapping(value = "/country/list")
-	public void getCountryList(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) throws Exception {
-		
+	@Autowired
+	private categoryMapper mapper;
+	
+	@PostMapping(value = {"/country/list/area/category", "/category"})
+	public void getCategoryList(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) throws Exception{
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
@@ -37,13 +38,15 @@ public class countryController {
 		
 		try {
 			
-			List<countryVO> list = mapper.getCountryList();
+			List<categoryVO> list = mapper.getCategoryList();
 			
 			jo.add("list", create.toJsonTree(list));
-			
+
 			jo.add("check", create.toJsonTree("success"));
 			
+			
 		} catch (Exception e) {
+			
 			jo = new JsonObject();
 			jo.add("check", create.toJsonTree("fail"));
 			jo.add("error", create.toJsonTree(e.toString()));
@@ -51,6 +54,5 @@ public class countryController {
 		} finally {
 			pw.write(create.toJson(jo));
 		}
-		
 	}
 }

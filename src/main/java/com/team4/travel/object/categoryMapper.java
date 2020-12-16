@@ -1,5 +1,7 @@
 package com.team4.travel.object;
 
+import java.util.List;
+
 public interface categoryMapper {
-	public categoryVO selectNow();
+	public List<categoryVO> getCategoryList();
 }

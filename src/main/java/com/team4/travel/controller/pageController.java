@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,27 +18,31 @@ public class pageController {
 	private static final Logger logger = LoggerFactory.getLogger(pageController.class);
 	
 	@GetMapping({"/", "/index"})
-	public String home(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) {
+	public String home(HttpServletRequest request, Locale locale, Model model) {
 		return "index";
 	}
 	
 	@GetMapping("/error")
-	public String error(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) {
+	public String error(HttpServletRequest request, Locale locale, Model model) {
+		
 		return "error";
 	}
 	
 	@GetMapping("/signup")
-	public String signup(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) {
+	public String signup(HttpServletRequest request, Locale locale, Model model) {
 		return "user/signup";
 	}
 	
 	@GetMapping("/country/{countryNumber}")
-	public String country(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, Locale locale, Model model) {
+	public String country(HttpServletRequest request, @PathVariable(value = "countryNumber") int countryNumber, Locale locale, Model model) {
+		model.addAttribute("countryNumber", countryNumber);
 		return "goTravel/country";
 	}
 	
 	@GetMapping("/country/{countryNumber}/area/{areaNumber}")
-	public String area(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber, Locale locale, Model model) {
+	public String area(HttpServletRequest request, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber, Locale locale, Model model) {
+		model.addAttribute("countryNumber", countryNumber);
+		model.addAttribute("areaNumber", areaNumber);
 		return "goTravel/area";
 	}
 	

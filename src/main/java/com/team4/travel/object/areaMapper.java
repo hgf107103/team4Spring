@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface areaMapper {
 	public List<areaVO> getAreaList(int countryNumber);
-	public areaVO getOneArea(int areaNumber);
+	public areaVO getOneArea(areaVO area);
 	public List<areaVO> getBestArea();
 }

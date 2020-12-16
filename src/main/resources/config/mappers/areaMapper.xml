@@ -4,15 +4,15 @@
 <mapper namespace="com.team4.travel.object.areaMapper">
 
     <select id="getAreaList" parameterType="int" resultType="com.team4.travel.object.areaVO">
-        SELECT T1.*, T2.englishName AS countryName
+        SELECT T1.*, T2.englishName AS countryName, T2.koreanName AS countryKoreanName
 		FROM areaTable AS T1 LEFT JOIN countryTable AS T2 ON T1.countryNumber = T2.countryNumber
 		WHERE T1.countryNumber = #{countryNumber}
     </select>
     
-    <select id="getOneArea" parameterType="int" resultType="com.team4.travel.object.areaVO">
+    <select id="getOneArea" parameterType="com.team4.travel.object.areaVO" resultType="com.team4.travel.object.areaVO">
     	SELECT T1.*, T2.englishName AS countryName
 		FROM areaTable AS T1 LEFT JOIN countryTable AS T2 ON T1.countryNumber = T2.countryNumber
-		WHERE T1.areaNumber = #{areaNumber}
+		WHERE T1.areaNumber = #{areaNumber} AND T1.countryNumber = #{countryNumber}
     </select>
     
     <select id="getBestArea" resultType="com.team4.travel.object.areaVO">

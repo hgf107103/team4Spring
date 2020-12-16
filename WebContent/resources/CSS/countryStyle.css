@@ -88,7 +88,8 @@ div.menu p.placeName {
 	grid-column-end: 2;
 	grid-row-start: 1;
     grid-row-end: 2;
-    font-size: 22px;
+    font-size: 24px;
+   	font-weight: bold;
     white-space: nowrap;
     color: rgba(255,255,255,0);
     text-shadow: 0 0 3px rgba(0,0,0,0), 0 0 1px rgba(0,0,0,0);
