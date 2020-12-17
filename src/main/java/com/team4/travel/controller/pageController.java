@@ -28,7 +28,7 @@ public class pageController {
 		return "error";
 	}
 	
-	@GetMapping("/signup")
+	@GetMapping("/user/signup")
 	public String signup(HttpServletRequest request, Locale locale, Model model) {
 		return "user/signup";
 	}

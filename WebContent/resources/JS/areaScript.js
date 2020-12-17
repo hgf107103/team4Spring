@@ -54,7 +54,7 @@ function getArea() {
 			}
 			areaName = data.area.englishName;
 			$('#areaNameTitle').text(`${data.area.koreanName}`);
-			$('#areaTitleImage').attr('src', `${path}/resources/image/area/${data.area.countryName}_${data.area.englishName}.jpg`);
+			$('#areaTitleImage').attr('src', `${path}/image/area/${data.area.countryName}_${data.area.englishName}.jpg`);
 			$('title').text(`방구석여행기 - ${data.area.koreanName}`);
 		},
 		error: (xhr) => {
@@ -100,7 +100,7 @@ function getPlace() {
 }
 
 function returnPlaceString(place) {
-	let str = `<div class="place"><div class="placeImage"><img src="${path}/resources/image/place/${areaName}_${place.englishName}.jpg" alt=""></div>
+	let str = `<div class="place"><div class="placeImage"><img src="${path}/image/place/${areaName}_${place.englishName}.jpg" alt=""></div>
 	<p class="placeScore">추천수 : ${place.count}</p><p class="placeName">${place.koreanName}</p><p class="placeCategory">${place.categoryName}</p></div>`;
 	return str;
 	

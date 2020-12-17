@@ -43,6 +43,6 @@ function callAreaList() {
 
 function returnAreaString(area) {
 	let str = `<div class="menu" onclick="window.open('${area.countryNumber}/area/${area.areaNumber}', '_blank')"><p class="placeName">${area.koreanName}</p>
-	<img src="${path}/resources/image/area/${area.countryName}_${area.englishName}.jpg" alt=""></div>`;
+	<img src="${path}/image/area/${area.countryName}_${area.englishName}.jpg" alt=""></div>`;
 	return str;
 }

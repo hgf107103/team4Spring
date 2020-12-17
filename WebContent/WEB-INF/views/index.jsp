@@ -6,17 +6,17 @@
     <meta charset="UTF-8">
     <meta name="path" id="path" content="${pageContext.request.contextPath}">
     <title>방구석여행기</title>
-    <script src="${pageContext.request.contextPath}/resources/JS/jquery-3.5.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/JS/indexScript.js"></script>
+    <script src="${pageContext.request.contextPath}/JS/jquery-3.5.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/JS/indexScript.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/CSS/defaultStyle.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/CSS/indexStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/defaultStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/indexStyle.css">
 </head>
 <body>
     <jsp:include page="header.jsp"></jsp:include>
     <!--continent 대륙 country 나라 area 지역 place 장소-->
-    <section id="mainSection">
+    <section id="mainSection" onclick="alwaysCloseBookmark()">
         <div id="searchBox">
             <div id="bestAreaSection">
                 <h1 id="bestAreaTitle">최고 인기 여행지를 확인하세요</h1>

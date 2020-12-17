@@ -3,11 +3,17 @@
  
 <mapper namespace="com.team4.travel.object.userMapper">
     
-    <select id="getUser" parameterType="com.team4.travel.object.userVO" resultType="com.team4.travel.object.userVO">
-        SELECT * FROM userTable WHERE userID = #{userID} AND userPassword = #{userPassword}
+    <select id="getUser" parameterType="String" resultType="com.team4.travel.object.userVO">
+        SELECT * FROM userTable WHERE userID = #{userID}
     </select>
-    <select id="signUser" parameterType="com.team4.travel.object.userVO">
+    <insert id="signUser" parameterType="com.team4.travel.object.userVO">
         INSERT INTO userTable (userID, userPassword, userName, userNickname) 
         VALUES (#{userID},#{userPassword},#{userName},#{userNickname})
+    </insert>
+    <select id="getIDCheck" resultType="int" parameterType="String">
+    	SELECT COUNT(*) FROM userTable WHERE userID = #{userID}
+    </select>
+    <select id="getNickCheck" resultType="int" parameterType="String">
+    	SELECT COUNT(*) FROM userTable WHERE userNickname = #{userNickname}
     </select>
 </mapper>
