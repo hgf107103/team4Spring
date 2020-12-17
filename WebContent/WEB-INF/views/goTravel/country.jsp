@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta name="path" id="path" content="${pageContext.request.contextPath}">
 	<title>방구석여행기</title>
-    <script src="${pageContext.request.contextPath}/resources/JS/jquery-3.5.1.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/JS/countryScript.js"></script>
+    <script src="${pageContext.request.contextPath}/JS/jquery-3.5.1.min.js"></script>
+    <script src="${pageContext.request.contextPath}/JS/countryScript.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/CSS/countryStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/countryStyle.css">
 </head>
 <body>
 	<input type="hidden" id="countryNumber" value='<c:out value="${countryNumber}"></c:out>'>

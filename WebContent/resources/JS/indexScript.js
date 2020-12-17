@@ -58,12 +58,12 @@ function getBestArea() {
 
 function returnCountryString(country) {
 	let str = `<div id="${country.englishName}" class="country" onclick="window.open('country/${country.countryNumber}', '_blank')">
-	<p>${country.koreanName}</p><img src="${path}/resources/image/country/${country.englishName}.jpg" alt=""></div>`;
+	<p>${country.koreanName}</p><img src="${path}/image/country/${country.englishName}.jpg" alt=""></div>`;
 	return str;
 }
 function returnBestAreaString(area) {
 	let str = `<div class="bestArea" onclick="window.open('country/${area.countryNumber}/area/${area.areaNumber}', '_blank')">
 	<p class="bestAreaName">${area.koreanName}</p>
-	<img class="bestAreaImg" src="${path}/resources/image/area/${area.countryName}_${area.englishName}.jpg" alt=""></div>`;
+	<img class="bestAreaImg" src="${path}/image/area/${area.countryName}_${area.englishName}.jpg" alt=""></div>`;
 	return str;
 }

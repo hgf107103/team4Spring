@@ -46,6 +46,7 @@ public class HomeController {
 			
 			String formattedDate = dateFormat.format(date);
 			
+			
 			model.addAttribute("serverTime", formattedDate );
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -61,6 +62,8 @@ public class HomeController {
 	public String upload(@RequestParam(value="file1", required = false) MultipartFile mf) {
 		System.out.println(SAVE_PATH);
 		String originalFileName = mf.getOriginalFilename();
+
+		//String root_path = request.getSession().getServletContext().getRealPath("/");
         long fileSize = mf.getSize();
         String safeFile = SAVE_PATH + System.currentTimeMillis() + originalFileName;
         System.out.println(1);
