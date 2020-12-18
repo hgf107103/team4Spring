@@ -248,9 +248,9 @@ section#mainSection div#placeSection div#placeList div.place div.placeImage:hove
     transition: transform ease 0.3s 0s;
 }
 section#mainSection div#placeSection div#placeList div.place div.placeImage img{
-    min-width: 220px;
-    width: 220px;
-    min-height: 130px;
+    height:130px;
+    width:220px;
+    object-fit: cover;
     cursor: pointer;
     transition: transform ease 0.3s 0s;
 }
@@ -284,4 +284,14 @@ section#mainSection div#placeSection div#placeList div.place p.placeCategory{
     grid-row-end: 5;
     grid-column-start: 1;
     grid-column-end: 2;
+}
+
+
+
+section#mainSection div#emptyMenu {
+	padding: 70px 0px;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
 }

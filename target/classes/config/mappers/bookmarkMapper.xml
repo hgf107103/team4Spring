@@ -3,11 +3,15 @@
  
 <mapper namespace="com.team4.travel.object.bookmarkMapper">
     
-    <select id="getBookmarkList" parameterType="int" resultType="com.team4.travel.object.userVO">
+    <select id="getBookmarkList" parameterType="int" resultType="com.team4.travel.object.bookmarkVO">
         SELECT T3.userNumber, T4.* FROM bookmarkTable AS T3 LEFT JOIN (
 		SELECT T1.areaNumber, T1.countryNumber, T1.englishName, T1.koreanName, T2.englishName AS countryName
 		FROM areaTable AS T1 LEFT JOIN countryTable AS T2 
 		ON T1.countryNumber = T2.countryNumber
 		) AS T4 ON T3.areaNumber = T4.areaNumber WHERE T3.userNumber = #{userNumber}
     </select>
+    
+    <insert id="bookmarkAdd" parameterType="hashmap">
+    	INSERT INTO bookmarkTable VALUES(#{userNumber}, #{areaNumber});
+    </insert>
 </mapper>

@@ -83,13 +83,13 @@ div#menuBar div#mainIcon p#pageTitle {
     cursor: pointer;
     text-shadow: 0 0 2px rgba(150,150,150,0.8);
 }
-div#menuBar div#login {
+div#menuBar form#login {
     grid-row-start: 1;
     grid-row-end: 2;
     grid-column-start: 2;
     grid-column-end: 3;
 }
-div#menuBar div#login input.inputTextStyle{
+div#menuBar form#login input.inputTextStyle{
     padding: 7px 10px;
     width: 160px;
     font-size: 15px;
@@ -99,15 +99,15 @@ div#menuBar div#login input.inputTextStyle{
     text-align: center;
     transition: border ease 0.3s 0s;
 }
-div#menuBar div#login input.inputTextStyle:hover{
+div#menuBar form#login input.inputTextStyle:hover{
     border: 1px solid rgba(150,150,150,0.3);
     transition: border ease 0.3s 0s;
 }
-div#menuBar div#login input.inputTextStyle:focus{
+div#menuBar form#login input.inputTextStyle:focus{
     border: 1px solid rgba(150,150,150,0.7);
     transition: border ease 0.3s 0s;
 }
-div#menuBar div#login input.inputButtonStyle{
+div#menuBar form#login input.inputButtonStyle{
     padding: 7px 10px;
     margin: 0px 5px;
     min-width: 90px;
@@ -119,11 +119,11 @@ div#menuBar div#login input.inputButtonStyle{
     background-color: rgba(255,255,255,0);
     transition: border-bottom ease 0.4s 0s;
 }
-div#menuBar div#login input.inputButtonStyle:hover{
+div#menuBar form#login input.inputButtonStyle:hover{
     border-bottom: 2px solid rgba(200,200,255);
     transition: border-bottom ease 0.4s 0s;
 }
-div#menuBar div#login input#loginSubmit {
+div#menuBar form#login input#loginSubmit {
     margin-left: 10px;
 }
 div#menuBar div#user {
@@ -182,9 +182,8 @@ div#bookmarkBar{
 	overflow: scroll;
 	transition: right ease 0.8s 0s, opacity ease 0.8s 0s;
     
-    display: grid;
-    grid-auto-rows: minmax(100px, auto);
-    grid-template-columns: auto;
+    display: flex;
+    flex-direction: column;
     align-content: center;
     align-items: center;
     justify-content: center;
@@ -201,9 +200,10 @@ div#bookmarkBar div.userbookmark {
     grid-template-columns: auto auto;
 	justify-items: center;
 	justify-content: center;
-	align-items: center;
-	align-content: center;
+	align-items: start;
+	align-content: start;
 	margin-left: 20px;
+	margin: 20px 0px;
 }
 
 div#bookmarkBar div.userbookmark div.bookmarkImage {
@@ -226,7 +226,8 @@ div#bookmarkBar div.userbookmark div.bookmarkImage:hover > img {
     transition: transform ease 0.5s 0s;
 }
 div#bookmarkBar div.userbookmark div.bookmarkImage img{
-    min-width: 120px;
+    object-fit: cover;
+    width: 120px;
     height: 120px;
 	cursor: pointer;
     transition: transform ease 0.5s 0s;
