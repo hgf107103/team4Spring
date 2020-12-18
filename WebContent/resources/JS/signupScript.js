@@ -228,6 +228,10 @@ function userSignupSubmit() {
 							userNickname:signUserInfo.nick
 						},
 						dataType: "json",
+						beforeSend: () => {
+							$('body').css('overflow', 'hidden');
+							$('body').append(returnLoadBox());
+						},
 						success: (data) => {
 							if(data.check != "success") {
 							alert('회원가입에 실패하였습니다.');
@@ -261,4 +265,10 @@ function userSignupSubmit() {
 	}
 	alert('아이디에 문제가 있습니다.')
 	return;
+}
+
+
+function returnLoadBox() {
+	let str = `<div id="loadBox"><img id="loadImage" src="${path}/image/sys/loading.gif"><p id="loadLog">세계로 여행을 떠날 채비를 하는중..</p></div>`;
+	return str;
 }

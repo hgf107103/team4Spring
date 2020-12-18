@@ -25,14 +25,14 @@
         <h1>회원가입</h1>
         <form id="mainForm">
             <div id="IDSection" class="signupSection">
-                <input type="text" id="signupID" class="signupInputText" name="signupID" onkeyup="if (window.event.keyCode == 13) {idCheck()}" placeholder="아이디 입력">
+                <input type="text" id="signupID" class="signupInputText" autocomplete="off" name="signupID" onkeyup="if (window.event.keyCode == 13) {idCheck()}" placeholder="아이디 입력">
                 <input type="button" id="signupIDCheck" class="signupInputButton" onclick="idCheck()" value="중복확인">
                 <p id="IDLog" class="log">아이디를 입력해주십시오</p>
             </div>
             <div id="PWDSection" class="signupSection">
-                <input type="password" id="signupPWD" class="signupInputText" name="signupPWD" onkeyup="pwdCheck()" placeholder="비밀번호 입력">
+                <input type="password" id="signupPWD" autocomplete="new-password" class="signupInputText" name="signupPWD" onkeyup="pwdCheck()" placeholder="비밀번호 입력">
                 <p id="PWDLog" class="log">비밀번호를 입력해주십시오</p>
-                <input type="password" id="signupPWDCheck" class="signupInputText" name="signupPWDCheck" onkeyup="pwdCheckCheck()" placeholder="비밀번호 재입력">
+                <input type="password" id="signupPWDCheck" autocomplete="new-password" class="signupInputText" name="signupPWDCheck" onkeyup="pwdCheckCheck()" placeholder="비밀번호 재입력">
                 <p id="PWDCheckLog" class="log">비밀번호를 한번 더 입력해주십시오</p>
             </div>
             <div id="NameSection" class="signupSection">
