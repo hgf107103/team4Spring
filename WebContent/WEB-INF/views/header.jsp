@@ -12,10 +12,10 @@
         </div>
         <c:if test="${userLogin eq null}">
          <form id="login">
-            <input type="text" id="loginID" class="inputTextStyle" autocomplete="username" onkeyup="if (window.event.keyCode == 13)  {userLogin('${pageContext.request.contextPath}')}" placeholder="아이디 입력">
+            <input type="text" id="loginID" class="inputTextStyle" autocomplete="off" onkeyup="if (window.event.keyCode == 13)  {userLogin('${pageContext.request.contextPath}')}" placeholder="아이디 입력">
             <input type="password" id="loginPWD" class="inputTextStyle" autocomplete="current-password" onkeyup="if (window.event.keyCode == 13) {userLogin('${pageContext.request.contextPath}')}" placeholder="비밀번호 입력">
-            <input type="button" id="loginSubmit" class="inputButtonStyle" value="로그인" onclick="userLogin('${pageContext.request.contextPath}')">
-            <input type="button" id="signupSubmit" class="inputButtonStyle" value="회원가입" onclick="location.href = '${pageContext.request.contextPath}/user/signup'">
+            <input type="button" id="loginButton" class="inputButtonStyle" value="로그인" onclick="userLogin('${pageContext.request.contextPath}')">
+            <input type="button" id="signupButton" class="inputButtonStyle" value="회원가입" onclick="location.href = '${pageContext.request.contextPath}/user/signup'">
         </form>
         </c:if>
        
