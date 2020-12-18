@@ -11,12 +11,12 @@
             <p id="pageTitle" onclick="location.href='${pageContext.request.contextPath}'">방구석여행기</p>
         </div>
         <c:if test="${userLogin eq null}">
-         <div id="login">
-            <input type="text" id="loginID" class="inputTextStyle" onkeyup="if (window.event.keyCode == 13) {userLogin('${pageContext.request.contextPath}')}" placeholder="아이디 입력">
-            <input type="password" id="loginPWD" class="inputTextStyle" onkeyup="if (window.event.keyCode == 13) {userLogin('${pageContext.request.contextPath}')}" placeholder="비밀번호 입력">
+         <form id="login">
+            <input type="text" id="loginID" class="inputTextStyle" autocomplete="username" onkeyup="if (window.event.keyCode == 13)  {userLogin('${pageContext.request.contextPath}')}" placeholder="아이디 입력">
+            <input type="password" id="loginPWD" class="inputTextStyle" autocomplete="current-password" onkeyup="if (window.event.keyCode == 13) {userLogin('${pageContext.request.contextPath}')}" placeholder="비밀번호 입력">
             <input type="button" id="loginSubmit" class="inputButtonStyle" value="로그인" onclick="userLogin('${pageContext.request.contextPath}')">
             <input type="button" id="signupSubmit" class="inputButtonStyle" value="회원가입" onclick="location.href = '${pageContext.request.contextPath}/user/signup'">
-        </div>
+        </form>
         </c:if>
        
         <c:if test="${userLogin ne null}">
@@ -25,22 +25,12 @@
              <c:if test="${userLogin.userAdminCheck}">
              <input id="adminPage" type="button" class="inputButtonStyle" value="관리페이지">
         	 </c:if>
-             <input id="userBookMark" type="button" class="inputButtonStyle" value="북마크열기" onclick="openBookmarkBar()">
+             <input id="userBookMark" type="button" class="inputButtonStyle" value="북마크열기" onclick="bookmarkButton('${pageContext.request.contextPath}')">
              <input id="logout" type="button" class="inputButtonStyle" value="로그아웃" onclick="userLogout('${pageContext.request.contextPath}')">
         </div>
         </c:if>
     </div>
     <c:if test="${userLogin ne null}">
-    <div id="bookmarkBar">
-    	<div class="userbookmark">
-    		<div class="bookmarkImage">
-    			<img src="${pageContext.request.contextPath}/background/background.jpg" alt="">
-    		</div>
-    		<div class="bookmarkName">북마크이름</div>
-    		<div class="bookmarkDel">
-    			<input type="button" value="북마크삭제">
-    		</div>
-    	</div>
-    </div>
+    <div id="bookmarkBar"></div>
     </c:if>
 </div>

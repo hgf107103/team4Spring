@@ -5,8 +5,15 @@ $(document).ready(() => {
 	
 	getCountryList();
 	getBestArea();
-	
 })
+
+function test() {
+	$('body').css("overflow", "hidden");
+}
+
+function test2() {
+	$('body').css("overflow", "none");
+}
 
 function getCountryList() {
 	$.ajax({
@@ -31,7 +38,6 @@ function getCountryList() {
         }
     });
 }
-
 function getBestArea() {
 	$.ajax({
 		url: `country/list/area/best`,
@@ -55,6 +61,7 @@ function getBestArea() {
 		}
 	});
 }
+
 
 function returnCountryString(country) {
 	let str = `<div id="${country.englishName}" class="country" onclick="window.open('country/${country.countryNumber}', '_blank')">

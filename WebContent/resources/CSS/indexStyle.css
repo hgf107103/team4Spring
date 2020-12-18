@@ -113,7 +113,8 @@ section#mainSection div#searchBox div#bestAreaSection div#bestAreaList div.bestA
     grid-column-end: 2;
     /*grid-column-end: 4;*/
     height:180px;
-    min-width: 180px;
+    width:180px;
+    object-fit: cover;
     cursor: pointer;
     transition: transform ease 0.5s 0s;
 }
@@ -302,7 +303,8 @@ section#mainSection div#allCountryList div.continent div.countryList div.country
     transition: opacity ease 0.5s 0s;
 }
 section#mainSection div#allCountryList div.continent div.countryList div.country img{
-    min-width: 200px;
+    object-fit: cover;
+    width: 200px;
     height: 200px;
     grid-row-start: 1;
     grid-row-end: 4;

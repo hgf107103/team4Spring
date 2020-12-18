@@ -23,11 +23,17 @@
             <h1 id="areaNameTitle"></h1>
             <img id="areaTitleImage" src="" alt="">
         </div>
+        <c:if test="${userLogin ne null}">
         <div id="areaInfo">
             <input type="button" class="areaButton" value="북마크넣기">
             <input type="button" class="areaButton" value="지역추천">
             <input type="button" class="areaButton" value="장소신청">
         </div>
+        </c:if>
+        <c:if test="${userLogin eq null}">
+        <div id="emptyMenu">
+        </div>
+        </c:if>
         <div id="placeSection">
             <div id="placeListOrder">
                 <div id="categoryButtonMenu">
