@@ -75,16 +75,21 @@ function getPlace() {
 		},
 		cache: false,
 		dataType: "json",
+		beforeSend: () => {
+			$('body').css('overflow', 'hidden');
+			$('body').css('touch-action', 'none');
+			$('#placeList').html('');
+		},
 		success: (data) => {
-			console.log(data);
 			if (data.check == "fail") {
 				alert('장소 목록을 불러오는데 실패하였습니다.');
 				console.error('장소 목록을 불러오는데 실패하였습니다.');
 				console.error("에러코드 : ", data.error);
 				return;
 			}
-			if(data.list.length > 0) {
-				$('#placeList').html('');
+			if(data.list.length == 0) {
+				$('#placeList').append('<h2 id="placeEmpty">등록된 장소가 없습니다.</h2>');
+				return;
 			}
 			$.each (data.list, function (index, el) {
 				if(el.placeCheck) {
@@ -95,12 +100,17 @@ function getPlace() {
 		error: (xhr) => {
 			alert('장소 목록을 불러오는데 실패하였습니다.');
 			console.error(xhr.status);
+		},
+		complete: () => {
+
+			$('body').css('overflow', 'auto');
+			$('body').css('touch-action', 'auto');
 		}
 	});
 }
 
 function returnPlaceString(place) {
-	let str = `<div class="place"><div class="placeImage"><img src="${path}/image/place/${areaName}_${place.englishName}.jpg" alt=""></div>
+	let str = `<div class="place"><div class="placeImage"><img src="${path}/image/place/${areaName}/${areaName}_${place.englishName}.jpg" alt=""></div>
 	<p class="placeScore">추천수 : ${place.count}</p><p class="placeName">${place.koreanName}</p><p class="placeCategory">${place.categoryName}</p></div>`;
 	return str;
 	
