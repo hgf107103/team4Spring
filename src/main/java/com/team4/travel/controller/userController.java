@@ -203,12 +203,12 @@ public class userController {
 			temp.setUserName(userName);
 			temp.setUserNickname(userNickname);
 			
-			//int signCheck = mapper.signUser(temp);
+			int signCheck = mapper.signUser(temp);
 			boolean result = true;
 			
-			/*if (signCheck != 1) {
+			if (signCheck != 1) {
 				result = false;
-			}*/
+			}
 			
 			jo.add("result", create.toJsonTree(result));
 			jo.add("check", create.toJsonTree("success"));
