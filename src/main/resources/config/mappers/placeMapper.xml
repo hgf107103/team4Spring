@@ -37,6 +37,6 @@
 		<if test="categoryNumber > 0">
 			AND T1.categoryNumber = #{categoryNumber}
 		</if>
-		GROUP BY T1.placeNumber ORDER BY T1.koreanName DESC;
+		GROUP BY T1.placeNumber ORDER BY T1.koreanName ASC;
     </select>
 </mapper>
