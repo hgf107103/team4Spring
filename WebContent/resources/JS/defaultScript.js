@@ -127,7 +127,7 @@ function alwaysCloseBookmark() {
 
 
 function returnBookmarString(book, path) {
-	let str = `<div class="userbookmark"><div class="bookmarkImage">
+	let str = `<div class="userbookmark"><div class="bookmarkImage" onclick="window.open('${path}/country/${book.countryNumber}/area/${book.areaNumber}', '_blank')">
 	<img src="${path}/image/area/${book.countryName}_${book.englishName}.jpg" alt=""></div>
     <div class="bookmarkName">${book.koreanName}</div><div class="bookmarkDel">
     <input type="button" value="북마크삭제"></div></div>`;

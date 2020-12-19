@@ -34,7 +34,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@SuppressWarnings("finally")
-	@RequestMapping(value = "/asdasdasdasdasd", method = RequestMethod.POST)
+	@RequestMapping(value = "/asdasdasdasdasd", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		try {
@@ -57,17 +57,32 @@ public class HomeController {
 	@Autowired
 	private String SAVE_PATH;
 	
-	@RequestMapping(value = "/wqeqwewqaasdasda", method = RequestMethod.POST)
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
 	public String upload(@RequestParam(value="file1", required = false) MultipartFile mf) {
 		System.out.println(SAVE_PATH);
-		String originalFileName = mf.getOriginalFilename();
-
+		
+		
+		String originalFileName = mf.getOriginalFilename();//파일의원래이름
 		//String root_path = request.getSession().getServletContext().getRealPath("/");
+		
+		
         long fileSize = mf.getSize();
+        System.out.println(mf.getSize());//바이트수
+        
+        
+        System.out.println(mf.getName());//홈에서 보낸 file 태그의 name
+        
+        
+        int index = originalFileName.lastIndexOf('.');
+        String hwak = originalFileName.substring(index + 1);
+        System.out.println(hwak);//확장자
+        
         String safeFile = SAVE_PATH + System.currentTimeMillis() + originalFileName;
-        System.out.println(1);
-        try {
+        System.out.println(safeFile);
+        
+        
+        /*try {
         	System.out.println(1);
         	mf.transferTo(new File(safeFile));
         	System.out.println(1);
@@ -79,7 +94,7 @@ public class HomeController {
         	System.out.println(1);
             e.printStackTrace();
             
-        }
+        }*/
             return "home";
     }
     
