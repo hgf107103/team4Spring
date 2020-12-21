@@ -71,3 +71,9 @@ section#mainSection form#mainForm div.signupSection p.log{
     padding-bottom: 10px;
     transition: color ease 0.5s 0s;
 }
+
+section#mainSection form#mainForm div.g-recaptcha{
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

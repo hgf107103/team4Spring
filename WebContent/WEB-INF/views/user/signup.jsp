@@ -8,6 +8,7 @@
 	<title>방구석여행기 - 회원가입</title>
     <script src="${pageContext.request.contextPath}/JS/jquery-3.5.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/JS/signupScript.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/defaultStyle.css">
@@ -42,6 +43,7 @@
                 <input type="button" id="signupNickCheck" class="signupInputButton" onclick="nickCheck()" value="중복확인">
                 <p id="nickLog" class="log">별명을 입력해주십시오</p>
             </div>
+            <div class="g-recaptcha" data-sitekey="6Ldrnw0aAAAAAOEcPwQhjP8e1TW1uMFD75H_oO8x"></div>
             <div id="submitSection" class="signupSection">
                 <input type="button" id="signupSubmit" class="signupInputButton" onclick="userSignupSubmit()" value="회원가입">
             </div>
