@@ -215,6 +215,12 @@ function userSignupSubmit() {
 		if(pwdCheckBool && regExpPwd($('#signupPWD').val()) && regExpPwd($('#signupPWDCheck').val()) && $('#signupPWD').val() == $('#signupPWDCheck').val() && $('#signupPWDCheck').val() == signUserInfo.pwd) {
 			if(nameCheckBool && regExpName($('#signupName').val()) && signUserInfo.name == $('#signupName').val()) {
 				if(nickCheckBool && regExpNickName($('#signupNick').val()) && signUserInfo.nick == $('#signupNick').val()) {
+					
+					if($("#g-recaptcha-response").val() == '') {
+						alert('회원가입 진행 전에 캡차인증을 해주십시오');
+						return;
+					}
+					
 					$('.signupInputText').attr('disabled', true);
 					$('.signupInputButton').attr('disabled', true);
 					$.ajax({
@@ -225,18 +231,22 @@ function userSignupSubmit() {
 							userID:signUserInfo.id,
 							userPassword:signUserInfo.pwd,
 							userName:signUserInfo.name,
-							userNickname:signUserInfo.nick
+							userNickname:signUserInfo.nick,
+							recode:$("#g-recaptcha-response").val()
 						},
 						dataType: "json",
 						beforeSend: () => {
 							$('body').css('overflow', 'hidden');
+							$('body').css('touch-action', 'none');
 							$('body').append(returnLoadBox());
 						},
 						success: (data) => {
+							if(data.result == "denaiCode") {
+								alert('캡차인증에 실패하였습니다.');
+							}
 							if(data.check != "success") {
-							alert('회원가입에 실패하였습니다.');
-							console.error(data.error);
-							return;
+								alert('회원가입에 실패하였습니다.');
+								console.error(data.error);
 							}
 							if(data.result == true) {
 								alert('회원가입에 성공하였습니다.');
@@ -244,12 +254,16 @@ function userSignupSubmit() {
 								return;
 							}
 							console.log(data);
-							return;
 						},
 						error: (xhr) => {
 							alert('회원가입에 실패하였습니다.');
 							console.error(xhr.status);
 							return;
+						},
+						complete: () => {
+							$('body').css('overflow', 'auto');
+							$('body').css('touch-action', 'auto');
+							$('#loadBox').detach();
 						}
 					});
 					return;

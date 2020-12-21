@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.team4.travel.module.recaptchaModule;
 import com.team4.travel.object.userMapper;
 import com.team4.travel.object.userVO;
 
@@ -177,7 +178,7 @@ public class userController {
 	
 	
 	@PostMapping(value = "/user/signup")
-	public void userSignup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userID") String userID, @RequestParam(value = "userPassword") String userPassword, @RequestParam(value = "userName") String userName, @RequestParam(value = "userNickname") String userNickname, Locale locale, Model model) throws Exception {
+	public void userSignup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userID") String userID, @RequestParam(value = "userPassword") String userPassword, @RequestParam(value = "userName") String userName, @RequestParam(value = "userNickname") String userNickname, @RequestParam(value = "recode") String recode, Locale locale, Model model) throws Exception {
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -187,30 +188,42 @@ public class userController {
 		JsonObject jo = new JsonObject();
 		
 		try {
-			boolean check = false;
-			if(regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,15}$", userID) && regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,15}$", userPassword) && regex("(?!^[0-9]*$)^([°¡-ÆR]{1,8})$", userName) && regex("(?!^[0-0]*$)^([°¡-ÆR||¤¡-¤¾||¤¿-¤Ó||a-z||A-Z||0-9||ª¢-ªó||?~!@#%^&*]{4,15})$", userNickname)) {
-				check = true;
-			}
 			
-			if(!check) {
-				Exception e = new Exception();
-				throw e;
-			}
+			recaptchaModule.setSecretKey("6Ldrnw0aAAAAAKnen1bMB_iaftwT7DiCJCSwDhw-");
+		    String gRecaptchaResponse = recode;
+		    boolean reCheck = recaptchaModule.verify(gRecaptchaResponse);
+		    
+		    if(reCheck == true) {
+		    	boolean check = false;
+				if(regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,15}$", userID) && regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{6,15}$", userPassword) && regex("(?!^[0-9]*$)^([°¡-ÆR]{1,8})$", userName) && regex("(?!^[0-0]*$)^([°¡-ÆR||¤¡-¤¾||¤¿-¤Ó||a-z||A-Z||0-9||ª¢-ªó||?~!@#%^&*]{4,15})$", userNickname)) {
+					check = true;
+				}
+				
+				if(!check) {
+					Exception e = new Exception();
+					throw e;
+				}
+				
+				userVO temp = new userVO();
+				temp.setUserID(userID);
+				temp.setUserPassword(BCrypt.hashpw(userPassword, BCrypt.gensalt(10)));
+				temp.setUserName(userName);
+				temp.setUserNickname(userNickname);
+				
+				int signCheck = mapper.signUser(temp);
+				boolean result = true;
+				
+				if (signCheck != 1) {
+					result = false;
+				}
+				
+				jo.add("result", create.toJsonTree(result));
+		    }
 			
-			userVO temp = new userVO();
-			temp.setUserID(userID);
-			temp.setUserPassword(BCrypt.hashpw(userPassword, BCrypt.gensalt(13)));
-			temp.setUserName(userName);
-			temp.setUserNickname(userNickname);
-			
-			int signCheck = mapper.signUser(temp);
-			boolean result = true;
-			
-			if (signCheck != 1) {
-				result = false;
-			}
-			
-			jo.add("result", create.toJsonTree(result));
+		    else if(reCheck == false) {
+		    	jo.add("result", create.toJsonTree("denaiCode"));
+		    }
+		    
 			jo.add("check", create.toJsonTree("success"));
 			
 			
