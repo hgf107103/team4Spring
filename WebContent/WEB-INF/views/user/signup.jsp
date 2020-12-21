@@ -8,6 +8,7 @@
 	<title>방구석여행기 - 회원가입</title>
     <script src="${pageContext.request.contextPath}/JS/jquery-3.5.1.min.js"></script>
     <script src="${pageContext.request.contextPath}/JS/signupScript.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/defaultStyle.css">
@@ -36,9 +37,9 @@
                 <p id="PWDCheckLog" class="log">비밀번호를 한번 더 입력해주십시오</p>
             </div>
             <div id="NameSection" class="signupSection">
-                <input type="text" id="signupName" class="signupInputText" name="signupName" onkeyup="nameCheck()" placeholder="이름 입력">
+                <input type="text" id="signupName" class="signupInputText" autocomplete="off" name="signupName" onkeyup="nameCheck()" placeholder="이름 입력">
                 <p id="nameLog" class="log">이름을 입력해주십시오</p>
-                <input type="text" id="signupNick" class="signupInputText" onkeyup="if (window.event.keyCode == 13) {nickCheck()}" name="signupNick" placeholder="별명 입력">
+                <input type="text" id="signupNick" class="signupInputText" autocomplete="off" onkeyup="if (window.event.keyCode == 13) {nickCheck()}" name="signupNick" placeholder="별명 입력">
                 <input type="button" id="signupNickCheck" class="signupInputButton" onclick="nickCheck()" value="중복확인">
                 <p id="nickLog" class="log">별명을 입력해주십시오</p>
             </div>
