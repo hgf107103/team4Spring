@@ -48,6 +48,8 @@ section#mainSection div#areaImg img{
     grid-column-end: 4;
     min-width: 1200px;
     width: 100vw;
+    height: 250px;
+    object-fit: cover;
     filter: blur(2px);
 }
 section#mainSection div#areaImg h1{

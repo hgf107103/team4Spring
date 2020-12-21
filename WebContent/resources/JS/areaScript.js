@@ -7,7 +7,6 @@ $(document).ready(()=>{
 	areaNumber = $('#areaNumber').attr('content');
 	getCategory();
 	getArea();
-	getPlace();
 })
 
 function getCategory() {
@@ -60,10 +59,19 @@ function getArea() {
 		error: (xhr) => {
 			alert('정보를 불러오는데 실패하였습니다.');
 			console.error(xhr.status);
+		},
+		complete:() => {
+			getPlace();
 		}
 	});
 }
 
+
+/*let placeFunction = getPlace();
+
+function emptyFunction() {
+	console.log('빈 함수');
+}*/
 
 function getPlace() {
 	$.ajax({
@@ -85,11 +93,9 @@ function getPlace() {
 				alert('장소 목록을 불러오는데 실패하였습니다.');
 				console.error('장소 목록을 불러오는데 실패하였습니다.');
 				console.error("에러코드 : ", data.error);
-				return;
 			}
 			if(data.list.length == 0) {
 				$('#placeList').append('<h2 id="placeEmpty">등록된 장소가 없습니다.</h2>');
-				return;
 			}
 			$.each (data.list, function (index, el) {
 				if(el.placeCheck) {
@@ -102,7 +108,6 @@ function getPlace() {
 			console.error(xhr.status);
 		},
 		complete: () => {
-
 			$('body').css('overflow', 'auto');
 			$('body').css('touch-action', 'auto');
 		}
@@ -116,10 +121,82 @@ function returnPlaceString(place) {
 	
 }
 
+function addBookmark() {
+	
+	$.ajax({
+		url: `${path}/bookmark/add`,
+		type: "post",
+		data: {
+			areaNumber:$('#areaNumber').attr('content')
+		},
+		cache: false,
+		dataType: "json",
+		beforeSend: () => {
+			$('body').css('overflow', 'hidden');
+			$('body').css('touch-action', 'none');
+		},
+		success: (data) => {
+			if (data.check == "fail") {
+				alert('북마크 추가에 실패하였습니다.');
+				console.error('북마크 추가에 실패하였습니다.');
+				console.error("에러코드 : ", data.error);
+			}
+			if (data.result == "true") {
+				alert('북마크에 추가했습니다.');
+				$('#bookmarkBar').html('');
+			}
+			if (data.result == "already") {
+				removeBookmark();
+			}
+		},
+		error: (xhr) => {
+			alert('북마크 추가에 실패하였습니다.');
+			console.error(xhr.status);
+		},
+		complete: () => {
+			$('body').css('overflow', 'auto');
+			$('body').css('touch-action', 'auto');
+		}
+	});
+}
+
+
+
+
+function removeBookmark() {
+	$.ajax({
+		url: `${path}/bookmark/remove`,
+		type: "post",
+		data: {
+			areaNumber:$('#areaNumber').attr('content')
+		},
+		cache: false,
+		dataType: "json",
+		success: (data) => {
+			if (data.check == "fail") {
+				alert('북마크 삭제에 실패하였습니다.');
+				console.error('북마크 삭제에 실패하였습니다.');
+				console.error("에러코드 : ", data.error);
+			}
+			if (data.result == "true") {
+				alert('북마크를 삭제했습니다.');
+				$('#bookmarkBar').html('');
+			}
+			if (data.result == "already") {
+				alert('원래 존재하지않는 북마크입니다.');
+				$('#bookmarkBar').html('');
+			}
+		},
+		error: (xhr) => {
+			alert('북마크 삭제에 실패하였습니다.');
+			console.error(xhr.status);
+		}
+	});
+}
 
 
 function getAgainList() {
 	setTimeout(() => {
-		getPlace()
-		}, 1);
+		getPlace();
+	}, 1);
 }

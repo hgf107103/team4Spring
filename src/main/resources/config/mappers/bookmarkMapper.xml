@@ -8,10 +8,18 @@
 		SELECT T1.areaNumber, T1.countryNumber, T1.englishName, T1.koreanName, T2.englishName AS countryName
 		FROM areaTable AS T1 LEFT JOIN countryTable AS T2 
 		ON T1.countryNumber = T2.countryNumber
-		) AS T4 ON T3.areaNumber = T4.areaNumber WHERE T3.userNumber = #{userNumber}
+		) AS T4 ON T3.areaNumber = T4.areaNumber WHERE T3.userNumber = #{userNumber} ORDER BY T4.koreanName ASC
     </select>
     
     <insert id="bookmarkAdd" parameterType="hashmap">
     	INSERT INTO bookmarkTable VALUES(#{userNumber}, #{areaNumber});
     </insert>
+    
+    <select id="bookmarkCheck" parameterType="hashmap" resultType="com.team4.travel.object.bookmarkVO">
+    	SELECT * FROM bookmarkTable WHERE userNumber = #{userNumber} AND areaNumber = #{areaNumber};
+    </select>
+    
+    <delete id="bookmarkRemove" parameterType="hashmap">
+    	DELETE FROM bookmarkTable WHERE userNumber = #{userNumber} AND areaNumber = #{areaNumber};
+    </delete>
 </mapper>

@@ -23,7 +23,7 @@
         <div id="user">
              <p id="userInfo"><span><c:out value="${userLogin.userNickname}"></c:out></span>님 환영합니다!</p>
              <c:if test="${userLogin.userAdminCheck}">
-             <input id="adminPage" type="button" class="inputButtonStyle" value="관리페이지">
+             <input id="adminPage" type="button" class="inputButtonStyle" onclick="window.open('${pageContext.request.contextPath}/hbj', '_blank');" value="관리페이지">
         	 </c:if>
              <input id="userBookMark" type="button" class="inputButtonStyle" value="북마크열기" onclick="bookmarkButton('${pageContext.request.contextPath}')">
              <input id="logout" type="button" class="inputButtonStyle" value="로그아웃" onclick="userLogout('${pageContext.request.contextPath}')">

@@ -1,37 +1,34 @@
 package com.team4.travel.controller;
 
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.team4.travel.object.areaVO;
-import com.team4.travel.object.placeMapper;
-import com.team4.travel.object.placeVO;
+import com.team4.travel.object.selectMapper;
+import com.team4.travel.object.selectVO;
+import com.team4.travel.object.userVO;
 
 @Controller
-public class placeController {
-	
+public class hbjController {
+
 	@Autowired
-	private placeMapper mapper;
+	selectMapper mapper;
 	
-	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/list")
-	public void getPlaceList(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber, @RequestParam(value = "order") String order, @RequestParam(value = "categoryNumber") int categoryNumber, Locale locale, Model model) throws Exception {
-		
+	@PostMapping(value = {"/hbj/category"})
+	public void getCategoryList(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "title") String title, Locale locale, Model model) throws Exception{
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
@@ -40,26 +37,24 @@ public class placeController {
 		JsonObject jo = new JsonObject();
 		
 		try {
+			HttpSession session = request.getSession();
+			userVO temp = (userVO)session.getAttribute("userLogin");
 			
-			HashMap<String, Integer> map = new HashMap<String, Integer>();
-			map.put("areaNumber", areaNumber);
-			map.put("categoryNumber", categoryNumber);
-			
-			
-			List<placeVO> list = null;
-			
-			
-			if(order.equals("like")) {
-				list = mapper.getPlaceListLike(map);
-			} else if(order.equals("new")) {
-				list = mapper.getPlaceListNew(map);
-			} else if(order.equals("name")) {
-				list = mapper.getPlaceListName(map);
+			if(!temp.isUserAdminCheck()) {
+				Exception ex = new Exception();
+				throw ex;
 			}
-
 			
+			List<selectVO> list = null;
+			if (title.equals("country")) {
+				list = mapper.getContinentList();
+			}
+			else if (title.equals("area")) {
+				list = mapper.getCountryList();
+			}
 			
 			jo.add("list", create.toJsonTree(list));
+
 			jo.add("check", create.toJsonTree("success"));
 			
 			

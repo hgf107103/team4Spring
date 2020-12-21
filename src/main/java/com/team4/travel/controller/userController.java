@@ -206,7 +206,7 @@ public class userController {
 				
 				userVO temp = new userVO();
 				temp.setUserID(userID);
-				temp.setUserPassword(BCrypt.hashpw(userPassword, BCrypt.gensalt(10)));
+				temp.setUserPassword(BCrypt.hashpw(userPassword, BCrypt.gensalt(13)));
 				temp.setUserName(userName);
 				temp.setUserNickname(userNickname);
 				

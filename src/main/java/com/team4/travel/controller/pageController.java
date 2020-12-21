@@ -46,5 +46,8 @@ public class pageController {
 		return "goTravel/area";
 	}
 	
-	
+	@GetMapping("/hbj")
+	public String hanamori(HttpServletRequest request, Locale locale, Model model) {
+		return "hanamori/hanamori";
+	}
 }

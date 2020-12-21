@@ -265,6 +265,16 @@ div#bookmarkBar div.userbookmark div.bookmarkDel input[type=button]:hover{
 	color: rgb(0,0,0);
     transition: border ease 0.3s 0s, color ease 0.3s 0s;
 }
+div#bookmarkBar h4#bookmarkEmpty {
+	font-size: 20px;
+    transition: color ease 0.5s 0s;
+}
+div#bookmarkBar h4#bookmarkEmpty:hover {
+	color: red;
+    transition: color ease 0.5s 0s;
+}
+
+
 
 div#loadBox {
 	height: 100vh;
@@ -296,6 +306,8 @@ div#loadBox p#loadLog {
 	font-size: 20px;
 	font-weight: bold;
 }
+
+
 
 footer {
     grid-row-start: 3;
