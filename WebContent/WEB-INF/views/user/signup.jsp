@@ -43,6 +43,7 @@
                 <input type="button" id="signupNickCheck" class="signupInputButton" onclick="nickCheck()" value="중복확인">
                 <p id="nickLog" class="log">별명을 입력해주십시오</p>
             </div>
+            <div class="g-recaptcha" data-sitekey="6Ldrnw0aAAAAAOEcPwQhjP8e1TW1uMFD75H_oO8x"></div>
             <div id="submitSection" class="signupSection">
                 <input type="button" id="signupSubmit" class="signupInputButton" onclick="userSignupSubmit()" value="회원가입">
             </div>
