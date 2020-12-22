@@ -1,3 +1,13 @@
+let path;
+
+$(document).ready(() => {
+	path = $('#path').attr('content');
+	categorySet("country");
+	categorySet("area");
+	mapSetting("country")
+	mapSetting("area")
+})
+
 class country {
     constructor(number, koreanName, englishName, countryLat, countryLng) {
         this.number = number;
@@ -34,54 +44,54 @@ function imageReset(val, target) {
 	$(`#${val}`).val('');
 }
 
-function menuChacng(title, kor) {
-	$('#screen').html(returnFormString(title, kor));
-	
-	if (countryList.length <= 0 || countryList === 'undefined' || title != "area") {
-		$.ajax({
-			url: `hbj/category`,
-			type: "post",
-			cache: false,
-			dataType: "json",
-			data: {
-				title:title
-			},
-			success: (data) => {
-				if (data.check == "fail" || data.list.length <= 0) {
-					alert('장소 구분 목록을 불러오는데 실패하였습니다.');
-					console.error('장소 구분 목록을 불러오는데 실패하였습니다.');
-					console.error("에러코드 : ", data.error);
-					$('#screen').html('<h1>오류가 발생하였습니다.</h1>');
-					return;
-				}
-				$.each (data.list, function (index, el) {
-	                $(`#${title}list`).append(returnSelectOption(el));
-	                if(title == "area") {
-	                	countryList.push(new country(el.number, el.koreanName, el.englishName, el.countryLat, el.countryLng));
-	                }
-	            });
-			},
-			error: (xhr) => {
-				alert('장소 구분 목록을 불러오는데 실패하였습니다.');
-				console.error(xhr.status);
-				$('#screen').html('<h1>오류가 발생하였습니다.</h1>');
-			}
-		});
-	}
-	else if (countryList.length > 0 || countryList !== 'undefined') {
-		$(`#${title}list`).html('');
-		$.each (countryList, function (index, el) {
-            $(`#${title}list`).append(returnSelectOption(el));
-        });
-	}
-	
+function menuChacng(title) {
+	$(`.formClass`).css('display', 'none');
+	$(`#${title}Form`).css('display', 'block');
+}
+
+function initMap() {}
+
+
+function returnSelectOption(select) {
+	let str = `<option value="${select.number}">${select.koreanName}</option>`;
+	return str;
+}
+
+
+function categorySet(title) {
+	$.ajax({
+		url: `${path}/hbj/category`,
+		type: "post",
+		cache: false,
+		dataType: "json",
+		data: {
+			title:title
+		},
+		success: (data) => {
+			$.each (data.list, function (index, el) {
+                $(`#${title}list`).append(returnSelectOption(el));
+                if(title == "area") {
+                	countryList.push(new country(el.number, el.koreanName, el.englishName, el.countryLat, el.countryLng));
+                }
+            });
+		},
+		error: (xhr) => {
+			alert('장소 구분 목록을 불러오는데 실패하였습니다.');
+			console.error(xhr.status);
+			$('#screen').html('<h1>오류가 발생하였습니다.</h1>');
+		}
+	});
+}
+
+
+function mapSetting(title) {
 	let myLatLng = new google.maps.LatLng(37.512660, 127.270387);
     //지역 좌표값 저장한 다음 불러와서 지도 센터로 찍도록 할것
 	
     let marker = new google.maps.Marker({
             position: myLatLng
         });
-    const map = new google.maps.Map(document.getElementById("maps"), {
+    const map = new google.maps.Map(document.getElementById(`${title}Map`), {
         zoom: 2,
         center: myLatLng,
         fullscreenControl: false,
@@ -108,13 +118,20 @@ function menuChacng(title, kor) {
         $(`#${title}LngText`).val(event.latLng.lng().toFixed(6));
     });
     
-    
+    if(title != 'area') {
+    	return;
+    }
     $('#arealist').change(() => {
+    	if($("#arealist option:selected").val() == 0) {
+    		return;
+    	}
     	marker.setMap(null);
     	let newLatLng;
     	$.each (countryList, function (index, el) {
             if(el.number == $("#arealist option:selected").val()) {
             	newLatLng = new google.maps.LatLng(el.countryLat, el.countryLng);
+            	nowCountry = el;
+            	console.log(nowCountry);
             }
         });
     	map.setCenter(newLatLng);
@@ -124,40 +141,93 @@ function menuChacng(title, kor) {
             position: newLatLng
         });
     	marker.setMap(map);
-    	$(`#${title}LatText`).val(newLatLng.lat());
-        $(`#${title}LngText`).val(newLatLng.lng());
+    	$(`#areaLatText`).val(newLatLng.lat());
+        $(`#areaLngText`).val(newLatLng.lng());
     })
 }
 
-function initMap() {}
 
-function returnFormString(title, kor) {
-	let str = `<form><label><span id="listSpan">${kor}선택 : </span><select id="${title}list"></select></label>
-	<div class="formdiv">
-	<label><span id="listSpan">한국어이름 : </span><input type="text" autocomplete="off" id="${title}KoreanName" class="text" placeholder="한국어이름"></label>
-	<br>
-	<label><span id="listSpan">　영어이름 : </span><input type="text" autocomplete="off" id="${title}EnglishName" class="text" placeholder="영어이름"></label>
-	</div>
-	<div class="formdiv">
-	<img class="imageBox" id="${title}Image"></img>
-	<label><span class="button">사진업로드</span><input type="file" id="${title}ImageSelect" onchange="imageChange(event, this, '${title}Image')" value="" accept="image/jpg, image/png, image/jpeg"></label>
-	<span class="button" onclick="imageReset('${title}ImageSelect', '${title}Image')">사진초기화</span>
-	</div>
-	<div class="formdiv">
-    <div id="maps"></div>
-    <label><span class="latlngLabel">위도</span><input type="text" id="${title}LatText" class="readOnlyText" placeholder="lat" value="0" readonly></label>
-    <br>
-    <label><span class="latlngLabel">경도</span><input type="text" id="${title}LngText" class="readOnlyText" placeholder="lng" value="0" readonly></label>
-    </div>
-    <div class="formdiv">
-    <input class="button" type="button" value="추가하기">
-    </div>
-	</form>`;
-	return str;
+
+function areaAdd() {
+	if($("#arealist option:selected").val() == "0") {
+		alert('나라를 선택해 주십시오');
+		return;
+	}
+	if($("#areaLatText").val() == "0" || $("#areaLngText").val() == "0") {
+		alert('지도에서 지역을 선택해 주십시오');
+		return;
+	}
+	if($(`#areaImageSelect`).val() == '') {
+		alert('이미지를 업로드해주십시오');
+		return;
+	}
+	if($('areaKoreanName').val() == '' || $('areaEnglishName').val() == '') {
+		alert('이름을 입력해주십시오');
+		return;
+	}
+	let formData = new FormData(document.getElementById("areaForm"));
+	formData.append("countryNumber", $("#arealist option:selected").val());
+	formData.append("countryName", nowCountry.englishName);
+	formData.append("koreanName", $('#areaKoreanName').val());
+	formData.append("englishName", $('#areaEnglishName').val());
+	formData.append("areaLat", $("#areaLatText").val());
+	formData.append("areaLng", $("#areaLngText").val());
+	formData.append("upload", document.getElementById('areaImageSelect').files[0]);
+	
+	$.ajax({
+		url: `/${path}/hbj/add/area`,
+		type: "post",
+		cache: false,
+		dataType: "json",
+		processData: false,
+		contextType: false,
+		enctype: "multipart/form-data",
+		data: formData,
+		beforeSend: () => {
+			$('#screen').html('<h1>서버와 통신중입니다.</h1>');
+		},
+		success: (data) => {
+			if (data.check == "false" || data.check == "fail") {
+				alert('지역추가 실패하였습니다.');
+				console.error('지역추가 실패하였습니다.');
+				console.error("에러코드 : ", data.error);
+				$('#screen').html('<h1>오류가 발생하였습니다.</h1>');
+				return;
+			}
+
+			$('#screen').html('<h1>메뉴를 선택해주십시오</h1>');
+		},
+		error: (xhr) => {
+			alert('지역추가 실패하였습니다.');
+			console.error(xhr.status);
+			$('#screen').html('<h1>오류가 발생하였습니다.</h1>');
+		}
+	});
 }
 
 
-function returnSelectOption(select) {
-	let str = `<option value="${select.number}">${select.koreanName}</option>`;
-	return str;
+
+function formSubmit(title) {
+	if($(`#${title}list option:selected`).val() == "0") {
+		alert('나라를 선택해 주십시오');
+		return;
+	}
+	if($(`#${title}LatText`).val() == "0" || $(`#${title}LngText`).val() == "0") {
+		alert('지도에서 지역을 선택해 주십시오');
+		return;
+	}
+	if($(`#${title}ImageSelect`).val() == '') {
+		alert('이미지를 업로드해주십시오');
+		return;
+	}
+	if($(`#${title}KoreanName`).val() == '' || $(`#${title}EnglishName`).val() == '') {
+		alert('이름을 입력해주십시오');
+		return;
+	}
+	let check = confirm('정말로 전송하시겠습니까?');
+	
+	
+	if(check) {
+		$(`#${title}Form`).submit();
+	}
 }

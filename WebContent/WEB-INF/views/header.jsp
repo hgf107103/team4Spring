@@ -7,8 +7,8 @@
 <div id="menuBarOuter">
 	<div id="menuBar">
 		<div id="mainIcon">
-			<img src="${pageContext.request.contextPath}/background/mainIcon.png" onclick="location.href='${pageContext.request.contextPath}'" alt="">
-            <p id="pageTitle" onclick="location.href='${pageContext.request.contextPath}'">방구석여행기</p>
+			<img src="${pageContext.request.contextPath}/background/mainIcon.png" onclick="location.href='${pageContext.request.contextPath}/'" alt="">
+            <p id="pageTitle" onclick="location.href='${pageContext.request.contextPath}/'">방구석여행기</p>
         </div>
         <c:if test="${userLogin eq null}">
          <form id="login">

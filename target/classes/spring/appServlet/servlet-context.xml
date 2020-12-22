@@ -23,7 +23,7 @@
 	
 	<beans:bean id="multipartResolver"
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <beans:property name="maxUploadSize" value="31457280" /> <!--약 10mb 제한 -->
+        <beans:property name="maxUploadSize" value="2097152" /> <!--약 2mb 제한 -->
         <beans:property name="defaultEncoding" value="utf-8" />    <!-- 인코딩 -->
     </beans:bean>
 	

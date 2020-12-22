@@ -9,4 +9,16 @@
     <select id="getCountryList" resultType="com.team4.travel.object.selectVO">
         SELECT countryNumber AS number, koreanName, englishName, countryLat, countryLng FROM countryTable ORDER BY koreanName ASC;
     </select>
+    
+    <insert id="insertCountry" parameterType="com.team4.travel.object.countryVO">
+    	INSERT INTO countryTable(continentNumber, englishName, koreanName, countryLat, countryLng) VALUES (#{continentNumber}, #{englishName}, #{koreanName}, #{countryLat} , #{countryLng});
+    </insert>
+    
+    <insert id="insertArea" parameterType="com.team4.travel.object.areaVO">
+    	INSERT INTO areaTable(countryNumber, englishName, koreanName, areaLat, areaLng) VALUES (#{countryNumber}, #{englishName}, #{koreanName}, #{areaLat} , #{areaLng});
+    </insert>
+    
+    <select id="getCountryName" parameterType="int" resultType="string">
+    	SELECT englishName FROM countryTable WHERE countryNumber = #{countryNumber}
+    </select>
 </mapper>

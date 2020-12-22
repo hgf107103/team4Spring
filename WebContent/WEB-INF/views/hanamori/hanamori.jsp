@@ -34,7 +34,81 @@
 				<div class="menuButton" id="reviewList" onclick="location.href='#reviewList'">리뷰목록</div>
 			</div>
 			<div id="screen">
-				<h1>메뉴를 선택해주십시오</h1>
+				<form id="countryForm" name="countryForm" class="formClass" method="post" action="hbj/add/country" enctype="multipart/form-data">
+				
+				<label><span id="listSpan">대륙선택 : </span>
+				<select id="countrylist" name="number">
+				<option value="0">대륙선택</option>
+				</select>
+				</label>
+				
+				<div class="formdiv">
+				<label><span id="listSpan">한국어이름 : </span>
+				<input type="text" autocomplete="off" id="countryKoreanName" name="koreanName" class="text" placeholder="한국어이름">
+				</label>
+				
+				<br>
+				<label><span id="listSpan">　영어이름 : </span>
+				<input type="text" autocomplete="off" id="countryEnglishName" name="englishName" class="text" placeholder="영어이름">
+				</label>
+				</div>
+				
+				<div class="formdiv">
+				<img class="imageBox" id="countryImage"></img>
+				<label><span class="button">사진업로드</span>
+				<input type="file" id="countryImageSelect" name="uploadImage" onchange="imageChange(event, this, 'countryImage')" value="" accept="image/jpg, image/png, image/jpeg">
+				</label>
+				<span class="button" onclick="imageReset('countryImageSelect', 'countryImage')">사진초기화</span>
+				</div>
+				<div class="formdiv">
+    			<div id="countryMap" class="map"></div>
+    			<label><span class="latlngLabel">위도</span><input type="text" id="countryLatText" name="lat" class="readOnlyText" placeholder="lat" value="0" readonly></label>
+    			<br>
+    			<label><span class="latlngLabel">경도</span><input type="text" id="countryLngText" name="lng" class="readOnlyText" placeholder="lng" value="0" readonly></label>
+    			</div>
+    			<div class="formdiv">
+    			<input class="button" type="button" onclick="formSubmit('country')" value="추가하기">
+    			</div>
+				</form>
+				
+				
+				
+				<form id="areaForm" name="areaForm" class="formClass" method="post" action="hbj/add/area" enctype="multipart/form-data">
+				
+				<label><span id="listSpan">나라선택 : </span>
+				<select id="arealist" name="number">
+				<option value="0">나라선택</option>
+				</select>
+				</label>
+				
+				<div class="formdiv">
+				<label><span id="listSpan">한국어이름 : </span>
+				<input type="text" autocomplete="off" id="areaKoreanName" name="koreanName" class="text" placeholder="한국어이름">
+				</label>
+				
+				<br>
+				<label><span id="listSpan">　영어이름 : </span>
+				<input type="text" autocomplete="off" id="areaEnglishName" name="englishName" class="text" placeholder="영어이름">
+				</label>
+				</div>
+				
+				<div class="formdiv">
+				<img class="imageBox" id="areaImage"></img>
+				<label><span class="button">사진업로드</span>
+				<input type="file" id="areaImageSelect" name="uploadImage" onchange="imageChange(event, this, 'areaImage')" value="" accept="image/jpg, image/png, image/jpeg">
+				</label>
+				<span class="button" onclick="imageReset('areaImageSelect', 'areaImage')">사진초기화</span>
+				</div>
+				<div class="formdiv">
+    			<div id="areaMap" class="map"></div>
+    			<label><span class="latlngLabel">위도</span><input type="text" id="areaLatText" name="lat" class="readOnlyText" placeholder="lat" value="0" readonly></label>
+    			<br>
+    			<label><span class="latlngLabel">경도</span><input type="text" id="areaLngText" name="lng" class="readOnlyText" placeholder="lng" value="0" readonly></label>
+    			</div>
+    			<div class="formdiv">
+    			<input class="button" type="button" onclick="formSubmit('area')" value="추가하기">
+    			</div>
+				</form>
 			</div>
         </c:if>
 	</c:if>
