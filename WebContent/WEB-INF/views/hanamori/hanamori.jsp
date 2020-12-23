@@ -24,6 +24,12 @@
 		</script>
 	</c:if>
 	<c:if test="${userLogin ne null}">
+		<c:if test="${!userLogin.userAdminCheck}">
+		<script type="text/javascript">
+			alert('관리자가 아닌 사람은 들어올 수 없습니다.');
+			self.close();
+		</script>
+		</c:if>
 		<c:if test="${userLogin.userAdminCheck}">
 			<script type="text/javascript">
 				location.href='#';

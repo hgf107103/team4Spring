@@ -15,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -72,5 +75,12 @@ public class placeController {
 		} finally {
 			pw.write(create.toJson(jo));
 		}
+	}
+	
+	
+	
+	@PostMapping("/insert")
+	public void addPlace(MultipartHttpServletRequest mr) {
+		System.out.println(mr.getAttribute("koreanName"));
 	}
 }

@@ -50,4 +50,11 @@ public class pageController {
 	public String hanamori(HttpServletRequest request, Locale locale, Model model) {
 		return "hanamori/hanamori";
 	}
+	
+	@GetMapping("/country/{countryNumber}/area/{areaNumber}/place/add")
+	public String addPlace(HttpServletRequest request, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber, Locale locale, Model model) {
+		model.addAttribute("countryNumber", countryNumber);
+		model.addAttribute("areaNumber", areaNumber);
+		return "goTravel/newPlace";
+	}
 }

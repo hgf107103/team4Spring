@@ -26,14 +26,14 @@ function imageChange(event, val, target) {
     filepoint = $(val).val().substring(pathpoint+1,$(val).val().length);
     filetype = filepoint.toLowerCase();
     
-    if(filetype=='png' || filetype=='jpeg' || filetype=='jpg') {
+    if(filetype=='jpg') {
         let reader = new FileReader();
         reader.onload = function(event) {
             $(`#${target}`).attr('src', event.target.result);
         };
         reader.readAsDataURL(event.target.files[0]);
     } else {
-        alert('jpg, jpeg, png 파일만 선택할 수 있습니다.');
+        alert('jpg 파일만 선택할 수 있습니다.');
         $(`#${target}Select`).val('');
         return;
     }
