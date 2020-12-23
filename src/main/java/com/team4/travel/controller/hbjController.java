@@ -230,4 +230,9 @@ public class hbjController {
 			
 		}
 	}
+	
+	
+	public void nameCheck() throws Exception {
+		
+	}
 }
