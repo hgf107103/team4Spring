@@ -8,4 +8,5 @@ public interface placeMapper {
 	public List<placeVO> getPlaceListLike(HashMap<String, Integer> opction);
 	public List<placeVO> getPlaceListNew(HashMap<String, Integer> opction);
 	public List<placeVO> getPlaceListName(HashMap<String, Integer> opction);
+	public int placeNameCheck(String name);
 }

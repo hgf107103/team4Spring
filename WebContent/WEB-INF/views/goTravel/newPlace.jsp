@@ -26,7 +26,7 @@
 	</c:if>
     <jsp:include page="../header.jsp"></jsp:include>
     <section id="mainSection">
-        <form id="addPlaceForm">
+        <form id="addPlaceForm" action="${areaNumber}/place/add" method="post">
         	<input type="hidden" id="countryNumber" name="countryNumber" value="${countryNumber}">
         	<input type="hidden" id="areaNumber" name="areaNumber" value="${areaNumber}">
             <h1 id="addPlaceTitle">새 장소 추가하기</h1>
@@ -37,6 +37,7 @@
             </div>
             
             <div id="placeCategory" class="placeSection">
+                <p id="placeCategoryLog" class="placeLog">카테고리를 선택해주십시오</p>
             	<select id="placeCategorySelect" name="category">
             		<option value="0">카테고리 선택</option>
             	</select>
@@ -60,14 +61,14 @@
             
             <div id="placeAddress" class="placeSection">
                 <div id="maps"></div>
-                <label><span class="latlngLabel">위도</span><input type="text" id="placeLatText" class="placeReadOnlyText" placeholder="lat" value="0" readonly></label>
+                <label><span class="latlngLabel">위도</span><input type="text" id="placeLatText" name="placeLat" class="placeReadOnlyText" placeholder="lat" value="0" readonly></label>
                 <br>
-                <label><span class="latlngLabel">경도</span><input type="text" id="placeLngText" class="placeReadOnlyText" placeholder="lng" value="0" readonly></label>
+                <label><span class="latlngLabel">경도</span><input type="text" id="placeLngText" name="placeLng" class="placeReadOnlyText" placeholder="lng" value="0" readonly></label>
                 <p id="placeAddressLog" class="placeLog">지역을 선택해주십시오</p>
             </div>
             
             <div id="placeSubmit" class="placeSection">
-                <input type="button" class="placeButton" onclick="testSend()" value="신청하기">
+                <input type="button" class="placeButton" onclick="submitSend()" value="신청하기">
             </div>
             
         </form>

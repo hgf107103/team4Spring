@@ -39,4 +39,8 @@
 		</if>
 		GROUP BY T1.placeNumber ORDER BY T1.koreanName ASC;
     </select>
+    
+    <select id="placeNameCheck" parameterType="string" resultType="int">
+    	SELECT COUNT(*) FROM placeTable WHERE koreanName LIKE CONCAT('%',#{name},'%') OR englishName LIKE CONCAT('%',#{name},'%')
+    </select>
 </mapper>

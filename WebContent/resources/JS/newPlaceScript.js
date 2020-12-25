@@ -10,11 +10,20 @@ let countryNumber;
 let areaNumber;
 let path;
 
-
+let formCheck = {
+		categoryNumber:0,
+		koreanName:"",
+		englishName:"",
+		imageFile:false,
+		mapTouch:false,
+		lat:0,
+		lng:0
+}
 
 $(document).ready(() => {
 	path = $('#path').attr('content');
 	getInfomation();
+	formCheck.toString();
 })
 
 function imageChange(event) {
@@ -29,9 +38,11 @@ function imageChange(event) {
             $('#placeImage').attr('src', event.target.result);
         };
         reader.readAsDataURL(event.target.files[0]);
+        formCheck.imageFile = true;
     } else {
-        alert('jpg, jpeg, png 파일만 선택할 수 있습니다.');
+        alert('jpg 파일만 선택할 수 있습니다.');
         $('#placeImageSelect').val('');
+        formCheck.imageFile = false;
         return;
     }
 }
@@ -44,7 +55,7 @@ function imageReset() {
 "use strict";
 
 function initMap() { 
-    
+    console.log('aaa');
 }
 
 function getInfomation() {
@@ -95,6 +106,9 @@ function getInfomation() {
 		        map.panTo(marker.getPosition());
 		        $('#placeLatText').val(event.latLng.lat().toFixed(6));
 		        $('#placeLngText').val(event.latLng.lng().toFixed(6));
+		        formCheck.mapTouch = true;
+		        formCheck.lat = event.latLng.lat().toFixed(6);
+		        formCheck.lng = event.latLng.lng().toFixed(6);
 		    });
 		}
 	});
@@ -126,26 +140,48 @@ function returnCategoryString(select) {
 
 
 
-function testSend() {
+function submitSend() {
+	alert('작성중');
+}
+
+function regExpKoreanName(str) {
+    const idReg = new RegExp('^(?=.*[가-힣0-9])[가-힣0-9]{2,20}$', 'g');
+    return idReg.test(str);
+}
+function regExpEnglishName(str) {
+    const idReg = new RegExp('^(?=.*[A-Za-z0-9])[A-Za-z0-9]{2,20}$', 'g');
+    return idReg.test(str);
+}
+
+function nameCheck() {
+	
+	
+	
 	$.ajax({
-		url: `${path}/insert`,
+		url: `name`,
 		type: "post",
 		cache: false,
-		processData: false,
-		contextType: false,
-		enctype: "multipart/form-data",
-		data: {
-			koreanName:$('#placeKoreanText').val(),
-			englishName:$('#placeEnglishText').val(),
-			categoryName:$("#placeCategorySelect option:selected").val(),
-			imageFile:document.getElementById('placeImageSelect').files[0]
-		},
 		dataType: "json",
+		data: {
+			koreanName: "경복궁",
+			englishName: "k"
+		},
+		beforeSend: () => {
+			$('body').css('overflow', 'hidden');
+			$('body').css('touch-action', 'none');
+			$('body').append(returnLoadBox('이름 체크중입니다.'));
+		},
 		success: (data) => {
-			console.log(data);
+			console.log(data)
 		},
 		error: (xhr) => {
+			alert('이름 중복체크에 실패하였습니다.');
 			console.error(xhr.status);
 		}
 	});
+}
+
+function returnLoadBox(text) {
+	let str = `<div id="loadBox"><p id="loadLog">${text}</p></div>`;
+	return str;
 }

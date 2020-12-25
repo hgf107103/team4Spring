@@ -79,8 +79,57 @@ public class placeController {
 	
 	
 	
-	@PostMapping("/insert")
-	public void addPlace(MultipartHttpServletRequest mr) {
-		System.out.println(mr.getAttribute("koreanName"));
+	@PostMapping("/country/{countryNumber}/area/{areaNumber}/place/add")
+	public void addPlace(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "category") int categoryNumber, @RequestParam(value = "koreanName") String koreanName, @RequestParam(value = "englishName") String englishName, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, @RequestParam(value = "placeLat") double placeLat, @RequestParam(value = "placeLng") double placeLng) throws Exception {
+	}
+	
+	@PostMapping("/country/{countryNumber}/area/{areaNumber}/place/name")
+	public void addPlaceNameCheck(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "koreanName") String koreanName, @RequestParam(value = "englishName") String englishName) throws Exception {
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		
+		try {
+
+			String result = "false";
+			
+			String kparam = "%" + koreanName + "%";
+			String eparam = "%" + englishName + "%";
+			
+			int kcheck = mapper.placeNameCheck(kparam);
+			int echeck = mapper.placeNameCheck(eparam);
+			
+			if(kcheck == 0 && echeck == 0) {
+				result = "true";
+			}
+			else if(kcheck == 1 && echeck == 0) {
+				result = "kerror";
+			}
+			else if(kcheck == 0 && echeck == 1) {
+				result = "eerror";
+			}
+			else if(kcheck == 1 && echeck == 1) {
+				result = "aerror";
+			}
+			
+			jo.add("result", create.toJsonTree(result));
+			jo.add("check", create.toJsonTree("success"));
+			
+		} catch (Exception e) {
+			
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			
+			pw.write(create.toJson(jo));
+			
+		}
+		
 	}
 }
