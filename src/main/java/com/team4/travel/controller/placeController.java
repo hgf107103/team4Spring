@@ -1,5 +1,6 @@
 package com.team4.travel.controller;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +24,11 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.team4.travel.object.areaMapper;
 import com.team4.travel.object.areaVO;
 import com.team4.travel.object.placeMapper;
 import com.team4.travel.object.placeVO;
+import com.team4.travel.object.userVO;
 
 @Controller
 public class placeController {
@@ -77,10 +81,93 @@ public class placeController {
 		}
 	}
 	
-	
+	@Autowired
+	private String SAVE_PATH;
 	
 	@PostMapping("/country/{countryNumber}/area/{areaNumber}/place/add")
-	public void addPlace(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "category") int categoryNumber, @RequestParam(value = "koreanName") String koreanName, @RequestParam(value = "englishName") String englishName, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, @RequestParam(value = "placeLat") double placeLat, @RequestParam(value = "placeLng") double placeLng) throws Exception {
+	public void addPlace(HttpServletRequest request, HttpServletResponse response,@PathVariable(value = "areaNumber") int areaNumber, @RequestParam(value = "category") int categoryNumber, @RequestParam(value = "koreanName") String koreanName, @RequestParam(value = "englishName") String englishName, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, @RequestParam(value = "placeLat") double placeLat, @RequestParam(value = "placeLng") double placeLng) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html");
+		PrintWriter pw = response.getWriter();
+		
+		try {
+			HttpSession session = request.getSession();
+			userVO temp = (userVO)session.getAttribute("userLogin");
+			
+			if(temp == null) {
+				Exception ex = new Exception();
+				throw ex;
+			}
+			
+			if(imageFile.getSize() > 2097152) {
+				
+				pw.write("<script>alert('이미지 용랑이 너무 큽니다.'); location.href='" +request.getContextPath() + "/hbj'</script>");
+				
+			} else {
+				
+				
+				String areaName = mapper.getAreaName(areaNumber);
+				
+				
+				
+				String originalFileName = imageFile.getOriginalFilename();
+				int index = originalFileName.lastIndexOf('.');
+		        String hwak = originalFileName.substring(index);
+				String fileName = areaName + "_" + englishName + hwak;
+				String savePath = SAVE_PATH + "/place/" + areaName + "/" + fileName;
+				
+				File pathCheck = new File(SAVE_PATH + "/place/" + areaName + "/");
+				
+				if (!pathCheck.exists()) {
+					try {
+						pathCheck.mkdir();
+					} catch (Exception e) {
+						e.printStackTrace();
+						return;
+					}
+				}
+				
+				imageFile.transferTo(new File(savePath));
+				
+				placeVO placeTemp = new placeVO();
+				placeTemp.setUserNumber(temp.getUserNumber());
+				placeTemp.setAreaNumber(areaNumber);
+				placeTemp.setCategoryNumber(categoryNumber);
+				placeTemp.setEnglishName(englishName);
+				placeTemp.setKoreanName(koreanName);
+				placeTemp.setPlaceLat(placeLat);
+				placeTemp.setPlaceLng(placeLng);
+				
+				
+				int insertCheck = mapper.addNewPlace(placeTemp);
+				
+				if(insertCheck == 1) {
+					pw.write("<script>alert('성공했습니다.'); location.href='" +request.getContextPath() + "/'</script>");
+				} else if(insertCheck != 1) {
+					pw.write("<script>alert('실패했습니다.'); location.href='" +request.getContextPath() + "/'</script>");
+					File tempFile = new File(savePath);
+					
+					if( tempFile.exists() ){ 
+						
+						if(tempFile.delete()){
+							System.out.println("파일삭제 성공"); 
+						} else { 
+							System.out.println("파일삭제 실패"); 
+						} 
+						
+					} else {
+						System.out.println("파일이 존재하지 않습니다."); 
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			pw.write("<script>alert('오류가 발생했습니다.'); location.href='" +request.getContextPath() + "/'</script>");
+		}
 	}
 	
 	@PostMapping("/country/{countryNumber}/area/{areaNumber}/place/name")
@@ -97,11 +184,8 @@ public class placeController {
 
 			String result = "false";
 			
-			String kparam = "%" + koreanName + "%";
-			String eparam = "%" + englishName + "%";
-			
-			int kcheck = mapper.placeNameCheck(kparam);
-			int echeck = mapper.placeNameCheck(eparam);
+			int kcheck = mapper.placeNameCheck(koreanName);
+			int echeck = mapper.placeNameCheck(englishName);
 			
 			if(kcheck == 0 && echeck == 0) {
 				result = "true";

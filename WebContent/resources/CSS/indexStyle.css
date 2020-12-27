@@ -190,15 +190,24 @@ section#mainSection div#searchBox div#searchSection div#searchResultBox::-webkit
 }
 section#mainSection div#searchBox div#searchSection div#searchResultBox p.searchResult {
     display: inline-block;
-    margin: 2px auto;
+    margin: 5px auto;
     text-align: center;
     cursor: pointer;
-    color: rgba(0,0,0,0.4);
-    font-size: 18px;
+    color: rgba(0,0,0,0.6);
+    font-size: 19px;
+    font-weight: bold;
     transition: color ease 0.3s 0s;
 }
 section#mainSection div#searchBox div#searchSection div#searchResultBox p.searchResult:hover {
     color: rgba(0,0,0,1);
+    transition: color ease 0.3s 0s;
+}
+section#mainSection div#searchBox div#searchSection div#searchResultBox p#searchEmpty {
+    color: rgba(0,0,0,0.6);
+    transition: color ease 0.3s 0s;
+}
+section#mainSection div#searchBox div#searchSection div#searchResultBox p#searchEmpty:hover {
+    color: rgba(255,50,50,1);
     transition: color ease 0.3s 0s;
 }
 /*寃��깋 李�*/

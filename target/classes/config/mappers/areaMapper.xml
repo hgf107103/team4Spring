@@ -23,4 +23,8 @@
 		ORDER BY T3.count DESC LIMIT 3;
     </select>
     
+    <select id="getSearch" parameterType="string" resultType="com.team4.travel.object.areaVO">
+    	SELECT * FROM areaTable WHERE koreanName LIKE CONCAT('%', #{name}, '%') OR englishName LIKE CONCAT('%', #{name}, '%')
+    </select>
+    
 </mapper>

@@ -24,12 +24,8 @@
                 </div>
             </div>
             <div id="searchSection">
-                <input type="text" id="searchText" placeholder="검색어 입력">
+                <input type="text" id="searchText" placeholder="검색어 입력" autocomplete="off" onkeyup="if (window.event.keyCode == 13)  {areaSearch()}">
                 <div id="searchResultBox">
-                    <p class="searchResult">검색어 샘플</p>
-                    <p class="searchResult">검색어 샘플</p>
-                    <p class="searchResult">검색어 샘플</p>
-                    <p class="searchResult">검색어 샘플</p>
                 </div>
             </div>
         </div>

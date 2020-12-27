@@ -41,6 +41,14 @@
     </select>
     
     <select id="placeNameCheck" parameterType="string" resultType="int">
-    	SELECT COUNT(*) FROM placeTable WHERE koreanName LIKE CONCAT('%',#{name},'%') OR englishName LIKE CONCAT('%',#{name},'%')
+    	SELECT COUNT(*) FROM placeTable WHERE koreanName LIKE #{name} OR englishName LIKE #{name}
     </select>
+    
+    <select id="getAreaName" parameterType="int" resultType="string">
+    	SELECT englishName FROM areaTable WHERE areaNumber = #{areaNumber}
+    </select>
+    
+    <insert id="addNewPlace" parameterType="com.team4.travel.object.placeVO">
+    	INSERT INTO placeTable(userNumber, areaNumber, categoryNumber, englishName, koreanName, placeLat, placeLng, placeCheck) VALUES(#{userNumber}, #{areaNumber}, #{categoryNumber}, #{englishName}, #{koreanName}, #{placeLat}, #{placeLng}, 1)
+    </insert>
 </mapper>

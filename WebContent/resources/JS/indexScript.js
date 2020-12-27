@@ -74,3 +74,63 @@ function returnBestAreaString(area) {
 	<img class="bestAreaImg" src="${path}/image/area/${area.countryName}_${area.englishName}.jpg" alt=""></div>`;
 	return str;
 }
+
+
+function areaSearch() {
+	if($('#searchText').val() == '') {
+		$('#searchResultBox').html('<p class="searchResult" id="searchEmpty">검색어를 입력하세요</p>');
+		return;
+	}
+	
+	$.ajax({
+		url: `${path}/search`,
+		type: "post",
+		cache: false,
+		data: {
+			searchText: $('#searchText').val()
+		},
+		beforeSend: () => {
+			$('#searchText').attr('readonly', true);
+			$('#searchResultBox').html('');
+		},
+		dataType: "json",
+		success: (data) => {
+			console.log(data)
+			if (data.check == "fail" || data.list.length < 0) {
+				alert('검색에 실패하였습니다.');
+				console.error('검색에 실패하였습니다.');
+				console.error("에러코드 : ", data.error);
+				return;
+			}
+			
+			if (data.list.length == 0) {
+				$('#searchResultBox').append('<p class="searchResult" id="searchEmpty">검색결과가 없습니다.</p>');
+				return;
+			}
+			
+			$.each (data.list, function (index, el) {
+                $('#searchResultBox').append(getSearchString(el));
+            });
+		},
+		error: (xhr) => {
+			alert('검색에 실패하였습니다.');
+			console.error(xhr.status);
+		},
+		complete: () => {
+			$('#searchText').attr('readonly', false);
+			$('#searchText').val('');
+		}
+	});
+}
+
+
+
+function getSearchString(search) {
+	let str = `<p class="searchResult" onclick="searchMove(${search.countryNumber}, ${search.areaNumber})">${search.koreanName}</p>`;
+	return str;
+}
+
+
+function searchMove(countryNumber, areaNumber) {
+	window.open(`${path}/country/${countryNumber}/area/${areaNumber}`, '_blank');
+}

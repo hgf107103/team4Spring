@@ -26,7 +26,7 @@
         <c:if test="${userLogin ne null}">
         <div id="areaInfo">
             <input type="button" class="areaButton" value="북마크" onclick="addBookmark()">
-            <input type="button" class="areaButton" value="장소신청">
+            <input type="button" class="areaButton" value="장소신청" onclick="location.href='${areaNumber}/place/add'">
         </div>
         </c:if>
         <c:if test="${userLogin eq null}">

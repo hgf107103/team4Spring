@@ -96,7 +96,7 @@ function getInfomation() {
 
 		    google.maps.event.addListener(map,'click',function(event) {
 		        marker.setMap(null);
-		        console.log(event.latLng.lat() + '' + event.latLng.lng());
+		        console.log(event.latLng.lat() + ' : ' + event.latLng.lng());
 		        myLatLng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
 
 		        marker = new google.maps.Marker({
@@ -126,6 +126,11 @@ function getInfomation() {
 		error: (xhr) => {
 			alert('지역 정보를 불러오는데 실패하였습니다.');
 			console.error(xhr.status);
+		},
+		complete: () => {
+			$(`#placeCategorySelect`).change(() => {
+				formCheck.categoryNumber = Number($(`#placeCategorySelect option:selected`).val());
+			})
 		}
 	});
 }
@@ -141,20 +146,68 @@ function returnCategoryString(select) {
 
 
 function submitSend() {
-	alert('작성중');
+	if(formCheck.categoryNumber == $(`#placeCategorySelect option:selected`).val()) {
+		if(formCheck.koreanName == $('#placeKoreanText').val()) {
+			if(formCheck.englishName == $('#placeEnglishText').val()) {
+				if(formCheck.imageFile) {
+					if(formCheck.mapTouch && formCheck.lat == $('#placeLatText').val() && formCheck.lng == $('#placeLngText').val()) {
+						$('#addPlaceForm').submit();
+						return;
+					}
+					alert('주소가 잘못되었습니다.');
+					return;
+				}
+				alert('이미지가 잘못되었습니다.');
+				return;
+			}
+			alert('영문이름이 잘못되었습니다.');
+			return;
+		}
+		alert('한글이름이 잘못되었습니다.');
+		return;
+	}
+	alert('카테고리가 잘못되었습니다.');
+	return;
 }
 
 function regExpKoreanName(str) {
-    const idReg = new RegExp('^(?=.*[가-힣0-9])[가-힣0-9]{2,20}$', 'g');
+    const idReg = new RegExp('^(?=.*[가-힣0-9])[가-힣0-9]{1,30}$', 'g');
     return idReg.test(str);
 }
 function regExpEnglishName(str) {
-    const idReg = new RegExp('^(?=.*[A-Za-z0-9])[A-Za-z0-9]{2,20}$', 'g');
+    const idReg = new RegExp('^(?=.*[A-Za-z0-9])[A-Za-z0-9]{1,30}$', 'g');
     return idReg.test(str);
 }
 
 function nameCheck() {
 	
+	if($('#placeKoreanText').val() == '' && $('#placeEnglishText').val() == '') {
+		$('#placeNameLog').text('이름을 입력해 주십시오');
+		$('#placeNameLog').css('color', 'rgb(255,50,50)');
+		return;
+	}
+	if($('#placeKoreanText').val() == '') {
+		$('#placeNameLog').text('한글 이름을 입력해 주십시오');
+		$('#placeNameLog').css('color', 'rgb(255,50,50)');
+		return;
+	}
+	if($('#placeEnglishText').val() == '') {
+		$('#placeNameLog').text('영문 이름을 입력해 주십시오');
+		$('#placeNameLog').css('color', 'rgb(255,50,50)');
+		return;
+	}
+	
+	
+	if(!regExpKoreanName($('#placeKoreanText').val())) {
+		$('#placeNameLog').text('한글 이름은 한글과 숫자만 입력 할 수 있습니다.');
+		$('#placeNameLog').css('color', 'rgb(255,50,50)');
+		return;
+	}
+	if(!regExpEnglishName($('#placeEnglishText').val())) {
+		$('#placeNameLog').text('영문 이름은 영문과 숫자만 입력 할 수 있습니다.');
+		$('#placeNameLog').css('color', 'rgb(255,50,50)');
+		return;
+	}
 	
 	
 	$.ajax({
@@ -163,8 +216,8 @@ function nameCheck() {
 		cache: false,
 		dataType: "json",
 		data: {
-			koreanName: "경복궁",
-			englishName: "k"
+			koreanName: $('#placeKoreanText').val(),
+			englishName: $('#placeEnglishText').val()
 		},
 		beforeSend: () => {
 			$('body').css('overflow', 'hidden');
@@ -172,16 +225,87 @@ function nameCheck() {
 			$('body').append(returnLoadBox('이름 체크중입니다.'));
 		},
 		success: (data) => {
-			console.log(data)
+			if(data.check != 'success') {
+				alert('이름 중복체크에서 오류가 발생하였습니다.');
+				return;
+			}
+			if(data.result == "true") {
+				$('#placeNameLog').text('사용이 가능한 이름입니다.');
+				$('#placeNameLog').css('color', 'rgb(50,50,255)');
+				
+				$('#placeKoreanText').attr('readonly', true);
+				$('#placeEnglishText').attr('readonly', true);
+				
+				formCheck.koreanName = $('#placeKoreanText').val();
+				formCheck.englishName = $('#placeEnglishText').val();
+				
+				$('#placeNameCheck').val('확인완료');
+			    $('#placeNameCheck').attr('disabled', true);
+				return;
+			}
+			if(data.result == "kerror") {
+				$('#placeNameLog').text('한글이름이 중복됩니다.');
+				$('#placeNameLog').css('color', 'rgb(255,50,50)');
+
+				$('#placeKoreanText').attr('readonly', false);
+				$('#placeEnglishText').attr('readonly', true);
+
+				formCheck.koreanName = '';
+				formCheck.englishName = $('#placeEnglishText').val();
+				return;
+			}
+			if(data.result == "eerror") {
+				$('#placeNameLog').text('영문이름이 중복됩니다.');
+				$('#placeNameLog').css('color', 'rgb(255,50,50)');
+
+				$('#placeKoreanText').attr('readonly', true);
+				$('#placeEnglishText').attr('readonly', false);
+
+				formCheck.koreanName = $('#placeKoreanText').val();
+				formCheck.englishName = '';
+				return;
+			}
+			if(data.result == "aerror") {
+				$('#placeNameLog').text('두 이름이 모두 중복됩니다.');
+				$('#placeNameLog').css('color', 'rgb(255,50,50)');
+				
+				$('#placeKoreanText').attr('readonly', false);
+				$('#placeEnglishText').attr('readonly', false);
+
+				formCheck.koreanName = '';
+				formCheck.englishName = '';
+				return;
+			}
 		},
 		error: (xhr) => {
 			alert('이름 중복체크에 실패하였습니다.');
 			console.error(xhr.status);
+		}, 
+		complete: () => {
+			$('body').css('overflow', 'auto');
+			$('body').css('touch-action', 'auto');
+			$('#loadBox').detach();
+			
+			if($('#placeKoreanText').attr('readonly') == 'readonly') {
+				$('#placeKoreanText').css('background-color', 'rgba(0,0,0,0.2)');
+			} else {
+				$('#placeKoreanText').css('background-color', 'rgba(255,255,255,0.1)');
+			}
+			if($('#placeEnglishText').attr('readonly') == 'readonly') {
+				$('#placeEnglishText').css('background-color', 'rgba(0,0,0,0.2)');
+			} else {
+				$('#placeEnglishText').css('background-color', 'rgba(255,255,255,0.1)');
+			}
 		}
 	});
 }
 
 function returnLoadBox(text) {
 	let str = `<div id="loadBox"><p id="loadLog">${text}</p></div>`;
+	return str;
+}
+
+function returnSubmitBox() {
+	let str = `<div id="loadBox"><img id="loadImage" src="${path}/image/sys/loading.gif"><p id="loadLog">새로운 여행지를 제시하는 중...</p></div>`;
 	return str;
 }
