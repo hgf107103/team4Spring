@@ -30,7 +30,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- <error-page>
+	<error-page>
       	<error-code>400</error-code>
       	<location>/error</location>
   	</error-page>
@@ -69,5 +69,5 @@
   	<error-page>
       	<error-code>508</error-code>
       	<location>/error</location>
-  	</error-page> -->
+  	</error-page>
 </web-app>
