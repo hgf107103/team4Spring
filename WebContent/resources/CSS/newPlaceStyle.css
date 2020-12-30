@@ -135,6 +135,7 @@ section#mainSection form#addPlaceForm div.placeSection p.placeLog{
     font-size: 17px;
     padding: 3px 0px;
     padding-left: 5px;
+    width: 400px;
     transition: color ease 0.5s 0s;
 }
 

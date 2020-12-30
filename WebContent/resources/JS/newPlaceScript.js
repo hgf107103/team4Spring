@@ -171,7 +171,7 @@ function submitSend() {
 }
 
 function regExpKoreanName(str) {
-    const idReg = new RegExp('^(?=.*[가-힣0-9])[가-힣0-9]{1,30}$', 'g');
+    const idReg = new RegExp('^(?=.*[가-힣0-9])[가-힣0-9 ]{1,30}$', 'g');
     return idReg.test(str);
 }
 function regExpEnglishName(str) {
@@ -204,7 +204,7 @@ function nameCheck() {
 		return;
 	}
 	if(!regExpEnglishName($('#placeEnglishText').val())) {
-		$('#placeNameLog').text('영문 이름은 영문과 숫자만 입력 할 수 있습니다.');
+		$('#placeNameLog').text('영문 이름은 영문과 숫자만 입력 할 수 있습니다. 영어는 띄어쓰기를 할 수 없습니다.');
 		$('#placeNameLog').css('color', 'rgb(255,50,50)');
 		return;
 	}

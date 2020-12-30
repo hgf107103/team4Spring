@@ -44,9 +44,9 @@
             </div>
             
             <div id="placeName" class="placeSection">
-                <input type="text" id="placeKoreanText" name="koreanName" autocomplete="off" class="placeText" placeholder="한글이름 입력">
+                <input type="text" id="placeKoreanText" name="koreanName" autocomplete="off" class="placeText" placeholder="한글이름 입력" maxlength="20">
                 <br>
-                <input type="text" id="placeEnglishText" name="englishName" autocomplete="off" class="placeText" placeholder="영문이름 입력">
+                <input type="text" id="placeEnglishText" name="englishName" autocomplete="off" class="placeText" placeholder="영문이름 입력" maxlength="20">
                 <br>
                 <input type="button" id="placeNameCheck" class="placeButton" onclick="nameCheck()" value="중복확인">
                 <p id="placeNameLog" class="placeLog">장소이름을 입력해주십시오</p>

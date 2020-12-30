@@ -266,12 +266,14 @@ section#mainSection div#placeSection div#placeList div.place p.placeScore{
     grid-row-end: 3;
     grid-column-start: 1;
     grid-column-end: 2;
+    width: 220px;
 }
 section#mainSection div#placeSection div#placeList div.place p.placeName{
     grid-row-start: 3;
     grid-row-end: 4;
     grid-column-start: 1;
     grid-column-end: 2;
+    width: 220px;
     font-size: 22px;
     font-weight: bold;
     color: rgba(0,0,0,0.6);

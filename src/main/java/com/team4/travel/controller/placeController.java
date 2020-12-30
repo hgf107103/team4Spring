@@ -85,7 +85,7 @@ public class placeController {
 	private String SAVE_PATH;
 	
 	@PostMapping("/country/{countryNumber}/area/{areaNumber}/place/add")
-	public void addPlace(HttpServletRequest request, HttpServletResponse response,@PathVariable(value = "areaNumber") int areaNumber, @RequestParam(value = "category") int categoryNumber, @RequestParam(value = "koreanName") String koreanName, @RequestParam(value = "englishName") String englishName, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, @RequestParam(value = "placeLat") double placeLat, @RequestParam(value = "placeLng") double placeLng) throws Exception {
+	public void addPlace(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber, @RequestParam(value = "category") int categoryNumber, @RequestParam(value = "koreanName") String koreanName, @RequestParam(value = "englishName") String englishName, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, @RequestParam(value = "placeLat") double placeLat, @RequestParam(value = "placeLng") double placeLng) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");
@@ -102,7 +102,7 @@ public class placeController {
 			
 			if(imageFile.getSize() > 2097152) {
 				
-				pw.write("<script>alert('이미지 용랑이 너무 큽니다.'); location.href='" +request.getContextPath() + "/hbj'</script>");
+				pw.write("<script>alert('이미지 용랑이 너무 큽니다.'); location.href='" +request.getContextPath() + "/country/" + countryNumber + "/area/" + areaNumber + "'</script>");
 				
 			} else {
 				
@@ -143,9 +143,9 @@ public class placeController {
 				int insertCheck = mapper.addNewPlace(placeTemp);
 				
 				if(insertCheck == 1) {
-					pw.write("<script>alert('성공했습니다.'); location.href='" +request.getContextPath() + "/'</script>");
+					pw.write("<script>alert('성공했습니다.'); location.href='" +request.getContextPath() + "/country/" + countryNumber + "/area/" + areaNumber + "'</script>");
 				} else if(insertCheck != 1) {
-					pw.write("<script>alert('실패했습니다.'); location.href='" +request.getContextPath() + "/'</script>");
+					pw.write("<script>alert('실패했습니다.'); location.href='" +request.getContextPath() + "/country/" + countryNumber + "/area/" + areaNumber + "'</script>");
 					File tempFile = new File(savePath);
 					
 					if( tempFile.exists() ){ 
@@ -166,7 +166,7 @@ public class placeController {
 			System.out.println(e);
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			pw.write("<script>alert('오류가 발생했습니다.'); location.href='" +request.getContextPath() + "/'</script>");
+			pw.write("<script>alert('오류가 발생하였습니다.'); location.href='" +request.getContextPath() + "/country/" + countryNumber + "/area/" + areaNumber + "/'</script>");
 		}
 	}
 	
