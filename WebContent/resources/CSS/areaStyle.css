@@ -51,6 +51,11 @@ section#mainSection div#areaImg img{
     height: 250px;
     object-fit: cover;
     filter: blur(2px);
+    transition: filter ease 0.8s 0s;
+}
+section#mainSection div#areaImg img:hover{
+    filter: blur(0px);
+    transition: filter ease 0.8s 0s;
 }
 section#mainSection div#areaImg h1{
     grid-row-start: 1;

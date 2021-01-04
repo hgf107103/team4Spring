@@ -1,0 +1,70 @@
+img#mainBackground{
+    display: none;
+}
+
+section#mainSection{
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    font-size: 10px;
+
+    min-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1200px auto;
+    grid-template-rows: auto auto auto;
+    justify-content: start;
+    align-items: center;
+    align-content: center;
+}
+
+section#mainSection div#placeImg {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    min-width: 1200px;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    border-bottom: 2px solid rgba(200, 255, 255, 0.8);
+}
+section#mainSection div#placeImg:hover > h1 {
+    opacity: 0;
+    transition: opacity ease 0.5s 0s;
+}
+section#mainSection div#placeImg img{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    min-width: 1200px;
+    width: 100vw;
+    height: 250px;
+    object-fit: cover;
+    filter: blur(2px);
+    transition: filter ease 0.5s 0s;
+}
+section#mainSection div#placeImg img:hover{
+    filter: blur(0px);
+    transition: filter ease 0.5s 0s;
+}
+section#mainSection div#placeImg h1{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    z-index: 999;
+    font-size: 50px;
+    color: rgba(255,255,255,1);
+    text-shadow: 0 0 10px rgba(0,0,0,0.8), 0 0 5px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.8);
+    transition: opacity ease 0.5s 0s;
+}

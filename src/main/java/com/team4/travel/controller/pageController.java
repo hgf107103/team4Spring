@@ -57,4 +57,11 @@ public class pageController {
 		model.addAttribute("areaNumber", areaNumber);
 		return "goTravel/newPlace";
 	}
+	@GetMapping("/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}")
+	public String place(HttpServletRequest request, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber,@PathVariable(value = "placeNumber") int placeNumber, Locale locale, Model model) {
+		model.addAttribute("countryNumber", countryNumber);
+		model.addAttribute("areaNumber", areaNumber);
+		model.addAttribute("placeNumber", placeNumber);
+		return "goTravel/place";
+	}
 }

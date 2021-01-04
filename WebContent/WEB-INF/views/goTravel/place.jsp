@@ -10,10 +10,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/defaultStyle.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/placeStyle.css">
 </head>
 <body>
     <jsp:include page="../header.jsp"></jsp:include>
 	<section id="mainSection" onclick="alwaysCloseBookmark()">
+		<div id="placeImg">
+			<h1 id="placeNameTitle"></h1>
+            <img id="placeTitleImage" src="" alt="">
+		</div>
+		<div id="placeMaps"></div>
+		<div id="placeReview"></div>
 	</section>
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
