@@ -11,6 +11,7 @@
       defer
     ></script>
     <script src="${pageContext.request.contextPath}/JS/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="${pageContext.request.contextPath}/JS/newPlaceScript.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">

@@ -27,7 +27,7 @@ public class categoryController {
 	@Autowired
 	private categoryMapper mapper;
 	
-	@PostMapping(value = {"/country/list/area/category", "/category"})
+	@PostMapping(value = "/category")
 	public void getCategoryList(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model) throws Exception{
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");

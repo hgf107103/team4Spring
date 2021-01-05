@@ -46,6 +46,12 @@ public class areaController {
 			temp.setAreaNumber(areaNumber);
 			
 			areaVO area = mapper.getOneArea(temp);
+			
+			if(area == null) {
+				Exception e = new Exception();
+				throw e;
+			}
+			
 			jo.add("area", create.toJsonTree(area));
 
 			jo.add("check", create.toJsonTree("success"));

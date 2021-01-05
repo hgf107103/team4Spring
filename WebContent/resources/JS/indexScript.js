@@ -1,25 +1,69 @@
-let path;
-$(document).ready(() => {
-	
+let path; 
+
+function readyFunction() {
 	path = $('#path').attr('content');
-	
-	getCountryList();
-	getBestArea();
-})
-
-function test() {
-	$('body').css("overflow", "hidden");
+	countryList();
+	bestArea();
 }
 
-function test2() {
-	$('body').css("overflow", "none");
+async function countryList() {
+	try {
+
+		let country = await axios({
+			method: 'post',
+			url: 'country/list'
+		});
+
+		if (country.status == 200 && country.data.check === "success") {
+			country.data.list.forEach((val, index) => {
+				$(`#${val.continentName}CountryList`).append(returnCountryString(val));
+			})
+		}
+
+		if (country.data.check != "success") {
+			alert('국가 목록을 불러오는데 실패하였습니다.');
+			console.error('국가 목록을 불러오는데 실패하였습니다.');
+		}
+
+	} catch (error) {
+		alert('국가 목록 오류가 발생했습니다.');
+		console.error('국가 목록 오류');
+		console.error(error)
+	}
 }
 
-function getCountryList() {
+async function bestArea() {
+	try {
+		let best = await axios({
+			method: 'post',
+			url: 'country/list/area/best'
+		})
+
+		if (best.status == 200 && best.data.check === "success") {
+			best.data.list.forEach((val, index) => {
+                $(`#bestAreaList`).append(returnBestAreaString(val));
+			})
+		}
+
+		if (best.data.check != "success") {
+			alert('베스트 목록을 불러오는데 실패하였습니다.');
+			console.error('베스트 목록을 불러오는데 실패하였습니다.');
+		}
+
+	} catch (error) {
+		alert('베스트 목록 오류가 발생하였습니다.')
+		console.error('베스트 목록 오류');
+		console.error(error)
+	}
+}
+
+/*function getCountryList() {
+	let check = false;
 	$.ajax({
         url: `country/list`,
         type: "post",
-        cache: false,
+		cache: false,
+		async: false,
         dataType: "json",
         success: (data) => {
 			if (data.check == "fail" || data.list.length <= 0) {
@@ -30,13 +74,17 @@ function getCountryList() {
 			}
         	$.each (data.list, function (index, el) {
                 $(`#${el.continentName}CountryList`).append(returnCountryString(el));
-            });
+			});
+			check = true;
         },
         error: (xhr) => {
         	alert('국가 목록을 불러오는데 실패하였습니다.');
         	console.error(xhr.status);
-        }
-    });
+		},
+		complete: ()=> {
+			console.log(2)
+		}
+	});
 }
 function getBestArea() {
 	$.ajax({
@@ -52,7 +100,6 @@ function getBestArea() {
 				return;
 			}
 			$.each (data.list, function (index, el) {
-                $(`#bestAreaList`).append(returnBestAreaString(el));
             });
 		},
 		error: (xhr) => {
@@ -60,7 +107,7 @@ function getBestArea() {
 			console.error(xhr.status);
 		}
 	});
-}
+}*/
 
 
 function returnCountryString(country) {

@@ -35,6 +35,8 @@ public class placeController {
 	
 	@Autowired
 	private placeMapper mapper;
+	@Autowired
+	private areaMapper aMapper;
 	
 	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/list")
 	public void getPlaceList(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber, @RequestParam(value = "order") String order, @RequestParam(value = "categoryNumber") int categoryNumber, Locale locale, Model model) throws Exception {
@@ -47,6 +49,17 @@ public class placeController {
 		JsonObject jo = new JsonObject();
 		
 		try {
+			
+			areaVO areatemp = new areaVO();
+			areatemp.setCountryNumber(countryNumber);
+			areatemp.setAreaNumber(areaNumber);
+			
+			areaVO areaCheck = aMapper.getOneArea(areatemp);
+			
+			if (areaCheck == null) {
+				Exception e = new Exception();
+				throw e;
+			}
 			
 			HashMap<String, Integer> map = new HashMap<String, Integer>();
 			map.put("areaNumber", areaNumber);
@@ -85,6 +98,111 @@ public class placeController {
 	private String SAVE_PATH;
 	
 	@PostMapping("/country/{countryNumber}/area/{areaNumber}/place/add")
+	public void addPlace(MultipartHttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber) throws Exception {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		String result = "none";
+		try {
+			
+			
+			
+			int categoryNumber = Integer.parseInt(request.getParameter("category"));
+			String englishName = request.getParameter("englishName");
+			String koreanName = request.getParameter("koreanName");
+			MultipartFile imageFile = request.getFile("imageFile");
+			double placeLat = Double.parseDouble(request.getParameter("placeLat"));
+			double placeLng = Double.parseDouble(request.getParameter("placeLng"));
+			
+			HttpSession session = request.getSession();
+			userVO temp = (userVO)session.getAttribute("userLogin");
+			
+			if(temp == null) {
+				Exception ex = new Exception();
+				throw ex;
+			}
+			
+			if(imageFile.getSize() > 2097152) {
+				
+				result = "imageSizeOver";
+				
+			} else {
+				
+				
+				String areaName = mapper.getAreaName(areaNumber);
+				
+				
+				
+				String originalFileName = imageFile.getOriginalFilename();
+				int index = originalFileName.lastIndexOf('.');
+		        String hwak = originalFileName.substring(index);
+				String fileName = areaName + "_" + englishName + hwak;
+				String savePath = SAVE_PATH + "/place/" + areaName + "/" + fileName;
+				
+				File pathCheck = new File(SAVE_PATH + "/place/" + areaName + "/");
+				
+				if (!pathCheck.exists()) {
+					
+					pathCheck.mkdir();
+					
+				}
+				
+				imageFile.transferTo(new File(savePath));
+				
+				placeVO placeTemp = new placeVO();
+				placeTemp.setUserNumber(temp.getUserNumber());
+				placeTemp.setAreaNumber(areaNumber);
+				placeTemp.setCategoryNumber(categoryNumber);
+				placeTemp.setEnglishName(englishName);
+				placeTemp.setKoreanName(koreanName);
+				placeTemp.setPlaceLat(placeLat);
+				placeTemp.setPlaceLng(placeLng);
+				
+				
+				int insertCheck = mapper.addNewPlace(placeTemp);
+				
+				if(insertCheck == 1) {
+					result = "uploadClear";
+				} else if(insertCheck != 1) {
+					result = "uploadFail";
+					File tempFile = new File(savePath);
+					
+					if( tempFile.exists() ){ 
+						
+						if(tempFile.delete()){
+							System.out.println("파일삭제 성공"); 
+						} else { 
+							System.out.println("파일삭제 실패"); 
+							result = "haveyError";
+						} 
+						
+					} else {
+						System.out.println("파일이 존재하지 않습니다.");
+						result = "noFile";
+					}
+				}
+			}
+			
+			jo.add("result", create.toJsonTree(result));
+			jo.add("check", create.toJsonTree("success"));
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+	}
+	
+	/*@PostMapping("/country/{countryNumber}/area/{areaNumber}/place/add")
 	public void addPlace(HttpServletRequest request, HttpServletResponse response, @PathVariable(value = "countryNumber") int countryNumber, @PathVariable(value = "areaNumber") int areaNumber, @RequestParam(value = "category") int categoryNumber, @RequestParam(value = "koreanName") String koreanName, @RequestParam(value = "englishName") String englishName, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, @RequestParam(value = "placeLat") double placeLat, @RequestParam(value = "placeLng") double placeLng) throws Exception {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -168,7 +286,7 @@ public class placeController {
 			e.printStackTrace();
 			pw.write("<script>alert('오류가 발생하였습니다.'); location.href='" +request.getContextPath() + "/country/" + countryNumber + "/area/" + areaNumber + "/'</script>");
 		}
-	}
+	}*/
 	
 	@PostMapping("/country/{countryNumber}/area/{areaNumber}/place/name")
 	public void addPlaceNameCheck(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "koreanName") String koreanName, @RequestParam(value = "englishName") String englishName) throws Exception {

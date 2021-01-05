@@ -143,6 +143,45 @@ function returnCategoryString(select) {
 }
 
 
+async function upload() {
+	let formData = new FormData(document.getElementById('addPlaceForm'));
+	
+	
+	$('body').css('overflow', 'hidden');
+	$('body').css('touch-action', 'none');
+	$('body').append(returnSubmitBox());
+
+	let result = await axios({
+		method: 'post',
+		url: '',
+		data: formData,
+		headers: { 'Content-Type': 'multipart/form-data' }
+	});
+
+	if (result.status == 200 && result.data.check === "success") {
+		$('body').css('overflow', 'auto');
+		$('body').css('touch-action', 'auto');
+		$('#loadBox').detach();
+
+		if (result.data.result == "uploadClear") {
+			alert('성공하였습니다.');
+		}
+		if (result.data.result == "imageSizeOver") {
+			alert('이미지 파일이 너무 큽니다.');
+			return;
+		}
+		if (result.data.result != "uploadClear" && result.data.result != "imageSizeOver") {
+			alert('오류가 발생하였습니다.');
+		}
+		location.href=`${path}/country/${countryNumber}/area/${areaNumber}`;
+		return;
+	}
+
+	if (result.data.check != "success") {
+		alert('전송에 실패하였습니다.');
+		console.error('전송에 실패하였습니다. : ', result.data.error);
+	}
+}
 
 
 function submitSend() {
@@ -151,7 +190,7 @@ function submitSend() {
 			if(formCheck.englishName == $('#placeEnglishText').val()) {
 				if(formCheck.imageFile) {
 					if(formCheck.mapTouch && formCheck.lat == $('#placeLatText').val() && formCheck.lng == $('#placeLngText').val()) {
-						$('#addPlaceForm').submit();
+						upload();
 						return;
 					}
 					alert('주소가 잘못되었습니다.');

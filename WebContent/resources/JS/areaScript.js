@@ -49,6 +49,7 @@ function getArea() {
 				alert('정보를 불러오는데 실패하였습니다.');
 				console.error('정보를 불러오는데 실패하였습니다.');
 				console.error("에러코드 : ", data.error);
+				self.close();
 				return;
 			}
 			areaName = data.area.englishName;
@@ -59,6 +60,7 @@ function getArea() {
 		error: (xhr) => {
 			alert('정보를 불러오는데 실패하였습니다.');
 			console.error(xhr.status);
+			self.close();
 		},
 		complete:() => {
 			getPlace();
