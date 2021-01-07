@@ -26,6 +26,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.team4.travel.object.areaMapper;
 import com.team4.travel.object.areaVO;
+import com.team4.travel.object.categoryMapper;
+import com.team4.travel.object.categoryVO;
 import com.team4.travel.object.placeMapper;
 import com.team4.travel.object.placeVO;
 import com.team4.travel.object.userVO;
@@ -333,5 +335,103 @@ public class placeController {
 			
 		}
 		
+	}
+	
+	@Autowired
+	private categoryMapper cMapper;
+	
+	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}")
+	public void getPlaceDetail
+	(
+			HttpServletRequest  request,
+			HttpServletResponse response,
+			@PathVariable(value = "countryNumber") 	int countryNumber,
+			@PathVariable(value = "areaNumber"   ) 	int areaNumber,
+			@PathVariable(value = "placeNumber"  ) 	int placeNumber,
+			Locale locale,
+			Model model
+	) throws Exception {
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw 		= response.getWriter();
+		Gson 		create	= new GsonBuilder().setPrettyPrinting().create();
+		JsonObject 	jo 		= new JsonObject();
+		
+		try 
+		{
+			
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			map.put("countryNumber", countryNumber);
+			map.put("areaNumber", areaNumber);
+			map.put("placeNumber", placeNumber);
+			placeVO place = mapper.placeDetail(map);
+			
+			categoryVO category = cMapper.getCategory(place.getCategoryNumber());
+			
+			if(place == null || category == null) {
+				throw new Exception();
+			}
+			
+			place.setCategoryName(category.getKoreanName());
+			
+			jo.add("check", create.toJsonTree("success"));
+			jo.add("place", create.toJsonTree(place));
+			
+		} catch (Exception e) {
+			
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+	}
+	
+	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/like/check")
+	public void getPlaceLikeCheck(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="placeNumber") int placeNumber) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+
+		try 
+		{
+			HashMap<String, Integer> temp = new HashMap<String, Integer>();
+			
+			HttpSession session = request.getSession();
+			
+			if(session.getAttribute("userLogin") == null) {
+				throw new Exception();
+			}
+			
+			userVO userTemp = (userVO)session.getAttribute("userLogin");
+			temp.put("userNumber", userTemp.getUserNumber());
+			temp.put("placeNumber", placeNumber);
+			
+			HashMap<String, Integer> map = mapper.placeLikeCheck(temp);
+			
+			String result = "already";
+			
+			if(map == null) {
+				result = "notready";
+			}
+			
+			jo.add("check", create.toJsonTree("success"));
+			jo.add("result", create.toJsonTree(result));
+			
+		} catch (Exception e) {
+			
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
 	}
 }

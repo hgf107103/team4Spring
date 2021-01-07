@@ -6,4 +6,8 @@
     <select id="getCategoryList" resultType="com.team4.travel.object.categoryVO">
         SELECT * FROM categoryTable;
     </select>
+    
+    <select id="getCategory" parameterType="int" resultType="com.team4.travel.object.categoryVO">
+        SELECT * FROM categoryTable WHERE categoryNumber = #{categoryNumber};
+    </select>
 </mapper>

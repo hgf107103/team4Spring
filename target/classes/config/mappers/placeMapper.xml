@@ -49,6 +49,45 @@
     </select>
     
     <insert id="addNewPlace" parameterType="com.team4.travel.object.placeVO">
-    	INSERT INTO placeTable(userNumber, areaNumber, categoryNumber, englishName, koreanName, placeLat, placeLng, placeCheck) VALUES(#{userNumber}, #{areaNumber}, #{categoryNumber}, #{englishName}, #{koreanName}, #{placeLat}, #{placeLng}, 1)
+    	INSERT INTO placeTable(userNumber, areaNumber, categoryNumber, englishName, koreanName, placeLat, placeLng, placeCheck) VALUES(#{userNumber}, #{areaNumber}, #{categoryNumber}, #{englishName}, #{koreanName}, #{placeLat}, #{placeLng}, 0)
+    </insert>
+    
+    <select id="placeDetail" parameterType="hashmap" resultType="com.team4.travel.object.placeVO">
+    	SELECT *
+    	FROM
+    	(
+    		SELECT countryNumber AS CN, areaNumber AS AN, englishName AS areaName FROM areaTable
+    		WHERE countryNumber = #{countryNumber} 
+    	) AS T1
+    	LEFT JOIN
+    	(
+    	
+    		SELECT T3.*, COUNT(T4.userNumber) AS count
+			FROM
+		 	(
+    			SELECT * 
+    			FROM placeTable 
+    			WHERE areaNumber = #{areaNumber} AND placeNumber = #{placeNumber}
+    		) AS T3
+		 	LEFT JOIN
+		 	(
+			 	SELECT *
+			 	FROM placeScoreTable
+			 	WHERE placeNumber = #{placeNumber} 
+			) AS T4
+			ON T3.placeNumber = T4.placeNumber
+			
+		) AS T2
+		ON T1.AN = T2.areaNumber
+		WHERE T1.CN = #{countryNumber} AND T2.areaNumber = #{areaNumber} AND T2.placeNumber  = #{placeNumber} 
+    </select>
+    
+    
+    <select id="placeLikeCheck" parameterType="hashmap" resultType="hashmap">
+    	SELECT * FROM placeScoreTable WHERE userNumber = #{userNumber} AND placeNumber = #{placeNumber}
+    </select>
+    
+    <insert id="placeLike" parameterType="hashmap">
+    	INSERT INTO placeScoreTable VALUES(#{userNumber}, #{placeNumber})
     </insert>
 </mapper>

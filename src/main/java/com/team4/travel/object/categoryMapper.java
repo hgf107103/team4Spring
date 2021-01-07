@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface categoryMapper {
 	public List<categoryVO> getCategoryList();
+	public categoryVO getCategory(int categoryNumber);
 }

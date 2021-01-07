@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.team4.travel.object.reviewMapper">
+	<select id="getReviewlist" parameterType="hashmap" resultType="com.team4.travel.object.reviewVO">
+    	select t1.*, t2.count 
+    	from 
+		( 
+			select * from reviewTable 
+    		where placeNumber = #{placeNumber} 
+		) as t1 
+		left join 
+		( 
+			select reviewNumber, count(reviewNumber) as count 
+			from reviewScoreTable 
+		) as t2 
+		on t1.reviewNumber = t2.reviewNumber
+    </select>
+    <insert id="writeReview" parameterType="com.team4.travel.object.reviewVO">
+    	insert into reviewTable 
+    	(
+    		 placeNumber 
+    		,userNumber 
+    		,reviewTitle 
+    		,reviewText 
+    		,reviewDate 
+    		,reviewCategory 
+    	)
+    	values 
+    	(
+    		 #{placeNumber} 
+    		,#{userNumber} 
+    		,#{reviewTitle} 
+    		,#{reviewText} 
+    		,now() 
+    		,#{reviewCategory}
+    	)
+    </insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+

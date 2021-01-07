@@ -7,6 +7,7 @@
         SELECT T1.*, T2.englishName AS countryName, T2.koreanName AS countryKoreanName
 		FROM areaTable AS T1 LEFT JOIN countryTable AS T2 ON T1.countryNumber = T2.countryNumber
 		WHERE T1.countryNumber = #{countryNumber}
+		ORDER BY koreanName ASC;
     </select>
     
     <select id="getOneArea" parameterType="com.team4.travel.object.areaVO" resultType="com.team4.travel.object.areaVO">
@@ -20,7 +21,7 @@
 		FROM (SELECT T1.*, COUNT(T2.areaNumber) AS count
 		FROM areaTable AS T1 LEFT JOIN bookmarkTable AS T2 ON T1.areaNumber = T2.areaNumber
 		GROUP BY T1.areaNumber) AS T3 LEFT JOIN countryTable AS T4 ON T3.countryNumber = T4.countryNumber
-		ORDER BY T3.count DESC LIMIT 3;
+		ORDER BY T3.count DESC, koreanName ASC LIMIT 3;
     </select>
     
     <select id="getSearch" parameterType="string" resultType="com.team4.travel.object.areaVO">

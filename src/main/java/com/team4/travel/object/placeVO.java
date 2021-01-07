@@ -12,6 +12,7 @@ public class placeVO {
 	private int userNumber;
 	private int areaNumber;
 	private int categoryNumber;
+	private String areaName;
 	private String englishName;
 	private String koreanName;
 	private String categoryName;
