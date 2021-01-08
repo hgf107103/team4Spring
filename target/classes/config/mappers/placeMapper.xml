@@ -87,7 +87,11 @@
     	SELECT * FROM placeScoreTable WHERE userNumber = #{userNumber} AND placeNumber = #{placeNumber}
     </select>
     
-    <insert id="placeLike" parameterType="hashmap">
+    <insert id="placeLikeAdd" parameterType="hashmap">
     	INSERT INTO placeScoreTable VALUES(#{userNumber}, #{placeNumber})
     </insert>
+    
+    <delete id="placeLikeDel" parameterType="hashmap">
+    	DELETE FROM placeScoreTable WHERE userNumber = #{userNumber} AND placeNumber = #{placeNumber}
+    </delete>
 </mapper>

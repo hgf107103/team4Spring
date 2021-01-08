@@ -39,6 +39,7 @@ function placeInfoPaser(object) {
             $('title').text(`방구석여행기 - ${object.data.place.koreanName}`);
             $('#placeCategory').text(object.data.place.categoryName);
             placeMapSetting(object.data.place.placeLat, object.data.place.placeLng)
+            $('#reviewBoxTitle').text(object.data.place.koreanName);
         }
         return new Promise((resolve,reject) => {
             return resolve(true);
@@ -100,52 +101,99 @@ async function countButtonClick() {
         method: 'post',
         url: `${$('#placeNumber').val()}/like/check`
     })
-    
+    console.log(check);
     if(check.data.check == 'success') {
-        await addCount(check);
+        let result = await checkCount(check);
+        getPlaceInfo();
     }
     
     await scrollRestart('body');
 }
 
-function addCount(check) {
-
-    if (check.data.result == 'already') {
-        return new Promise((resolve, reject) => {
+async function checkCount(check) {
+    let final;
+    if (check.data.result == 'notready') {
             let con = confirm('추천하시겠습니까?');
             if (con) {
-                
-                resolve(true);
+                let result = await addCount();
+                final = result;
             }
             else {
-                alert('취소하였습니다.')
-                reject(false);
+                alert('취소하였습니다.');
             }
-        });
+        
     }
-    else if (check.data.result == 'notready') {
-        return new Promise((resolve, reject) => {
+    else if (check.data.result == 'already') {
             let con = confirm('이미 추천되어있습니다.\n추천을 삭제하시겠습니까?');
             if (con) {
-                let result = await axios({
-                    method: 'post',
-                    url: `${$('#placeNumber').val()}/like/check`
-                })
-                resolve(true);
+                let result = await delCount();
+                final = result;
             }
             else {
-                alert('취소하였습니다.')
-                reject(false);
+                alert('취소하였습니다.');
             }
-        });
     }
-    
+    return new Promise((resolve, reject) => {
+        resolve(final);
+    });
+}
 
-    
+
+async function addCount() {
+    let check = false;
+    let result = await axios({
+        method: 'post',
+        url: `${$('#placeNumber').val()}/like/add`
+    })
+
+    if (result.data.check == "success") {
+        if (result.data.result == "true") {
+            alert('추천하였습니다.');
+            check = true;
+        }
+    }
+
+    return new Promise((resolve, reject) => {
+        resolve(check);
+    });
 }
-function delCount(check) {
-    
+async function delCount() {
+    let check = false;
+    let result = await axios({
+        method: 'post',
+        url: `${$('#placeNumber').val()}/like/del`
+    })
+    if (result.data.check == "success") {
+        if (result.data.result == "true") {
+            alert('추천을 취소하였습니다.');
+            check = true;
+        }
+    }
+    return new Promise((resolve, reject) => {
+        resolve(check);
+    });
 }
+
+
+
+
+
+async function viewGoodReview() {
+    setReviewBack('추천', 30)
+}
+async function viewBadReview() {
+    setReviewBack('비추천', 20)
+}
+
+
+function setReviewBack(name, number) {
+    $('#reviewBoxBackground').css('display', 'block');
+    $('#reviewBoxBackground').css('opacity', 1);
+    $('#reviewBoxCategory').text(`${name}리뷰`);
+    $('#reviewBoxCount').text(`${number}개`);
+}
+
+
 
 
 function returnLoadBox(text) {

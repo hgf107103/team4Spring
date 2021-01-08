@@ -434,4 +434,95 @@ public class placeController {
 			pw.write(create.toJson(jo));
 		}
 	}
+	
+	
+	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/like/add")
+	public void getPlaceAdd(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="placeNumber") int placeNumber) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+
+		try 
+		{
+			HashMap<String, Integer> temp = new HashMap<String, Integer>();
+			
+			HttpSession session = request.getSession();
+			
+			if(session.getAttribute("userLogin") == null) {
+				throw new Exception();
+			}
+			
+			userVO userTemp = (userVO)session.getAttribute("userLogin");
+			temp.put("userNumber", userTemp.getUserNumber());
+			temp.put("placeNumber", placeNumber);
+			
+			int insert = mapper.placeLikeAdd(temp);
+			
+			String result = "true";
+			
+			if(insert != 1) {
+				result = "false";
+			}
+			
+			jo.add("check", create.toJsonTree("success"));
+			jo.add("result", create.toJsonTree(result));
+			
+		} catch (Exception e) {
+			
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+	}
+	
+	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/like/del")
+	public void getPlaceDel(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="placeNumber") int placeNumber) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+
+		try 
+		{
+			HashMap<String, Integer> temp = new HashMap<String, Integer>();
+			
+			HttpSession session = request.getSession();
+			
+			if(session.getAttribute("userLogin") == null) {
+				throw new Exception();
+			}
+			
+			userVO userTemp = (userVO)session.getAttribute("userLogin");
+			temp.put("userNumber", userTemp.getUserNumber());
+			temp.put("placeNumber", placeNumber);
+			
+			int insert = mapper.placeLikeDel(temp);
+			
+			String result = "true";
+			
+			if(insert != 1) {
+				result = "false";
+			}
+			
+			jo.add("check", create.toJsonTree("success"));
+			jo.add("result", create.toJsonTree(result));
+			
+		} catch (Exception e) {
+			
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+	}
 }

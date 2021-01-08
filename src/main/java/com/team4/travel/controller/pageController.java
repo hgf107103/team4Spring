@@ -64,4 +64,9 @@ public class pageController {
 		model.addAttribute("placeNumber", placeNumber);
 		return "goTravel/place";
 	}
+	
+	@GetMapping("/chat")
+	public String chat(HttpServletRequest request, Locale locale, Model model) {
+		return "chatPage";
+	}
 }

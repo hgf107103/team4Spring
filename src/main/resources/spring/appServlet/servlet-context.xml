@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -30,10 +32,14 @@
 	<beans:bean id="SAVE_PATH" class="java.lang.String">
 		<beans:constructor-arg value="/Users/Administrator/Documents/GitHub/team4Spring/WebContent/resources/image/"></beans:constructor-arg>
 		<!-- <beans:constructor-arg value="/Users/JSJ/Documents/GitHub/team4Spring/WebContent/resources/image/"></beans:constructor-arg> -->
+		<!-- <beans:constructor-arg value="/usr/local/lib/apache-tomcat-8.5.50/webapps/travel/resources/image/"></beans:constructor-arg> -->
 	</beans:bean>
 	
 	<context:component-scan base-package="com.team4.travel" />
 	
+	<websocket:handlers>
+		<websocket:mapping handler="chatSocket" path="/chat-ws"/>
+	</websocket:handlers>
 	
 	<resources location="/resources/" mapping="/resources/**"></resources>
 	<resources location="/resources/JS/" mapping="/JS/**"></resources>

@@ -370,3 +370,15 @@ section#mainSection div#placeReview div.reviewBoxStyle div.sampleReview p.sample
     color:rgba(0,0,0,0.6);
     transition: color ease 0.3s 0s;
 }
+
+div#reviewBoxBackground {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    display: none;
+    opacity: 0;
+    background-color: rgba(100,100,100,0.2);
+}

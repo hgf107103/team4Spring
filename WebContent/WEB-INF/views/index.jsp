@@ -13,6 +13,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+KR&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/defaultStyle.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/indexStyle.css">
+    <script type="text/javascript">
+    	let a = '<%= request.getRequestURL() %>';
+    	let b = '<%= request.getRequestURI() %>';
+    	let c = a.split(b);
+    	let d = c[0].split('http://');
+    	let f = d[1] + `${pageContext.request.contextPath}`;
+    	console.log(f);
+    </script>
 </head>
 <body onload="readyFunction()">
     <jsp:include page="header.jsp"></jsp:include>

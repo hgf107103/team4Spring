@@ -25,6 +25,7 @@
              <c:if test="${userLogin.userAdminCheck}">
              <input id="adminPage" type="button" class="inputButtonStyle" onclick="window.open('${pageContext.request.contextPath}/hbj', '_blank');" value="관리페이지">
         	 </c:if>
+        	 <input id="chat" type="button" class="inputButtonStyle" value="채팅" onclick="window.open('${pageContext.request.contextPath}/chat', 'popup', 'width = 700, height = 800, top = 100, left = 200, location = no');">
              <input id="userBookMark" type="button" class="inputButtonStyle" value="북마크열기" onclick="bookmarkButton('${pageContext.request.contextPath}')">
              <input id="logout" type="button" class="inputButtonStyle" value="로그아웃" onclick="userLogout('${pageContext.request.contextPath}')">
         </div>

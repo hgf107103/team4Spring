@@ -13,5 +13,6 @@ public interface placeMapper {
 	public int addNewPlace(placeVO place);
 	public placeVO placeDetail(HashMap<String, Integer> option);
 	public HashMap<String, Integer> placeLikeCheck(HashMap<String, Integer> option);
-	public int placeLike(HashMap<String, Integer> option);
+	public int placeLikeAdd(HashMap<String, Integer> option);
+	public int placeLikeDel(HashMap<String, Integer> option);
 }

@@ -117,7 +117,7 @@ function getPlace() {
 }
 
 function returnPlaceString(place) {
-	let str = `<div class="place"><div class="placeImage" onclick="window.open('${areaNumber}/place/${place.placeNumber}', '_blank');"><img src="${path}/image/place/${areaName}/${areaName}_${place.englishName}.jpg" alt=""></div>
+	let str = `<div class="place"><div class="placeImage" onclick="location.href='${areaNumber}/place/${place.placeNumber}'"><img src="${path}/image/place/${areaName}/${areaName}_${place.englishName}.jpg" alt=""></div>
 	<p class="placeScore">추천수 : ${place.count}</p><p class="placeName">${place.koreanName}</p><p class="placeCategory">${place.categoryName}</p></div>`;
 	return str;
 	

@@ -131,7 +131,7 @@ div#menuBar div#user {
     grid-row-end: 2;
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto;
     justify-content: right;
     align-content: center;
     align-items: center;
@@ -173,7 +173,7 @@ div#bookmarkBar{
 	position: fixed;
 	top:0px;
 	right:-500px;
-	height: 100vh;
+	height: 100%;
 	width: 500px;
 	opacity:0;
 	background-color: rgba(255,255,255, 0.9);

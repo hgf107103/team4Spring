@@ -1,0 +1,144 @@
+* {
+    margin: 0 0;
+    padding: 0 0;
+    font-family: "Noto Sans KR";
+    cursor: default;
+}
+*:focus {
+    outline: none;
+}
+body {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+    width: 100vw;
+    min-width: 600px;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    row-gap: 20px;
+    column-gap: 10px;
+}
+h1#title {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+div#chatLog {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    width: 80vw;
+    min-width: 600px;
+    height: 70vh;
+    padding: 20px 20px;
+    overflow: auto;
+    box-shadow: 0 0 6px 2px rgba(0,0,0,0.2);
+}
+div#chatLog div.messageBox {
+    font-size: 18px;
+    width: 100%;
+    min-width: 600px;
+    word-break: break-all;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    column-gap: 20px;
+    justify-content: left;
+    align-content: start;
+}
+div#chatLog div.messageBox:hover > p.id {
+    border-right: 2px solid rgba(0,0,0,0.8);
+    transition: border-right ease 0.3s 0s;
+}
+div#chatLog div.messageBox:hover > p.myid {
+    border-right: 2px solid rgba(255,50,50, 0.8);
+    transition: border-right ease 0.3s 0s;
+}
+div#chatLog div.messageBox p.id {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    width: 80px;
+    border-right: 2px solid rgba(0,0,0,0.5);
+    word-break: break-all;
+    transition: border-right ease 0.3s 0s;
+}
+div#chatLog div.messageBox p.myid {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    width: 80px;
+    border-right: 2px solid rgba(255, 50, 50, 0.5);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: border-right ease 0.3s 0s;
+}
+div#chatLog div.messageBox p.message {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    word-break: break-all;
+}
+
+
+div#write {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    width: 100%;
+    min-width: 600px;
+    column-gap: 15px;
+}
+div#write input#writeChat {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    border: 1px solid rgba(0,0,0,0.3);
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0);
+    border-radius: 5px;
+    cursor: text;
+    padding: 5px 15px;
+    font-size: 18px;
+    width: 100%;
+    min-width: 460px;
+    transition: box-shadow ease 0.3s 0s;
+}
+div#write input#writeChat:hover {
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.1);
+    transition: box-shadow ease 0.3s 0s;
+}
+div#write input#writeChat:focus {
+    box-shadow: 0 0 4px 1px rgba(0,0,0,0.4);
+    transition: box-shadow ease 0.3s 0s;
+}
+
+input#goButton {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    border: 1px solid black;
+    background-color: rgba(255,255,255,1);
+    cursor: pointer;
+    font-size: 18px;
+    width: 120px;
+    padding: 5px 10px;
+    transition: background-color ease 0.3s 0s;
+}
+input#goButton:hover {
+    background-color: rgba(230,230,230,1);
+    transition: background-color ease 0.3s 0s;
+}

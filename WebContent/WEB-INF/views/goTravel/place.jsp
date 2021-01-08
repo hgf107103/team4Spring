@@ -28,7 +28,12 @@
 		</div>
 		<div id="placeInfo">
 			<p id="placeCategory"></p>
-			<p id="placeCount" onclick="addCount()"></p>
+			<c:if test="${userLogin eq null}">
+				<p id="placeCount" onclick="alert('로그인하지 않은 사람은 추천할 수 없습니다.')"></p>
+			</c:if>
+			<c:if test="${userLogin ne null}">
+				<p id="placeCount" onclick="countButtonClick()"></p>
+			</c:if>
 		</div>
 		<div id="placeMaps"></div>
 		<div id="placeReview">
@@ -59,7 +64,7 @@
 					<p class="sampleText">리뷰내용입니다 리뷰내용입니다</p>
 					<p class="sampleDate">2021년 1월 6일</p>
 				</div>
-				<input class="buttonStyle" type="button" value="한번에 보기">
+				<input class="buttonStyle" type="button" onclick="viewGoodReview()" value="한번에 보기">
 			</div>
 			<div id="badReview" class="reviewBoxStyle">
 				<div class="sampleReview">
@@ -72,7 +77,7 @@
 					<p class="sampleText">리뷰내용입니다 리뷰내용입니다</p>
 					<p class="sampleDate">2021년 1월 6일</p>
 				</div>
-				<input class="buttonStyle" type="button" value="한번에 보기">
+				<input class="buttonStyle" type="button" onclick="viewBadReview()" value="한번에 보기">
 			</div>
 		</div>
 	</section>

@@ -335,7 +335,7 @@ section#mainSection div#allCountryList div.continent div.countryList div.country
     white-space: nowrap;
     text-shadow: 0 0 5px black, 0 0 2px black;
     opacity: 1;
-    z-index: 9999;
+    z-index: 999;
     transition: opacity ease 0.5s 0s;
 }
 /*��瑜숇퀎 �굹�씪 �젙蹂�*/
