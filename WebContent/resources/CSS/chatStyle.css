@@ -14,6 +14,7 @@ body {
     width: 100vw;
     min-width: 600px;
     height: 100vh;
+    min-height: 900px;
     justify-content: center;
     align-items: center;
     align-content: center;
@@ -21,10 +22,16 @@ body {
     column-gap: 10px;
 }
 h1#title {
+    display: none;
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
+    text-align: center;
+    font-size: 40px;
+    color: white;
+    padding-top: 5px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.4), 0 0 4px rgba(0,0,0,0.5), 0 0 2px rgba(0,0,0,1);
 }
 div#chatLog {
     grid-column-start: 1;
@@ -34,6 +41,7 @@ div#chatLog {
     width: 80vw;
     min-width: 600px;
     height: 70vh;
+    display: none;
     padding: 20px 20px;
     overflow: auto;
     box-shadow: 0 0 6px 2px rgba(0,0,0,0.2);
@@ -52,11 +60,19 @@ div#chatLog div.messageBox {
     align-content: start;
 }
 div#chatLog div.messageBox:hover > p.id {
-    border-right: 2px solid rgba(0,0,0,0.8);
+    border-right: 2px solid rgba(0,0,0,1);
     transition: border-right ease 0.3s 0s;
 }
-div#chatLog div.messageBox:hover > p.myid {
-    border-right: 2px solid rgba(255,50,50, 0.8);
+div#chatLog div.messageBox:hover > p.mylog {
+    border-right: 2px solid rgba(255,50,50,1);
+    transition: border-right ease 0.3s 0s;
+}
+div#chatLog div.messageBox:hover > p.syslog {
+    border-right: 2px solid rgba(0,0,0,1);
+    transition: border-right ease 0.3s 0s;
+}
+div#chatLog div.messageBox:hover > p.log {
+    border-right: 2px solid rgba(50,50,255, 1);
     transition: border-right ease 0.3s 0s;
 }
 div#chatLog div.messageBox p.id {
@@ -64,22 +80,24 @@ div#chatLog div.messageBox p.id {
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
-    width: 80px;
-    border-right: 2px solid rgba(0,0,0,0.5);
+    width: 100px;
     word-break: break-all;
     transition: border-right ease 0.3s 0s;
 }
-div#chatLog div.messageBox p.myid {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    width: 80px;
-    border-right: 2px solid rgba(255, 50, 50, 0.5);
-    overflow: hidden;
-    text-overflow: ellipsis;
+div#chatLog div.messageBox p.syslog {
+    border-right: 2px solid rgba(0,0,0,0.5);
     transition: border-right ease 0.3s 0s;
 }
+div#chatLog div.messageBox p.mylog {
+    border-right: 2px solid rgba(255, 50, 50, 0.5);
+    transition: border-right ease 0.3s 0s;
+}
+div#chatLog div.messageBox p.log {
+    border-right: 2px solid rgba(50, 50, 255, 0.5);
+    transition: border-right ease 0.3s 0s;
+}
+
+
 div#chatLog div.messageBox p.message {
     grid-column-start: 2;
     grid-column-end: 3;
@@ -94,18 +112,18 @@ div#write {
     grid-column-end: 2;
     grid-row-start: 3;
     grid-row-end: 4;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto;
-    width: 100%;
+    display: none;
+    width: 80vw;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
     min-width: 600px;
     column-gap: 15px;
+    margin: auto;
 }
 div#write input#writeChat {
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
     border: 1px solid rgba(0,0,0,0.3);
     box-shadow: 0 0 4px 1px rgba(0,0,0,0);
     border-radius: 5px;
@@ -125,16 +143,29 @@ div#write input#writeChat:focus {
     transition: box-shadow ease 0.3s 0s;
 }
 
-input#goButton {
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
+
+input#outButton {
     border: 1px solid black;
     background-color: rgba(255,255,255,1);
     cursor: pointer;
     font-size: 18px;
     width: 120px;
+    margin-top: 15px;
+    padding: 5px 10px;
+    transition: background-color ease 0.3s 0s;
+}
+input#outButton:hover {
+    background-color: rgba(230,230,230,1);
+    transition: background-color ease 0.3s 0s;
+}
+
+input#goButton {
+    border: 1px solid black;
+    background-color: rgba(255,255,255,1);
+    cursor: pointer;
+    font-size: 18px;
+    width: 120px;
+    margin-top: 15px;
     padding: 5px 10px;
     transition: background-color ease 0.3s 0s;
 }
@@ -142,3 +173,56 @@ input#goButton:hover {
     background-color: rgba(230,230,230,1);
     transition: background-color ease 0.3s 0s;
 }
+
+
+
+div#ready {
+    z-index: 9999;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+div#ready h2#serverTitle {
+    font-size: 40px;
+    color: white;
+    text-shadow: 0 0 6px rgba(0,0,0,0.4), 0 0 3px rgba(0,0,0,0.5), 0 0 1px rgba(0,0,0,0.8);
+}
+div#ready select#serverlist {
+    font-size: 18px;
+    padding: 6px 15px;
+    border: 1px solid black;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+    transition: box-shadow ease 0.5s 0s;
+}
+div#ready select#serverlist:hover {
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.6);
+    transition: box-shadow ease 0.5s 0s;
+}
+div#ready input[type=button] {
+    font-size: 18px;
+    padding: 6px 15px;
+    border: 1px solid black;
+    color: rgba(0,0,0,0.4);
+    background-color: white;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.2);
+    transition: color ease 0.5s 0s, box-shadow ease 0.5s 0s;
+}
+div#ready input[type=button]:hover {
+    color: rgba(0,0,0,0.9);
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.6);
+    transition: color ease 0.5s 0s, box-shadow ease 0.5s 0s;
+}
+

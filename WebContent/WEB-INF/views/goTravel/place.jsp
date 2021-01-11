@@ -40,47 +40,40 @@
 			<div id="reviewInfo">
 				<div id="allReview">
 					<p id="allTitle">리뷰 수</p>
-					<p id="allCount">50</p>
+					<p id="allCount"></p>
 				</div>
 				<div id="goodCountBox" class="countBox">
 					<p class="countTitle">추천리뷰</p>
-					<p class="countNumber">30</p>
-					<meter id="goodCount" value="30" min="0" max="50"></meter>
+					<p id="goodCountTitle" class="countNumber"></p>
+					<meter id="goodCount" value="0" min="0" max="1"></meter>
 				</div>
 				<div id="badCountBox" class="countBox">
 					<p class="countTitle">비추천리뷰</p>
-					<p class="countNumber">20</p>
-					<meter id="badCount" value="20" min="0" max="50"></meter>
+					<p id="badCountTitle" class="countNumber"></p>
+					<meter id="badCount" value="0" min="0" max="1"></meter>
 				</div>
+				<c:if test="${userLogin ne null}">
+				<input id="writeReview" type="button" onclick="writeReviewOpen()" value="리뷰쓰기">
+				</c:if>
 			</div>
 			<div id="goodReview" class="reviewBoxStyle">
-				<div class="sampleReview">
-					<p class="sampleTitle">이것은 리뷰샘플 제목 이것은 리뷰샘플 제목 이것은 리뷰샘플 제목 이것은 리뷰샘플 제목 이것은 리뷰샘플 제목</p>
-					<p class="sampleText">리뷰내용입니다 리뷰sdasdasdadasdasddasdsadsadasdasdasdsadsadasdasdsadsadsadasdasdsadasdsadasdasdas내용입니다</p>
-					<p class="sampleDate">2021년 1월 6일</p>
+				<div class="emptyReviewBox">
+					추천 리뷰가 없습니다.
 				</div>
-				<div class="sampleReview">
-					<p class="sampleTitle">이것은 리뷰샘플 제목</p>
-					<p class="sampleText">리뷰내용입니다 리뷰내용입니다</p>
-					<p class="sampleDate">2021년 1월 6일</p>
-				</div>
-				<input class="buttonStyle" type="button" onclick="viewGoodReview()" value="한번에 보기">
 			</div>
 			<div id="badReview" class="reviewBoxStyle">
-				<div class="sampleReview">
-					<p class="sampleTitle">이것은 리뷰샘플 제목</p>
-					<p class="sampleText">리뷰내용입니다 리뷰내용입니다</p>
-					<p class="sampleDate">2021년 1월 6일</p>
+				<div class="emptyReviewBox">
+					비추천 리뷰가 없습니다.
 				</div>
-				<div class="sampleReview">
-					<p class="sampleTitle">이것은 리뷰샘플 제목</p>
-					<p class="sampleText">리뷰내용입니다 리뷰내용입니다</p>
-					<p class="sampleDate">2021년 1월 6일</p>
-				</div>
-				<input class="buttonStyle" type="button" onclick="viewBadReview()" value="한번에 보기">
 			</div>
 		</div>
 	</section>
+	<div id="writeReviewBox">
+		<form id="writeReviewForm">
+        	<label class="writeReviewRadio" id="goodRadio"><input type="radio" class="writeReviewCategory" name="reviewCategory" value="1"><span id="goodRadioText">이 장소를 추천합니다.</span></label>
+			<label class="writeReviewRadio" id="badRadio"><input type="radio" class="writeReviewCategory" name="reviewCategory" value="0"><span id="badRadioText">이 장소를 추천하지 않습니다.</span></label>
+		</form>
+	</div>
 	<div id="reviewBoxBackground">
 		<div id="reviewBoxMain">
 			<div id="reviewBoxInfo">

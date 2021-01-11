@@ -146,7 +146,7 @@ section#mainSection div#placeReview div#reviewInfo{
     grid-column-end: 2;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     justify-content: center;
     justify-items: center;
     align-items: center;
@@ -258,9 +258,24 @@ section#mainSection div#placeReview div#reviewInfo div.countBox meter::-webkit-m
     border-radius: 0px;
     height: 16px;
 }
-
-
-
+section#mainSection div#placeReview div#reviewInfo input#writeReview{
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 5px 15px;
+    border: 1px solid rgb(200,200,200);
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 5px;
+    color: rgb(150,150,150);
+    transition: border ease 0.3s 0s, color ease 0.3s 0s, box-shadow ease 0.3s 0s;
+}
+section#mainSection div#placeReview div#reviewInfo input#writeReview:hover{
+    border: 1px solid rgb(0,0,0);
+    color: rgb(0,0,0);
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.2);
+    transition: border ease 0.3s 0s, color ease 0.3s 0s, box-shadow ease 0.3s 0s;
+}
 
 
 
@@ -302,13 +317,15 @@ section#mainSection div#placeReview div.reviewBoxStyle input.buttonStyle{
     border-radius: 5px;
     cursor: pointer;
     background-color: white;
+    border-radius: 5px;
     color: rgb(150,150,150);
-    transition: border ease 0.3s 0s, color ease 0.3s 0s;
+    transition: border ease 0.3s 0s, color ease 0.3s 0s, box-shadow ease 0.3s 0s;
 }
 section#mainSection div#placeReview div.reviewBoxStyle input.buttonStyle:hover{
     border: 1px solid rgb(0,0,0);
     color: rgb(0,0,0);
-    transition: border ease 0.3s 0s, color ease 0.3s 0s;
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.2);
+    transition: border ease 0.3s 0s, color ease 0.3s 0s, box-shadow ease 0.3s 0s;
 }
 
 
@@ -371,7 +388,25 @@ section#mainSection div#placeReview div.reviewBoxStyle div.sampleReview p.sample
     transition: color ease 0.3s 0s;
 }
 
+section#mainSection div#placeReview div.reviewBoxStyle div.emptyReviewBox {
+    min-width: 300px;
+    height: 190px;
+    padding: 20px 20px;
+    text-align: center;
+    line-height: 190px;
+    vertical-align: middle;
+    font-size: 25px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.8);
+    transition: color ease 0.3s 0s;
+}
+section#mainSection div#placeReview div.reviewBoxStyle div.emptyReviewBox:hover {
+    color: rgba(0, 0, 0, 0.2);
+    transition: color ease 0.3s 0s;
+}
+
 div#reviewBoxBackground {
+    z-index: 99999;
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -381,4 +416,41 @@ div#reviewBoxBackground {
     display: none;
     opacity: 0;
     background-color: rgba(100,100,100,0.2);
+}
+
+
+
+div#writeReviewBox {
+    z-index: 99999;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    display: none;
+    opacity: 0;
+    background-color: rgba(100,100,100,0.2);
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+}
+
+div#writeReviewBox form#writeReviewForm {
+    display: grid;
+    align-content: center;
+    align-items: center;
+    justify-content: start;
+    justify-items: start;
+    grid-template-columns: auto;
+    grid-auto-rows: auto;
+    row-gap: 5px;
+}
+div#writeReviewBox form#writeReviewForm label.writeReviewRadio input[type=radio]{
+    margin: 0px 5px;
+}
+div#writeReviewBox form#writeReviewForm label.writeReviewRadio input[type=radio]:checked ~ span{
+    color: red;
 }

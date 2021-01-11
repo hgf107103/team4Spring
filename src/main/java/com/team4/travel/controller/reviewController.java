@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.team4.travel.object.reviewCountVO;
 import com.team4.travel.object.reviewMapper;
 import com.team4.travel.object.reviewVO;
 import com.team4.travel.object.userVO;
@@ -30,13 +31,11 @@ public class reviewController {
 	@Autowired
 	private reviewMapper mapper;
 		
-	@PostMapping(value = "/getReviewlist/{placeNumber}")
-	public void getReviewlist
-	(
+	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/review/info")
+	public void getReviewInfo (
 			HttpServletRequest  request,
 			HttpServletResponse response,
-			@PathVariable(value = "placeNumber"  ) 	int placeNumber,
-			//@RequestParam(value = "revieworder"  )  int revieworder,
+			@PathVariable(value = "placeNumber") int placeNumber,
 			Locale locale,
 			Model model
 	) throws Exception {
@@ -44,17 +43,44 @@ public class reviewController {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
-		PrintWriter pw 		= response.getWriter();
-		Gson 		create	= new GsonBuilder().setPrettyPrinting().create();
-		JsonObject 	jo 		= new JsonObject();
+		PrintWriter pw = response.getWriter();
+		Gson create	= new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
 		
 		
 		try 
 		{
 			HashMap<String, Integer> map = new HashMap<String, Integer>();
 			map.put("placeNumber", placeNumber);
-			List<reviewVO> list = mapper.getReviewList(map);
-			jo.add("list", create.toJsonTree(list));
+			map.put("reviewCategory", 1);
+			map.put("limit", 2);
+			List<reviewVO> goodList = mapper.getReviewList(map);
+			
+			map.put("reviewCategory", 0);
+			List<reviewVO> badList = mapper.getReviewList(map);
+			
+			List<reviewCountVO> countList = mapper.getReviewInfo(placeNumber);
+			int goodCount = 0;
+			int badCount = 0;
+			
+			for (reviewCountVO reviewCountVO : countList) {
+				if(reviewCountVO.getReviewCategory() == 1) {
+					goodCount = reviewCountVO.getReviewCount();
+					continue;
+				}
+				if(reviewCountVO.getReviewCategory() == 0) {
+					badCount = reviewCountVO.getReviewCount();
+				}
+			}
+			
+			int allCount = goodCount + badCount;
+			
+			jo.add("check", create.toJsonTree("success"));
+			jo.add("goodCount", create.toJsonTree(goodCount));
+			jo.add("badCount", create.toJsonTree(badCount));
+			jo.add("allCount", create.toJsonTree(allCount));
+			jo.add("goodList", create.toJsonTree(goodList));
+			jo.add("badList", create.toJsonTree(badList));
 			
 		} catch (Exception e) {
 			
@@ -64,14 +90,11 @@ public class reviewController {
 			
 		} finally {
 			pw.write(create.toJson(jo));
-			System.out.println(create.toJson(jo));
-			
-			
 		}
 	}
 	
 	
-	  @PostMapping(value = "/writeReview/{placeNumber}") 
+	  /*@PostMapping(value = "/writeReview/{placeNumber}") 
 	  public void writeReview
 	  (
 			HttpServletRequest  request,
@@ -123,6 +146,6 @@ public class reviewController {
 			
 			
 			
-	  }
+	  }*/
 	 
 }
