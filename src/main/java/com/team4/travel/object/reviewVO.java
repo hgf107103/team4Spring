@@ -17,7 +17,6 @@ public class reviewVO
 	private String reviewTitle;
 	private String reviewText;
 	private Timestamp reviewDate;
-	private int reviewPhotoCheck;
 	private int reviewCategory;
 	private int reviewCount;
 }

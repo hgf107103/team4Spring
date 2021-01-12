@@ -94,15 +94,15 @@ public class reviewController {
 	}
 	
 	
-	  /*@PostMapping(value = "/writeReview/{placeNumber}") 
+	  @PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/review/add") 
 	  public void writeReview
 	  (
-			HttpServletRequest  request,
+			HttpServletRequest request,
 			HttpServletResponse response,
-			@PathVariable(value = "placeNumber"  ) 	int placeNumber,
-			@RequestParam(value = "revieworder"  )  int revieworder,
-			@RequestParam(value = "reviewTitle"  )  String reviewTitle,
-			@RequestParam(value = "reviewText"  )  	String reviewText,
+			@PathVariable(value = "placeNumber" ) int placeNumber,
+			@RequestParam(value = "reviewTitle" ) String reviewTitle,
+			@RequestParam(value = "reviewText" )  String reviewText,
+			@RequestParam(value = "reviewCategory" ) int reviewCategory,
 			Locale locale,
 			Model model  
 	  )
@@ -110,26 +110,34 @@ public class reviewController {
 	  {
 		   
 		  	HttpSession session = request.getSession();
-		  	userVO 	 	temp 	= (userVO)session.getAttribute("userLogin");
+		  	userVO temp = (userVO)session.getAttribute("userLogin");
 		  			
-		  	
 		  	request.setCharacterEncoding("UTF-8");
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("application/json");
-			PrintWriter pw 		= response.getWriter();
-			Gson 		create	= new GsonBuilder().setPrettyPrinting().create();
-			JsonObject 	jo 		= new JsonObject();
+			PrintWriter pw = response.getWriter();
+			Gson create	= new GsonBuilder().setPrettyPrinting().create();
+			JsonObject jo = new JsonObject();
 			
 			try 
 			{
-				reviewVO vo = new reviewVO();
-				vo.setPlaceNumber(placeNumber);
-				vo.setReviewCategory(revieworder);
-				vo.setReviewTitle(reviewTitle);
-				vo.setReviewText(reviewText);
-				vo.setUserNumber(1);
-				int write = mapper.writeReview(vo);
-				jo.add("check", create.toJsonTree("ok"));
+				reviewVO review = new reviewVO();
+				
+				review.setPlaceNumber(placeNumber);
+				review.setUserNumber(temp.getUserNumber());
+				review.setReviewTitle(reviewTitle);
+				review.setReviewText(reviewText);
+				review.setReviewCategory(reviewCategory);
+				
+				int insertCheck = mapper.addNewReview(review);
+				String result = "false";
+				
+				if(insertCheck == 1) {
+					result = "true";
+				}
+
+				jo.add("check", create.toJsonTree("success"));
+				jo.add("result", create.toJsonTree(result));
 			} 
 			catch (Exception e) 
 			{
@@ -142,10 +150,6 @@ public class reviewController {
 				pw.write(create.toJson(jo));
 				System.out.println(create.toJson(jo));
 			}
-			
-			
-			
-			
-	  }*/
+	  }
 	 
 }

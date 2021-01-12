@@ -415,7 +415,7 @@ div#reviewBoxBackground {
     left: 0;
     display: none;
     opacity: 0;
-    background-color: rgba(100,100,100,0.2);
+    background-color: rgba(100,100,100,0.1);
 }
 
 
@@ -430,7 +430,7 @@ div#writeReviewBox {
     left: 0;
     display: none;
     opacity: 0;
-    background-color: rgba(100,100,100,0.2);
+    background-color: rgba(0,0,0,0);
     flex-direction: column;
     justify-content: center;
     justify-items: center;
@@ -441,16 +441,107 @@ div#writeReviewBox {
 div#writeReviewBox form#writeReviewForm {
     display: grid;
     align-content: center;
-    align-items: center;
-    justify-content: start;
-    justify-items: start;
+    min-width: 600px;
+    max-width: 600px;
     grid-template-columns: auto;
     grid-auto-rows: auto;
     row-gap: 5px;
+    padding: 20px 20px;
+    background-color: black;
+    box-shadow: 0 0 10px 2px rgb(0,0,0);
+    border-radius: 10px;
+    color: white;
+}
+div#writeReviewBox form#writeReviewForm h3#writeReviewHead {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+div#writeReviewBox form#writeReviewForm label.writeReviewRadio {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    justify-items: start;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+div#writeReviewBox form#writeReviewForm label.writeReviewRadio:hover > span.radioText {
+    color: white;
+    transition: color ease 0.3s 0s;
 }
 div#writeReviewBox form#writeReviewForm label.writeReviewRadio input[type=radio]{
     margin: 0px 5px;
+    display: none;
 }
-div#writeReviewBox form#writeReviewForm label.writeReviewRadio input[type=radio]:checked ~ span{
+div#writeReviewBox form#writeReviewForm label.writeReviewRadio input[type=radio]:checked ~ span.radioBox{
+    background-color: white;
+    transition: background-color ease 0.3s 0s;
+}
+div#writeReviewBox form#writeReviewForm label.writeReviewRadio input[type=radio]:checked ~ span.radioText{
     color: red;
+    transition: color ease 0.3s 0s;
+}
+div#writeReviewBox form#writeReviewForm label.writeReviewRadio span.radioText{
+    color: rgb(200,200,200);
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color ease 0.3s 0s;
+}
+div#writeReviewBox form#writeReviewForm label.writeReviewRadio span.radioBox{
+    width: 12px;
+    height: 12px;
+    outline: 2px solid white;
+    display: inline-block;
+    background-color: rgba(255,255,255,0);
+    margin-right: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color ease 0.3s 0s;
+}
+
+div#writeReviewBox form#writeReviewForm input#writeReviewTitle {
+    width: 600px;
+    padding: 6px 10px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: text;
+    margin-top: 15px;
+}
+div#writeReviewBox form#writeReviewForm textarea#writeReviewText {
+    width: 600px;
+    height: 355px;
+    overflow: hidden;
+    padding: 10px 10px;
+    resize: none;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    cursor: text;
+}
+
+div#writeReviewBox form#writeReviewForm div#writeReviewButtonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div#writeReviewBox form#writeReviewForm div#writeReviewButtonBox input.writeReviewButtonStyle{
+    font-size: 20px;
+    padding: 5px 15px;
+    border: 1px solid rgb(200,200,200);
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 5px;
+    color: rgb(150,150,150);
+    transition: border ease 0.3s 0s, color ease 0.3s 0s, box-shadow ease 0.3s 0s;
+}
+div#writeReviewBox form#writeReviewForm div#writeReviewButtonBox input.writeReviewButtonStyle:hover{
+    border: 1px solid rgb(255,255,255);
+    color: rgb(0,0,0);
+    box-shadow: 0 0 6px 1px rgba(255, 255, 255, 1);
+    transition: border ease 0.3s 0s, color ease 0.3s 0s, box-shadow ease 0.3s 0s;
 }

@@ -217,7 +217,7 @@ async function reviewInfo() {
             if(index == 0) $(`#badReview`).html('');
             $(`#badReview`).append(returnReviewSampleString(val));
         })
-        if(result.data.goodList.length > 0) {
+        if(result.data.badList.length > 0) {
             $(`#badReview`).append(`<input class="buttonStyle" type="button" onclick="viewBadReview()" value="비추리뷰 보기">`);
         }
         
@@ -255,7 +255,6 @@ async function viewBadReview() {
     setReviewBack('비추천', 20)
 }
 
-
 function setReviewBack(name, number) {
     $('#reviewBoxBackground').css('display', 'block');
     $('#reviewBoxBackground').css('opacity', 1);
@@ -263,21 +262,87 @@ function setReviewBack(name, number) {
     $('#reviewBoxCount').text(`${number}개`);
 }
 
-
-
-
 function returnLoadBox(text) {
 	let str = `<div id="loadBox"><p id="loadLog">${text}</p></div>`;
 	return str;
 }
 
 
-
-
-
-
-
+//이하 리뷰 쓰기 함수
 function writeReviewOpen() {
     $('#writeReviewBox').css('display', 'flex');
     $('#writeReviewBox').css('opacity', '1');
+}
+
+function writeTextLengthCheck() {
+    if ($('#writeReviewText').val().length <= 400) {
+        $('#writeReviewTextCount').text(`${$('#writeReviewText').val().length} / 400`);
+    }
+    if ($('#writeReviewText').val().length > 400) {
+        let text = $('#writeReviewText').val().substring(0,400);
+        $('#writeReviewText').val(text);
+    }
+}
+
+function writeClose() {
+    $('#writeReviewBox').css('opacity', '0');
+    $('#writeReviewBox').css('display', 'none');
+    $('#writeReviewText').val('');
+    $('#writeReviewTitle').val('');
+    $('#writeReviewTextCount').text('0 / 400');
+}
+
+
+
+async function writeSubmit() {
+    if ($('#writeReviewTitle').val() == '') {
+        alert('제목을 입력해주십시오');
+        return;
+    }
+    if ($('#writeReviewText').val() == '') {
+        alert('내용을 입력해주십시오');
+        return;
+    }
+
+    let title = wordReplace($('#writeReviewTitle').val());
+    let text = wordReplace($('#writeReviewText').val());
+    let category = $(".writeReviewCategory:checked").val();
+
+    console.log(title);
+    console.log(text);
+    console.log(category);
+
+    let result = await axios({
+        method: 'post',
+        url: `${$('#placeNumber').val()}/review/add`,
+        params: {
+            reviewTitle: title,
+            reviewText: text,
+            reviewCategory: category
+        }
+    })
+
+    console.log(result);
+
+    if (result.status == 200 && result.data.check == "success") {
+        alert('리뷰가 등록되었습니다.');
+    }
+    else if (result.status != 200 || result.data.check == "fail") {
+        alert('리뷰가 등록되지 않았습니다.');
+    }
+
+    writeClose();
+    reviewInfo();
+}
+
+
+function wordReplace(text) {
+    let one = text.replace(/(\r\n\t|\n|\r\t)/gm," ");//개행
+    let two = one.replace(/([<|>$%&#])/gm, "");
+    let thr = two.replace(/(  )/gm, " ");
+    for (let index = 0; index < 5; index++) {
+        thr = thr.replace(/(  )/gm, " ");
+    }
+    let result = thr.replace(/(  )/gm, " ");
+    return result;
 }

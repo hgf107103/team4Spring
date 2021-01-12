@@ -70,8 +70,16 @@
 	</section>
 	<div id="writeReviewBox">
 		<form id="writeReviewForm">
-        	<label class="writeReviewRadio" id="goodRadio"><input type="radio" class="writeReviewCategory" name="reviewCategory" value="1"><span id="goodRadioText">이 장소를 추천합니다.</span></label>
-			<label class="writeReviewRadio" id="badRadio"><input type="radio" class="writeReviewCategory" name="reviewCategory" value="0"><span id="badRadioText">이 장소를 추천하지 않습니다.</span></label>
+			<h3 id="writeReviewHead">새로운 리뷰 작성</h3>
+        	<label class="writeReviewRadio" id="goodRadio"><input type="radio" class="writeReviewCategory" checked="checked" name="reviewCategory" value="1"><span class="radioBox"></span><span id="goodRadioText" class="radioText">이 장소를 추천합니다.</span></label>
+			<label class="writeReviewRadio" id="badRadio"><input type="radio" class="writeReviewCategory" name="reviewCategory" value="0"><span class="radioBox"></span><span id="badRadioText" class="radioText">이 장소를 추천하지 않습니다.</span></label>
+			<input type="text" id="writeReviewTitle" maxlength="30" placeholder="리뷰 제목">
+			<textarea id="writeReviewText" maxlength="400" onkeyup="writeTextLengthCheck()" placeholder="리뷰 본문"></textarea>
+			<div id="writeReviewButtonBox">
+				<p id="writeReviewTextCount">0 / 400</p>
+				<input type="button" id="writeReviewSubmit" class="writeReviewButtonStyle" onclick="writeSubmit()" value="작성">
+				<input type="button" id="writeReviewClose" class="writeReviewButtonStyle" onclick="writeClose()" value="취소">
+			</div>
 		</form>
 	</div>
 	<div id="reviewBoxBackground">

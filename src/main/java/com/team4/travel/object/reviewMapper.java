@@ -7,4 +7,5 @@ public interface reviewMapper
 {
 	public List<reviewVO> getReviewList(HashMap<String, Integer> list);
 	public List<reviewCountVO> getReviewInfo(int placeNumber);
+	public int addNewReview(reviewVO review);
 }

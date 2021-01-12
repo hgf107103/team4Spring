@@ -25,26 +25,11 @@
 		GROUP BY reviewCategory
     </select>
     
-    <!-- <insert id="writeReview" parameterType="com.team4.travel.object.reviewVO">
-    	insert into reviewTable 
-    	(
-    		 placeNumber 
-    		,userNumber 
-    		,reviewTitle 
-    		,reviewText 
-    		,reviewDate 
-    		,reviewCategory 
-    	)
-    	values 
-    	(
-    		 #{placeNumber} 
-    		,#{userNumber} 
-    		,#{reviewTitle} 
-    		,#{reviewText} 
-    		,now() 
-    		,#{reviewCategory}
-    	)
-    </insert> -->
+    <insert id="addNewReview" parameterType="com.team4.travel.object.reviewVO">
+    	INSERT INTO reviewTable
+    	(placeNumber,userNumber,reviewTitle,reviewText,reviewCategory)
+    	VALUES (#{placeNumber},#{userNumber},#{reviewTitle},#{reviewText},#{reviewCategory})
+    </insert>
 </mapper>
 
 
