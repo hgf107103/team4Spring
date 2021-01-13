@@ -11,7 +11,13 @@
 			SELECT reviewNumber, COUNT(*) AS reviewCount FROM reviewScoreTable GROUP BY reviewNumber
 		) AS T2
 		ON T1.reviewNumber = T2.reviewNumber
-		ORDER BY reviewCount DESC, T1.reviewNumber DESC
+		ORDER BY 
+		<if test="reviewOrder == 0">
+			reviewCount DESC, T1.reviewDate ASC, T1.reviewNumber DESC
+		</if>
+		<if test="reviewOrder == 1">
+			T1.reviewDate ASC, T1.reviewNumber DESC
+		</if>
 		
 		<if test="limit > 0">
 			LIMIT #{limit}

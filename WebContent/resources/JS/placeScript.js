@@ -2,6 +2,11 @@
 let path;
 let placeNumber;
 
+//리뷰쪽에서 쓰는 변수
+let goodReviewCount;
+let badReviewCount;
+
+
 function initMap() {
     console.log('맵이 만들어졌음');
 }
@@ -201,10 +206,13 @@ async function reviewInfo() {
         $('#goodCountTitle').text(result.data.goodCount);
         $('#goodCount').attr('max', result.data.allCount);
         $('#goodCount').val(result.data.goodCount);
+        goodReviewCount = result.data.goodCount;
 
         $('#badCountTitle').text(result.data.badCount);
         $('#badCount').attr('max', result.data.allCount);
         $('#badCount').val(result.data.badCount);
+        badReviewCount = result.data.badCount;
+
         result.data.goodList.forEach((val, index) => {
             if(index == 0) $(`#goodReview`).html('');
             $(`#goodReview`).append(returnReviewSampleString(val));
@@ -232,7 +240,8 @@ async function reviewInfo() {
 
 
 function dateFormat(date) {
-    let str = `${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`;
+    console.log(date)
+    let str = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate() - 1}일`;
     return str;
 }
 
@@ -248,24 +257,90 @@ function returnReviewSampleString(object) {
 
 
 //리뷰 전체보기
+let categoryChangeCategory = ''; //정렬할때 쓸 변수
 async function viewGoodReview() {
-    setReviewBack('추천', 30)
+    await setReviewBack('추천', goodReviewCount);
+    categoryChangeCategory = 'good';
+    reviewCategoryChange();
 }
+
 async function viewBadReview() {
-    setReviewBack('비추천', 20)
+    await setReviewBack('비추천', badReviewCount);
+    categoryChangeCategory = 'bad';
+    reviewCategoryChange();
 }
+
+async function reviewCategoryChange() {
+    let object = await getReviewAllList(categoryChangeCategory);
+    settingReviewList(object);
+}
+
+
+function settingReviewList(object) {
+    if (object.status == 200 && object.data.check === "success") {
+        $(`#reviewBoxList`).html('');
+        object.data.list.forEach((val, index) => {
+            $(`#reviewBoxList`).append(returnReviewString(val));
+        })
+    }
+}
+
 
 function setReviewBack(name, number) {
-    $('#reviewBoxBackground').css('display', 'block');
+    $('#reviewBoxBackground').css('display', 'grid');
     $('#reviewBoxBackground').css('opacity', 1);
     $('#reviewBoxCategory').text(`${name}리뷰`);
-    $('#reviewBoxCount').text(`${number}개`);
+    $('#reviewBoxCount').html(`리뷰 수 : <span id="reviewBoxCountSpan">${number}</span>`);
+
+    return new Promise((resolve, reject) => {
+        resolve(true);
+    });
 }
 
-function returnLoadBox(text) {
-	let str = `<div id="loadBox"><p id="loadLog">${text}</p></div>`;
-	return str;
+async function getReviewAllList(category) {
+    let getUrl = `${$('#placeNumber').val()}/review/${category}`;
+    console.log($("#reviewBoxOrder option:selected").val());
+    let result = await axios({
+        method: 'post',
+        url: getUrl,
+        params: {
+            reviewOrder: $("#reviewBoxOrder option:selected").val()
+        }
+    })
+    return result;
 }
+
+function returnReviewString(object) {
+    let str = `<div class="reviewObjectMain"><p class="reviewObjectTitle">${object.reviewTitle}</p>
+    <p class="reviewObjectLike">추천수 : ${object.reviewCount}</p>
+    <p class="reviewObjectText">${object.reviewText}</p>
+    <p class="reviewObjectDate">${dateFormat(new Date(object.reviewDate))}</p>
+    <input class="reviewObjectLikeBtn" type="button" value="추천"></div>`
+    return str;
+}
+
+function outReviewListBox() {
+    $('#reviewBoxBackground').css('display', 'none');
+    $('#reviewBoxBackground').css('opacity', 0);
+    $('#reviewBoxCategory').text(``);
+    $('#reviewBoxCount').html(``);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //이하 리뷰 쓰기 함수
@@ -345,4 +420,12 @@ function wordReplace(text) {
     }
     let result = thr.replace(/(  )/gm, " ");
     return result;
+}
+
+
+
+
+function returnLoadBox(text) {
+	let str = `<div id="loadBox"><p id="loadLog">${text}</p></div>`;
+	return str;
 }

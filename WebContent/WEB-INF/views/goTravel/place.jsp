@@ -83,20 +83,21 @@
 		</form>
 	</div>
 	<div id="reviewBoxBackground">
-		<div id="reviewBoxMain">
-			<div id="reviewBoxInfo">
-				<p id="reviewBoxTitle">광화문 광장</p>
-				<p id="reviewBoxCategory">추천리뷰</p>
-				<p id="reviewBoxCount">30개</p>
-				<select id="reviewBoxOrder">
-					<option value="new">최신순</option>
-					<option value="best">추천순</option>
-				</select>
-			</div>
-			<div id="reviewBoxList">
-			</div>
+		<div id="reviewBoxInfo">
+			<p id="reviewBoxTitle"></p>
+			<p id="reviewBoxCategory"></p>
+			<p id="reviewBoxCount"></p>
+			<select id="reviewBoxOrder" onchange="reviewCategoryChange()">
+				<option value="0">추천순</option>
+				<option value="1">최신순</option>
+			</select>
+			<input id="reviewBoxClose" type="button" onclick="outReviewListBox()" value="창닫기">
+		</div>
+		<div id="reviewBoxList">
 		</div>
 	</div>
+
+
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>
 </html>

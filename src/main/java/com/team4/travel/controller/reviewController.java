@@ -53,6 +53,7 @@ public class reviewController {
 			HashMap<String, Integer> map = new HashMap<String, Integer>();
 			map.put("placeNumber", placeNumber);
 			map.put("reviewCategory", 1);
+			map.put("reviewOrder", 0);
 			map.put("limit", 2);
 			List<reviewVO> goodList = mapper.getReviewList(map);
 			
@@ -152,4 +153,83 @@ public class reviewController {
 			}
 	  }
 	 
+	  
+	  @PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/review/good")
+		public void getGoodReview (
+				HttpServletRequest  request,
+				HttpServletResponse response,
+				@PathVariable(value = "placeNumber") int placeNumber,
+				@RequestParam(value = "reviewOrder") int reviewOrder,
+				Locale locale,
+				Model model
+		) throws Exception {
+			
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			Gson create	= new GsonBuilder().setPrettyPrinting().create();
+			JsonObject jo = new JsonObject();
+			
+			try 
+			{
+				HashMap<String, Integer> map = new HashMap<String, Integer>();
+				map.put("placeNumber", placeNumber);
+				map.put("reviewCategory", 1);
+				map.put("reviewOrder", reviewOrder);
+				List<reviewVO> list = mapper.getReviewList(map);
+				
+				jo.add("check", create.toJsonTree("success"));
+				jo.add("list", create.toJsonTree(list));
+				
+			} catch (Exception e) {
+				
+				jo = new JsonObject();
+				jo.add("check", create.toJsonTree("fail"));
+				jo.add("error", create.toJsonTree(e.toString()));
+				
+			} finally {
+				pw.write(create.toJson(jo));
+			}
+		}
+	  
+	  
+	  @PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/review/bad")
+		public void getBadReview (
+				HttpServletRequest  request,
+				HttpServletResponse response,
+				@PathVariable(value = "placeNumber") int placeNumber,
+				@RequestParam(value = "reviewOrder") int reviewOrder,
+				Locale locale,
+				Model model
+		) throws Exception {
+			
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json");
+			PrintWriter pw = response.getWriter();
+			Gson create	= new GsonBuilder().setPrettyPrinting().create();
+			JsonObject jo = new JsonObject();
+			
+			try 
+			{
+				HashMap<String, Integer> map = new HashMap<String, Integer>();
+				map.put("placeNumber", placeNumber);
+				map.put("reviewCategory", 0);
+				map.put("reviewOrder", reviewOrder);
+				List<reviewVO> list = mapper.getReviewList(map);
+				
+				jo.add("check", create.toJsonTree("success"));
+				jo.add("list", create.toJsonTree(list));
+				
+			} catch (Exception e) {
+				
+				jo = new JsonObject();
+				jo.add("check", create.toJsonTree("fail"));
+				jo.add("error", create.toJsonTree(e.toString()));
+				
+			} finally {
+				pw.write(create.toJson(jo));
+			}
+		}
 }
