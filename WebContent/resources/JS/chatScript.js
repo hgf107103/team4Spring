@@ -31,6 +31,7 @@ function connect(id, name, url){
     $('#chatLog').css('display', 'block');
     $('#write').css('display', 'flex');
     $('#ready').css('display', 'none');
+    
     $('#title').text(`${$("#serverlist option:selected").text()} 채팅방`);
     console.log('입장');
 

@@ -8,7 +8,7 @@
 	<!-- MySQL dataSource -->
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"> 
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/> 
-        <property name="url" value="jdbc:mysql://115.85.183.241:3306/team4spring?characterEncoding=UTF8&amp;serverTimezone=UTC"/> 
+        <property name="url" value="jdbc:mysql://140.238.20.45:3306/team4?characterEncoding=UTF8&amp;serverTimezone=UTC"/> 
         <property name="username" value="hgf107103"/> 
         <property name="password" value="Hwt0147258!"/>
     </bean>        
