@@ -114,7 +114,7 @@ async function countButtonClick() {
         method: 'post',
         url: `${$('#placeNumber').val()}/like/check`
     })
-    console.log(check);
+    //console.log(check);
     if(check.data.check == 'success') {
         await checkCount(check);
         getPlaceInfo();
@@ -240,7 +240,6 @@ async function reviewInfo() {
 
 
 function dateFormat(date) {
-    console.log(date)
     let str = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate() - 1}일`;
     return str;
 }
@@ -258,24 +257,27 @@ function returnReviewSampleString(object) {
 
 //리뷰 전체보기
 let categoryChangeCategory = ''; //정렬할때 쓸 변수
+
+//카테고리 변경
 async function viewGoodReview() {
     await setReviewBack('추천', goodReviewCount);
     categoryChangeCategory = 'good';
     reviewCategoryChange();
 }
-
+//카테고리 변경
 async function viewBadReview() {
     await setReviewBack('비추천', badReviewCount);
     categoryChangeCategory = 'bad';
     reviewCategoryChange();
 }
 
+//bad good 변경하고 리스트를 받아와서 다음 메소드에 전달
 async function reviewCategoryChange() {
     let object = await getReviewAllList(categoryChangeCategory);
     settingReviewList(object);
 }
 
-
+//받아온 리뷰 리스트 오브젝트 화면에 세팅
 function settingReviewList(object) {
     if (object.status == 200 && object.data.check === "success") {
         $(`#reviewBoxList`).html('');
@@ -285,7 +287,7 @@ function settingReviewList(object) {
     }
 }
 
-
+//리뷰창 띄우기
 function setReviewBack(name, number) {
     $('#reviewBoxBackground').css('display', 'grid');
     $('#reviewBoxBackground').css('opacity', 1);
@@ -297,9 +299,10 @@ function setReviewBack(name, number) {
     });
 }
 
+//조건에 맞는 리뷰 리스트 불러오기
 async function getReviewAllList(category) {
     let getUrl = `${$('#placeNumber').val()}/review/${category}`;
-    console.log($("#reviewBoxOrder option:selected").val());
+    //console.log($("#reviewBoxOrder option:selected").val());
     let result = await axios({
         method: 'post',
         url: getUrl,
@@ -315,10 +318,11 @@ function returnReviewString(object) {
     <p class="reviewObjectLike">추천수 : ${object.reviewCount}</p>
     <p class="reviewObjectText">${object.reviewText}</p>
     <p class="reviewObjectDate">${dateFormat(new Date(object.reviewDate))}</p>
-    <input class="reviewObjectLikeBtn" type="button" value="추천"></div>`
+    <input class="reviewObjectLikeBtn" type="button" onclick="reviewLike(${object.reviewNumber})" value="추천"></div>`
     return str;
 }
 
+//리뷰창 닫기
 function outReviewListBox() {
     $('#reviewBoxBackground').css('display', 'none');
     $('#reviewBoxBackground').css('opacity', 0);
@@ -326,18 +330,33 @@ function outReviewListBox() {
     $('#reviewBoxCount').html(``);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+//리뷰추천
+async function reviewLike(reviewNumber) {
+    let result = await axios({
+        method: 'post',
+        url: `${$('#placeNumber').val()}/review/${reviewNumber}/like`
+    })
+    if (result.data.check == "success" && result.data.result != "") {
+        if (result.data.result == "already") {
+            alert('이미 추천한 리뷰입니다.');
+        }
+        if (result.data.result == "okay") {
+            alert('추천했습니다.');
+        }
+        if (result.data.result == "likeError") {
+            alert('추천에 실패했습니다.');
+        }
+        if (result.data.result == "notUser") {
+            alert('로그인이 필요합니다.');
+            return;
+        }
+    }
+    if (result.data.check == "fail") {
+        alert('오류가 발생하였습니다.');
+        console.error(result.data.error);
+    }
+    reviewCategoryChange();
+}
 
 
 
@@ -383,9 +402,9 @@ async function writeSubmit() {
     let text = wordReplace($('#writeReviewText').val());
     let category = $(".writeReviewCategory:checked").val();
 
-    console.log(title);
+    /*console.log(title);
     console.log(text);
-    console.log(category);
+    console.log(category);*/
 
     let result = await axios({
         method: 'post',
@@ -397,7 +416,7 @@ async function writeSubmit() {
         }
     })
 
-    console.log(result);
+    //console.log(result);
 
     if (result.status == 200 && result.data.check == "success") {
         alert('리뷰가 등록되었습니다.');

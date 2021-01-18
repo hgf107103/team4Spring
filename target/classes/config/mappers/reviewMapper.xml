@@ -36,6 +36,15 @@
     	(placeNumber,userNumber,reviewTitle,reviewText,reviewCategory)
     	VALUES (#{placeNumber},#{userNumber},#{reviewTitle},#{reviewText},#{reviewCategory})
     </insert>
+    
+    <select id="reviewLikeCheck" parameterType="hashmap" resultType="com.team4.travel.object.reviewVO">
+    	SELECT * FROM reviewScoreTable WHERE userNumber = #{userNumber} AND reviewNumber = #{reviewNumber} LIMIT 1
+    </select>
+    
+    <insert id="addReviewLike" parameterType="hashmap">
+    	INSERT INTO reviewScoreTable
+    	VALUES (#{reviewNumber},#{userNumber})
+    </insert>
 </mapper>
 
 

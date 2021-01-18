@@ -44,10 +44,17 @@ function imageReset(val, target) {
 	$(`#${val}`).val('');
 }
 
-function menuChacng(title) {
+function formChange(title) {
 	$(`.formClass`).css('display', 'none');
 	$(`#${title}Form`).css('display', 'block');
 }
+
+function divChange(divName) {
+	$(`.showClass`).css('display', 'none');
+	$(`#${divName}`).css('display', 'block');
+}
+
+
 
 function initMap() {}
 

@@ -175,11 +175,20 @@ div.map {
     overflow: hidden;
 }
 form.formClass {
-	display: none;
+    display: none;
+    width: 800px;
+    height: 800px;
 }
 div.formdiv {
 	margin: 10px 0px;
 }
+div.showClass {
+    display: none;
+    width: 800px;
+    height: 800px;
+}
+
+
 
 select{
 	font-size: 18px;

@@ -194,7 +194,7 @@ public class reviewController {
 		}
 	  
 	  
-	  @PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/review/bad")
+	  	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/review/bad")
 		public void getBadReview (
 				HttpServletRequest  request,
 				HttpServletResponse response,
@@ -232,4 +232,61 @@ public class reviewController {
 				pw.write(create.toJson(jo));
 			}
 		}
+	  
+	  @PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/review/{reviewNumber}/like")
+	  public void reviewLike ( HttpServletRequest  request, HttpServletResponse response, @PathVariable(value = "reviewNumber") int reviewNumber, Locale locale, Model model ) throws Exception {
+		  
+		  request.setCharacterEncoding("UTF-8");
+		  response.setCharacterEncoding("UTF-8");
+		  response.setContentType("application/json");
+		  PrintWriter pw = response.getWriter();
+		  Gson create	= new GsonBuilder().setPrettyPrinting().create();
+		  JsonObject jo = new JsonObject();
+		  HttpSession session = request.getSession();
+			
+		  try {
+			  userVO temp = (userVO)session.getAttribute("userLogin");
+			  
+			  String result = "";
+			  
+			  if(temp == null || session.getAttribute("userLogin") == null) {
+				  result = "notUser";
+			  } 
+			  
+			  if(temp != null && session.getAttribute("userLogin") != null) {
+				  HashMap<String, Integer> tempMap = new HashMap<String, Integer>();
+				  tempMap.put("reviewNumber", reviewNumber);
+				  tempMap.put("userNumber", temp.getUserNumber());
+				  
+				  
+				  reviewVO reviewCheck = mapper.reviewLikeCheck(tempMap);
+				  
+				  if(reviewCheck == null) {
+					  int addCheck = mapper.addReviewLike(tempMap);
+					  result = "likeError";
+					  if(addCheck == 1) {
+						  result = "okay";
+					  }
+				  }
+				  
+				  else if(reviewCheck != null) {
+					  result = "already";
+				  }
+			  }
+			  
+			  jo.add("check", create.toJsonTree("success"));
+			  jo.add("result", create.toJsonTree(result));
+			  
+		  } catch (Exception e) {
+			  e.printStackTrace();
+			  jo = new JsonObject();
+			  jo.add("check", create.toJsonTree("fail"));
+			  jo.add("error", create.toJsonTree(e.toString()));
+				
+		  } finally {
+			  pw.write(create.toJson(jo));
+		  }
+		  
+	 }
+	  
 }

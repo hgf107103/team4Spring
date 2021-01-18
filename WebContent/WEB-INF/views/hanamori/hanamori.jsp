@@ -35,12 +35,13 @@
 				location.href='#';
 			</script>
 			<div id="menu">
-				<div class="menuButton" id="countryAdd" onclick="location.href='#countryAdd'; menuChacng('country', '대륙');">나라추가</div>
-				<div class="menuButton" id="areaAdd" onclick="location.href='#areaAdd'; menuChacng('area', '나라');">지역추가</div>
-				<div class="menuButton" id="reviewList" onclick="location.href='#reviewList'">리뷰목록</div>
+				<div class="menuButton" id="countryAdd" onclick="location.href='#countryAdd'; formChange('country');">나라추가</div>
+				<div class="menuButton" id="areaAdd" onclick="location.href='#areaAdd'; formChange('area');">지역추가</div>
+				<div class="menuButton" id="placeAdd" onclick="location.href='#placeAdd'; divChange('addPlaceList')">장소신청목록</div>
+				<div class="menuButton" id="reviewList" onclick="location.href='#reviewList'; divChange('reviewListBox')">리뷰목록</div>
 			</div>
 			<div id="screen">
-				<form id="countryForm" name="countryForm" class="formClass" method="post" action="hbj/add/country" enctype="multipart/form-data">
+				<form id="countryForm" name="countryForm" class="formClass showClass" method="post" action="hbj/add/country" enctype="multipart/form-data">
 				
 				<label><span id="listSpan">대륙선택 : </span>
 				<select id="countrylist" name="number">
@@ -76,10 +77,7 @@
     			<input class="button" type="button" onclick="formSubmit('country')" value="추가하기">
     			</div>
 				</form>
-				
-				
-				
-				<form id="areaForm" name="areaForm" class="formClass" method="post" action="hbj/add/area" enctype="multipart/form-data">
+				<form id="areaForm" name="areaForm" class="formClass showClass" method="post" action="hbj/add/area" enctype="multipart/form-data">
 				
 				<label><span id="listSpan">나라선택 : </span>
 				<select id="arealist" name="number">
@@ -115,6 +113,18 @@
     			<input class="button" type="button" onclick="formSubmit('area')" value="추가하기">
     			</div>
 				</form>
+				<div id="addPlaceList" class="showClass">
+					<div class="placeObject">
+						<div class="placeObjectImg"></div>
+						<div class="placeObjectName">
+							<p class="placeObjectKoreanName"></p>
+							<p class="placeObjectEnglishName"></p>
+						</div>
+					</div>
+				</div>
+				<div id="reviewListBox" class="showClass">
+					리뷰목록
+				</div>
 			</div>
         </c:if>
 	</c:if>

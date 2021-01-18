@@ -64,9 +64,10 @@ function onMessage(evt){
 function onClose(){
 }
 
-
+ 
 function send(){
-    let message = $('#writeChat').val();
+    let myWrite = $('#writeChat').val();
+    let message = myWrite.replace(/([<|>$%&#*:;])/gm, " ");
     websocket.send(`${userID}:${server}:${userName}*${message}`);
     $('#writeChat').val('');
 }
