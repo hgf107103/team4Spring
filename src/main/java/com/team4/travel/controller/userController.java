@@ -16,6 +16,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,7 +62,14 @@ public class userController {
 			pw.write(create.toJson(jo));
 		}
 	}
+	@CrossOrigin("*")
+	@PostMapping(value = "/user/useruser")
+	public void check(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession a = request.getSession();
+		System.out.println(a.getId());
+	}
 	
+	@CrossOrigin("*")
 	@PostMapping(value = "/user/login")
 	public void login(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userID") String userID, @RequestParam(value = "userPassword") String userPassword, Locale locale, Model model) throws Exception {
 		
@@ -95,6 +103,7 @@ public class userController {
 			
 
 			jo.add("check", create.toJsonTree("success"));
+			jo.add("code", create.toJsonTree(session.getId()));
 			
 		} catch (Exception e) {
 			

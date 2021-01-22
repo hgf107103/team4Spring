@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -389,7 +390,7 @@ public class placeController {
 			pw.write(create.toJson(jo));
 		}
 	}
-	
+	@CrossOrigin("*")
 	@PostMapping(value = "/country/{countryNumber}/area/{areaNumber}/place/{placeNumber}/like/check")
 	public void getPlaceLikeCheck(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="placeNumber") int placeNumber) throws Exception{
 		request.setCharacterEncoding("UTF-8");
