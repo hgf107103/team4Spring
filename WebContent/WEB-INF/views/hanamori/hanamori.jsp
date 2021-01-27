@@ -7,6 +7,7 @@
     <meta name="path" id="path" content="${pageContext.request.contextPath}">
     <title>방구석여행기 - 관리</title>
     <script src="${pageContext.request.contextPath}/JS/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="${pageContext.request.contextPath}/JS/hbjScript.js"></script>
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-RE27wVARCBrtj-pd3u0fTXBnv1JLAIA&callback=initMap&libraries=&v=weekly"
@@ -37,8 +38,8 @@
 			<div id="menu">
 				<div class="menuButton" id="countryAdd" onclick="location.href='#countryAdd'; formChange('country');">나라추가</div>
 				<div class="menuButton" id="areaAdd" onclick="location.href='#areaAdd'; formChange('area');">지역추가</div>
-				<div class="menuButton" id="placeAdd" onclick="location.href='#placeAdd'; divChange('addPlaceList')">장소신청목록</div>
-				<div class="menuButton" id="reviewList" onclick="location.href='#reviewList'; divChange('reviewListBox')">리뷰목록</div>
+				<div class="menuButton" id="placeAdd" onclick="location.href='#placeAdd'; divChange('addPlaceList'); getPlaceList();">장소신청목록</div>
+				<div class="menuButton" id="reviewList" onclick="location.href='#reviewList'; divChange('reviewListBox'); getReviewList();">리뷰목록</div>
 			</div>
 			<div id="screen">
 				<form id="countryForm" name="countryForm" class="formClass showClass" method="post" action="hbj/add/country" enctype="multipart/form-data">
@@ -113,16 +114,9 @@
     			<input class="button" type="button" onclick="formSubmit('area')" value="추가하기">
     			</div>
 				</form>
-				<div id="addPlaceList" class="showClass">
-					<div class="placeObject">
-						<div class="placeObjectImg"></div>
-						<div class="placeObjectName">
-							<p class="placeObjectKoreanName"></p>
-							<p class="placeObjectEnglishName"></p>
-						</div>
-					</div>
+				<div id="addPlaceList" class="showClass listBox">
 				</div>
-				<div id="reviewListBox" class="showClass">
+				<div id="reviewListBox" class="showClass listBox">
 					리뷰목록
 				</div>
 			</div>

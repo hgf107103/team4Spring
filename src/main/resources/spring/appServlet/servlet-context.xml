@@ -30,9 +30,9 @@
     </beans:bean>
 	
 	<beans:bean id="SAVE_PATH" class="java.lang.String">
-		<beans:constructor-arg value="/Users/Administrator/Documents/GitHub/team4Spring/WebContent/resources/image/"></beans:constructor-arg>
+		<!-- <beans:constructor-arg value="/Users/Administrator/Documents/GitHub/team4Spring/WebContent/resources/image/"></beans:constructor-arg> -->
 		<!-- <beans:constructor-arg value="/Users/JSJ/Documents/GitHub/team4Spring/WebContent/resources/image/"></beans:constructor-arg> -->
-		<!-- <beans:constructor-arg value="/usr/local/lib/apache-tomcat-8.5.50/webapps/travel/resources/image/"></beans:constructor-arg> -->
+		<beans:constructor-arg value="/usr/local/lib/apache-tomcat-8.5.50/webapps/travel/resources/image/"></beans:constructor-arg>
 	</beans:bean>
 	
 	<context:component-scan base-package="com.team4.travel" />

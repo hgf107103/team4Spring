@@ -45,13 +45,15 @@ function imageReset(val, target) {
 }
 
 function formChange(title) {
+	$(`.showClass`).css('display', 'none');
 	$(`.formClass`).css('display', 'none');
 	$(`#${title}Form`).css('display', 'block');
 }
 
 function divChange(divName) {
 	$(`.showClass`).css('display', 'none');
-	$(`#${divName}`).css('display', 'block');
+	$(`.formClass`).css('display', 'none');
+	$(`#${divName}`).css('display', 'flex');
 }
 
 
@@ -237,4 +239,148 @@ function formSubmit(title) {
 	if(check) {
 		$(`#${title}Form`).submit();
 	}
+}
+
+
+
+
+
+
+
+//이하 장소관련 메서드
+async function getPlaceList() {
+    let result = await axios({
+        method: 'post',
+        url: `${path}/hbj/place/list`
+	})
+    setPlaceList(result);
+}
+
+function setPlaceList(result) {
+	if (result.status == 200 && result.data.check === "success") {
+		$(`#addPlaceList`).html('');
+        result.data.list.forEach((val, index) => {
+            $(`#addPlaceList`).append(returnPlaceString(val));
+		})
+		if (result.data.list.length == 0) {
+			$(`#addPlaceList`).append("<p id='emptyText'>신청받은 장소가 없습니다!</p>");
+		}
+	}
+
+}
+
+async function placeAllow(placeNumber) {
+	let check = confirm('정말로 등록을 허가하시겠습니따?\n주의 : 한번 허가하면 되돌릴 수 없습니다.');
+	if(!check) {
+		alert('취소되었습니다.');
+		return;
+	}
+
+    await axios({
+        method: 'post',
+		url: `${path}/hbj/place/allow`,
+		params: {
+			placeNumber: placeNumber
+		}
+	})
+	getPlaceList()
+}
+
+async function placeDeny(placeNumber) {
+	let check = confirm('정말로 등록을 거부하시겠습니따?\n주의 : 한번 거부하면 되돌릴 수 없습니다.');
+	if(!check) {
+		alert('취소되었습니다.');
+		return;
+	}
+
+    await axios({
+        method: 'post',
+		url: `${path}/hbj/place/deny`,
+		params: {
+			placeNumber: placeNumber
+		}
+	})
+	getPlaceList()
+}
+
+function returnPlaceString(ob) {
+	let str = `<div class="placeObject">
+	<div class="placeObjectImg">
+		<img src="${path}/image/place/${ob.areaName}/${ob.areaName}_${ob.englishName}.jpg">
+	</div>
+	<div class="placeObjectName">
+		<p class="placeObjectNameTitle">장소명</p>
+		<p class="placeObjectKoreanName placeObjectText">${ob.koreanName}</p>
+		<p class="placeObjectEnglishName placeObjectText">${ob.englishName}</p>
+	</div>
+	<div class="placeObjectLatLng">
+		<p class="placeObjectLatLngTitle">좌표</p>
+		<p class="placeObjectLat placeObjectText">Lat : ${ob.placeLat}</p>
+		<p class="placeObjectLng placeObjectText">Lng : ${ob.placeLng}</p>
+	</div>
+	<div class="placeObjectAction">
+		<input type="button" value="등록허가" onclick="placeAllow(${ob.placeNumber})">
+		<input type="button" value="등록거부" onclick="placeDeny(${ob.placeNumber})">
+	</div>
+	</div>`;
+	return str;
+}
+
+
+
+
+
+
+
+async function getReviewList() {
+    let result = await axios({
+        method: 'post',
+        url: `${path}/hbj/review/list`
+	})
+    setReviewList(result);
+}
+
+function setReviewList(result) {
+	if (result.status == 200 && result.data.check === "success") {
+		$(`#reviewListBox`).html('');
+        result.data.list.forEach((val, index) => {
+            $(`#reviewListBox`).append(returnReviewString(val));
+		})
+		if (result.data.list.length == 0) {
+			$(`#reviewListBox`).append("<p id='emptyText'>리뷰 내역이 없습니다!</p>");
+		}
+	}
+
+}
+
+function dateFormat(date) {
+    let str = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate() - 1}일`;
+    return str;
+}
+
+function returnReviewString(object) {
+    let str = `<div class="reviewObjectMain"><p class="reviewObjectTitle">${object.reviewTitle}</p>
+    <p class="reviewObjectLike">추천수 : ${object.reviewCount}</p>
+    <p class="reviewObjectText">${object.reviewText}</p>
+    <p class="reviewObjectDate">${dateFormat(new Date(object.reviewDate))}</p>
+    <input class="reviewObjectLikeBtn" type="button" onclick="reviewDelete(${object.reviewNumber})" value="삭제"></div>`
+    return str;
+}
+
+
+async function reviewDelete(reviewNumber) {
+	let check = confirm('정말로 리뷰를 삭제하시겠습니따?\n주의 : 한번 삭제하면 되돌릴 수 없습니다.');
+	if(!check) {
+		alert('취소되었습니다.');
+		return;
+	}
+
+    await axios({
+        method: 'post',
+		url: `${path}/hbj/review/delete`,
+		params: {
+			reviewNumber: reviewNumber
+		}
+	})
+	getReviewList()
 }

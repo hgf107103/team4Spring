@@ -198,3 +198,209 @@ span#listSpan {
 	font-size: 18px;
     padding: 3px 5px;
 }
+
+
+div.listBox p#emptyText{
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+div.listBox {
+    justify-content: left;
+    justify-items: left;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+div.listBox::-webkit-scrollbar { 
+    display: none;
+}
+div.placeObject {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto;
+    padding: 20px 20px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    justify-content: space-between;
+    justify-items: left;
+    align-items: center;
+    align-content: center;
+    width: 90%;
+    column-gap: 20px;
+    margin: 10px auto;
+}
+div.placeObject div.placeObjectImg{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+div.placeObject div.placeObjectImg:hover > img{
+    transform: scale(1.2);
+    transition: transform ease 0.3s 0s;
+}
+div.placeObject div.placeObjectImg img{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    transition: transform ease 0.3s 0s;
+}
+
+div.placeObject div.placeObjectName{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+}
+div.placeObject div.placeObjectName p.placeObjectNameTitle{
+    font-size: 25px;
+    font-weight: bold;
+}
+div.placeObject div.placeObjectLatLng{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+}
+div.placeObject div.placeObjectLatLng p.placeObjectLatLngTitle{
+    font-size: 25px;
+    font-weight: bold;
+}
+div.placeObject div.placeObjectAction{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 4;
+    grid-column-end: 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+}
+div.placeObject div.placeObjectAction input[type=button]{
+    padding: 5px 10px;
+    margin: 5px auto;
+    font-size: 17px;
+    border: 1px solid black;
+    background-color: white;
+    color: rgba(0,0,0,0.7);
+    cursor: pointer;
+    transition: color ease 0.3s 0s, background-color ease 0.3s 0s;
+}
+div.placeObject div.placeObjectAction input[type=button]:hover{
+    color: black;
+    background-color: rgb(240,240,240);
+    transition: color ease 0.3s 0s, background-color ease 0.3s 0s;
+}
+
+
+div.placeObject p.placeObjectText{
+    padding: 5px 5px;
+    text-align: center;
+    word-break: break-all;
+    color: rgba(0,0,0,0.7);
+    transition: color ease 0.3s 0s, background-color ease 0.3s 0s;
+}
+div.placeObject p.placeObjectText:hover{
+    color: black;
+    background-color: rgb(240,240,240);
+    transition: color ease 0.3s 0s, background-color ease 0.3s 0s;
+}
+
+
+
+div.reviewObjectMain{
+    width: 680px;
+    padding: 20px 10px;
+    margin: 20px auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    transition: border ease 0.3s 0s;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+    justify-content: space-between;
+    align-items: center;
+}
+div.reviewObjectMain:hover{
+    border-top: 1px solid rgba(0, 0, 0, 0.9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.9);
+    transition: border ease 0.3s 0s;
+}
+div.reviewObjectMain p.reviewObjectTitle{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    width: 530px;
+    font-size: 18px;
+    font-weight: bold;
+    word-break: break-all;
+}
+div.reviewObjectMain p.reviewObjectLike{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    text-align: center;
+}
+div.reviewObjectMain p.reviewObjectText{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    width: 660px;
+    margin: 30px auto;
+    word-break: break-all;
+}
+div.reviewObjectMain p.reviewObjectDate{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+div.reviewObjectMain input.reviewObjectLikeBtn{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    margin: auto;
+    font-size: 20px;
+    padding: 5px 15px;
+    width: 90px;
+    border: 1px solid rgb(200,200,200);
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 5px;
+    color: rgb(150,150,150);
+    transition: border ease 0.3s 0s, color ease 0.3s 0s, box-shadow ease 0.3s 0s;
+}
+div.reviewObjectMain input.reviewObjectLikeBtn:hover{
+    border: 1px solid rgb(0,0,0);
+    color: rgb(0,0,0);
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.2);
+    transition: border ease 0.3s 0s, color ease 0.3s 0s, box-shadow ease 0.3s 0s;
+}

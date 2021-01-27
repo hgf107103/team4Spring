@@ -3,6 +3,7 @@ package com.team4.travel.controller;
 import java.io.File;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -28,6 +29,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.team4.travel.object.areaVO;
 import com.team4.travel.object.countryVO;
+import com.team4.travel.object.placeVO;
+import com.team4.travel.object.reviewVO;
 import com.team4.travel.object.selectMapper;
 import com.team4.travel.object.selectVO;
 import com.team4.travel.object.userVO;
@@ -228,6 +231,205 @@ public class hbjController {
 		} catch (Exception e) {
 			System.out.println(e);
 			
+		}
+	}
+	
+	//아직 허가되지 않은 장소 리스트
+	@PostMapping(value = "/hbj/place/list")
+	public void addPlaceList(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		try {
+			
+			userVO user = (userVO)session.getAttribute("userLogin");
+			
+			if(user == null || !user.isUserAdminCheck()) {
+				throw new Exception();
+			}
+			
+			List<placeVO> list = mapper.getAddPlaceList();
+			
+			jo.add("list", create.toJsonTree(list));
+			jo.add("check", create.toJsonTree("success"));
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+	}
+	
+	//장소 허가
+	@PostMapping(value = "/hbj/place/allow")
+	public void allowPlace(HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam(value = "placeNumber") int placeNumber) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		try {
+			
+			userVO user = (userVO)session.getAttribute("userLogin");
+			
+			if(user == null || !user.isUserAdminCheck()) {
+				throw new Exception();
+			}
+			
+			String result = "fail";
+			
+			int check = mapper.allowPlace(placeNumber);
+
+			if(check == 1) {
+				result = "ok";
+			}
+			if(check != 1) {
+				result = "no";
+			}
+			
+			jo.add("result", create.toJsonTree(result));
+			jo.add("check", create.toJsonTree("success"));
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+	}
+	
+	//장소 디나이
+	@PostMapping(value = "/hbj/place/deny")
+	public void denyPlace(HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam(value = "placeNumber") int placeNumber) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		try {
+			
+			userVO user = (userVO)session.getAttribute("userLogin");
+			
+			if(user == null || !user.isUserAdminCheck()) {
+				throw new Exception();
+			}
+			
+			String result = "fail";
+			
+			int check = mapper.denyPlace(placeNumber);
+
+			if(check == 1) {
+				result = "ok";
+			}
+			if(check != 1) {
+				result = "no";
+			}
+			
+			jo.add("result", create.toJsonTree(result));
+			jo.add("check", create.toJsonTree("success"));
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+	}
+	
+	
+	
+	//리뷰 리스트
+	@PostMapping(value = "/hbj/review/list")
+	public void reviewList(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		try {
+			
+			userVO user = (userVO)session.getAttribute("userLogin");
+			
+			if(user == null || !user.isUserAdminCheck()) {
+				throw new Exception();
+			}
+			
+			List<reviewVO> list = mapper.getReviewList();
+			
+			jo.add("list", create.toJsonTree(list));
+			jo.add("check", create.toJsonTree("success"));
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
+		}
+	}
+	
+	//리뷰삭제
+	@PostMapping(value = "/hbj/review/delete")
+	public void reviewDelete(HttpServletRequest request, HttpServletResponse response, HttpSession session, @RequestParam(value = "reviewNumber") int reviewNumber) throws Exception{
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		PrintWriter pw = response.getWriter();
+		Gson create = new GsonBuilder().setPrettyPrinting().create();
+		JsonObject jo = new JsonObject();
+		try {
+			
+			userVO user = (userVO)session.getAttribute("userLogin");
+			
+			if(user == null || !user.isUserAdminCheck()) {
+				throw new Exception();
+			}
+			
+			String result = "fail";
+			
+			int check = mapper.deleteReview(reviewNumber);
+
+			if(check == 1) {
+				result = "ok";
+			}
+			if(check != 1) {
+				result = "no";
+			}
+			
+			jo.add("result", create.toJsonTree(result));
+			jo.add("check", create.toJsonTree("success"));
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			jo = new JsonObject();
+			jo.add("check", create.toJsonTree("fail"));
+			jo.add("error", create.toJsonTree(e.toString()));
+			
+		} finally {
+			pw.write(create.toJson(jo));
 		}
 	}
 }

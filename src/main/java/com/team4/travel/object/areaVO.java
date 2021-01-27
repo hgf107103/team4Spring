@@ -1,5 +1,7 @@
 package com.team4.travel.object;
 
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;

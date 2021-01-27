@@ -21,4 +21,31 @@
     <select id="getCountryName" parameterType="int" resultType="string">
     	SELECT englishName FROM countryTable WHERE countryNumber = #{countryNumber}
     </select>
+    
+    <select id="getAddPlaceList" resultType="com.team4.travel.object.placeVO">
+    	SELECT T1.*, T2.englishName AS areaName FROM placeTable AS T1 LEFT JOIN
+		areaTable AS T2 ON T1.areaNumber = T2.areaNumber WHERE placeCheck = 0 ORDER BY placeNumber DESC
+    </select>
+    
+    <update id="allowPlace" parameterType="int">
+    	UPDATE placeTable SET placeCheck = 1 WHERE placeNumber = #{placeNumber}
+    </update>
+    
+    <delete id="denyPlace" parameterType="int">
+    	DELETE FROM placeTable WHERE placeCheck = 0 AND placeNumber = #{placeNumber}
+    </delete>
+    
+    <select id="getReviewList" resultType="com.team4.travel.object.reviewVO">
+    	SELECT T1.*, T2.reviewCount
+		FROM reviewTable AS T1 
+		LEFT JOIN (
+			SELECT reviewNumber, COUNT(*) AS reviewCount FROM reviewScoreTable GROUP BY reviewNumber
+		) AS T2
+		ON T1.reviewNumber = T2.reviewNumber
+		ORDER BY  T1.reviewDate ASC, T1.reviewNumber DESC ,reviewCount DESC
+    </select>
+    
+    <delete id="deleteReview" parameterType="int">
+    	DELETE FROM reviewTable WHERE reviewNumber = #{reviewNumber}
+    </delete>
 </mapper>

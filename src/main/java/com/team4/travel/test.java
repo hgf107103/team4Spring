@@ -7,13 +7,16 @@ import java.util.regex.Pattern;
 public class test {
 
 	public static void main(String[] args) {
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("limit", 2);
-		System.out.println(map);
-		
-		map.put("limit", 5);
-		System.out.println(map);
-		
+		String a = "123.12";
+		try {
+
+			int b = Integer.parseInt(a);
+			System.out.println(b);
+		} catch (Exception e) {
+			System.out.println("asd");
+		} finally {
+			System.out.println("qwe");
+		}
 	}
 
 }
