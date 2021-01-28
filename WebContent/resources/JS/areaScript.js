@@ -76,12 +76,21 @@ function emptyFunction() {
 }*/
 
 function getPlace() {
+	let order = $(":input:radio[name=orderRadio]:checked").val();
+	let cate = $(":input:radio[name=categoryRadio]:checked").val();
+	if (cate == null || cate == undefined || cate < 0) {
+		cate = 0;
+	}
+	if (order == null || order == undefined) {
+		order = "like";
+	}
+
 	$.ajax({
 		url: `${areaNumber}/place/list`,
 		type: "post",
 		data: {
-			order:$(":input:radio[name=orderRadio]:checked").val(),
-			categoryNumber:$(":input:radio[name=categoryRadio]:checked").val()
+			order:order,
+			categoryNumber:cate
 		},
 		cache: false,
 		dataType: "json",

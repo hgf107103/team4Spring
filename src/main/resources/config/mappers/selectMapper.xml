@@ -42,7 +42,7 @@
 			SELECT reviewNumber, COUNT(*) AS reviewCount FROM reviewScoreTable GROUP BY reviewNumber
 		) AS T2
 		ON T1.reviewNumber = T2.reviewNumber
-		ORDER BY  T1.reviewDate ASC, T1.reviewNumber DESC ,reviewCount DESC
+		ORDER BY  T1.reviewDate DESC, T1.reviewNumber DESC ,reviewCount DESC
     </select>
     
     <delete id="deleteReview" parameterType="int">
